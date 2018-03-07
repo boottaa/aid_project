@@ -1,0 +1,52 @@
+{
+  "name": "bitexpert/prophiler-psr7-middleware",
+  "description": "PSR-7 middleware for Prophiler",
+  "minimum-stability": "stable",
+  "license": "Apache-2.0",
+  "keywords": [
+    "psr7",
+    "psr-7",
+    "prophiler"
+  ],
+  "authors": [
+    {
+      "name": "Stephan Hochdörfer",
+      "email": "S.Hochdoerfer@bitExpert.de",
+      "homepage": "http://www.bitExpert.de"
+    }
+  ],
+  "require": {
+    "php": "^7.0",
+    "psr/http-message": "^1.0",
+    "fabfuel/prophiler": "^1.6",
+    "zendframework/zend-stratigility": "^2.0",
+    "bitexpert/slf4psrlog": "^0.1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4.8",
+    "squizlabs/php_codesniffer": "^2.3",
+    "phpdocumentor/phpdocumentor": "^2.8",
+    "phing/phing": "^2.8.0",
+    "bitexpert/phing-securitychecker": "^0.3.1",
+    "monolog/monolog": "^1.14.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "bitExpert\\Http\\Middleware\\Psr7\\Prophiler\\": "src/bitExpert/Http/Middleware/Psr7/Prophiler/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "bitExpert\\Http\\Middleware\\Psr7\\Prophiler\\": "tests/bitExpert/Http/Middleware/Psr7/Prophiler/"
+    }
+  },
+  "scripts": {
+    "check": [
+      "@cs-check",
+      "@test"
+    ],
+    "cs-check": "vendor/bin/phing sniff",
+    "cs-fix": "vendor/bin/ping cs-fix",
+    "test": "vendor/bin/phing unit"
+  }
+}

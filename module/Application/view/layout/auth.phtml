@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?= $this->headTitle('Dashboard')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?= $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'shop/image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+            ->prependStylesheet($this->basePath('shop-admin/css/sb-admin.min.css'))
+            ->prependStylesheet($this->basePath('font-awesome/css/font-awesome.min.css'))
+            ->prependStylesheet($this->basePath('shop/css/bootstrap.min.css'))
+
+        ?>
+        <!-- Scripts -->
+        <?= $this->headScript()
+            ->prependFile($this->basePath('shop-admin/js/sb-admin.js'))
+            ->prependFile($this->basePath('shop/js/bootstrap.bundle.js'))
+            ->prependFile($this->basePath('shop/js/bootstrap.js'))
+            ->prependFile($this->basePath('shop/js/jquery-3.1.0.min.js'))
+        ?>
+        <style>
+            body {
+                padding-top: 40px;
+                padding-bottom: 40px;
+                background-color: #eee;
+            }
+
+            .form-signin {
+                max-width: 330px;
+                padding: 15px;
+                margin: 0 auto;
+            }
+            .form-signin .form-signin-heading,
+            .form-signin .checkbox {
+                margin-bottom: 10px;
+            }
+            .form-signin .checkbox {
+                font-weight: 400;
+            }
+            .form-signin .form-control {
+                position: relative;
+                box-sizing: border-box;
+                height: auto;
+                padding: 10px;
+                font-size: 16px;
+            }
+            .form-signin .form-control:focus {
+                z-index: 2;
+            }
+            .form-signin input[type="text"] {
+                margin-bottom: -1px;
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+            .form-signin input[type="password"] {
+                margin-bottom: 10px;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <form method="post" class="form-signin">
+                <h2 class="form-signin-heading">Авторизация</h2>
+                <label for="inputEmail" class="sr-only">Логин</label>
+                <input id="inputEmail" name="auth_login" class="form-control" placeholder="Логин" required="" autofocus="" type="text">
+                <label for="inputPassword" class="sr-only">Пароль</label>
+                <input id="inputPassword" name="auth_password" class="form-control" placeholder="Пароль" required="" type="password">
+
+
+                <p style="display: block; color: red" id="errorAuth" class="text-center">
+                    <?= isset($_GET['error'])?'<b>Ошибка!</b> <br />Неверно указан логин или пароль':'&nbsp;<br />&nbsp;'; ?>
+                </p>
+<!--                <div class="checkbox">-->
+<!--                    <label>-->
+<!--                        <input name="remember_me" value="1" type="checkbox"> Запомнить меня-->
+<!--                    </label>-->
+<!--                </div>-->
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+            </form>
+        </div>
+    </body>
+</html>
+
