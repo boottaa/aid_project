@@ -17,8 +17,9 @@
     },
     "autoload": {
       "psr-4": {
-        "Application\\": "module/Application/src/",
-        "Aid\\": "module/Aid/src/"
+          "Application\\": "module/Application/src/",
+          "Aid\\": "module/Aid/src/",
+          "RpcTest\\": "module/RpcTest/src/"
       }
     }
 }

@@ -7,10 +7,13 @@
 
 namespace Aid;
 
+use Aid\Model\ApiAccess;
 use Aid\Model\Order\Orders;
 use Aid\Model\Order\OrdersTable;
 use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Json\Server\Server;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
 
@@ -38,8 +41,17 @@ class Module implements ConfigProviderInterface
 					$resultSetPrototype->setArrayObjectPrototype(new Orders());
 					return new TableGateway('orders', $dbAdapter, null, $resultSetPrototype);
 				},
-
-
+                'Aid\Model\ApiAccess' => function($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $sql = new Sql($dbAdapter, 'api_access');
+                    return new ApiAccess($sql);
+                },
+                'RpcServer' => function($sm){
+				    $class = new \Aid\JsonRpc\Orders($sm->get(OrdersTable::class));
+                    $server = new Server();
+                    $server->setClass($class);
+                    return $server;
+                }
 			),
 		);
 	}
@@ -49,24 +61,14 @@ class Module implements ConfigProviderInterface
 		return [
 			'factories' => [
 				Controller\IndexController::class => function ($container) {
-					return new Controller\IndexController(
-						$container->get(OrdersTable::class)
+					return new Controller\IndexController([
+                        'OrdersTable' => $container->get(OrdersTable::class),
+                        'ApiAccess' => $container->get(ApiAccess::class),
+                    ],
+                        $container->get("RpcServer")
 					);
 				}
 			]
 		];
 	}
-
-//	public function getControllerPluginConfig()
-//	{
-//		return [
-//			'factories' => [
-//				'Aid\JsonRpc\Orders' => function ($container) {
-//					return new \Aid\JsonRpc\Orders(
-//						$container->get(OrdersTable::class)
-//					);
-//				}
-//			]
-//		];
-//	}
 }

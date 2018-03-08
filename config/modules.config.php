@@ -5,6 +5,7 @@ return [
 	'Zend\Validator',
 	'Application',
 	'Aid',
+    'RpcTest'
 ];
 
 ?>

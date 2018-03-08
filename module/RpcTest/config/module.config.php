@@ -5,22 +5,24 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Aid;
+namespace RpcTest;
 
+use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
+use Zend\ServiceManager\Factory\InvokableFactory;
 
 $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
 
 return [
     'router' => [
         'routes' => [
-            'aid' => [
+            'test' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route'    => '/aid[/:hash][/:action][/:id]',
+                    'route'    => '/rpctest[/:hash][/:id]',
                     'constraints' => [
+//	                    'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'hash' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
 	                    'id'     => '[0-9]+',
                     ],
                     'defaults' => [
@@ -31,7 +33,11 @@ return [
             ],
         ],
     ],
-
+    'controllers' => [
+        'factories' => [
+            Controller\IndexController::class => InvokableFactory::class,
+        ],
+    ],
     'view_manager' => [
 	    'template_path_stack' => [
 		    __DIR__ . '/../view',
