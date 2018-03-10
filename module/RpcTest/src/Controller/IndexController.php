@@ -32,9 +32,26 @@ class IndexController extends AbstractActionController
 //        echo "<pre>";
 //        print_r($hash);
 //        die("***DIE***");
-        $client = new \Zend\Json\Server\Client("http://{$_SERVER['HTTP_HOST']}/aid/".$hash."");
+        $client = new \Zend\Json\Server\Client("http://{$_SERVER['HTTP_HOST']}/aid/".$hash."/employee");
 
-        $client->call( 'getOrder', [4] );
+        $data['data'] = [
+            "id_order" => "6",
+//            "status"  => '1',
+//            "address" => "asddddd",
+//            "phone"   => 1111222,
+//            'email'   => "boo@dd.cc"
+        ];
+
+        $dataE['data'] = [
+            'lname' => 'AAA',
+            'fname' => 'FFF',
+            'email' => 'asd@asd.com',
+            'password' => md5('das21312asd'),
+//            'profession' => 'asdsd',
+            'rating'    => 100,
+        ];
+
+        $client->call( 'saveEmployee', $dataE );
 
         $e = $client->getLastResponse()->getError();
 

@@ -13,7 +13,10 @@
         "zendframework/zend-router": "^3.0",
         "zendframework/zend-json": "^3.0",
         "http-interop/http-middleware": "^0.5.0",
-        "zendframework/zend-json-server": "^3.0"
+        "zendframework/zend-json-server": "^3.0",
+        "zendframework/zend-paginator": "^2.8",
+        "zendframework/zend-inputfilter": "^2.8",
+        "zendframework/zend-log": "^2.9"
     },
     "autoload": {
       "psr-4": {

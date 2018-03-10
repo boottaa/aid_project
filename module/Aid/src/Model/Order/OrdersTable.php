@@ -8,7 +8,11 @@
 
 namespace Aid\Model\Order;
 
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\Select;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Paginator\Adapter\DbSelect;
+use Zend\Paginator\Paginator;
 
 class OrdersTable
 {
@@ -19,16 +23,46 @@ class OrdersTable
 		$this->tableGateway = $tableGateway;
 	}
 
-	public function fetchAll()
-	{
-		$resultSet = $this->tableGateway->select();
-		return $resultSet;
-	}
+//	public function fetchAll()
+//	{
+//		$resultSet = $this->tableGateway->select();
+//
+//		return $resultSet;
+//	}
 
-	public function getOrder($id)
+    public function fetchAll($paginated=false, $satus = 1)
+    {
+        if ($paginated) {
+
+            $select = new Select('orders');
+            $select->where([
+                'is_deleted' => '0',
+                'status' => $satus
+            ]);
+
+            $resultSetPrototype = new ResultSet();
+            $resultSetPrototype->setArrayObjectPrototype(new Orders());
+            $paginatorAdapter = new DbSelect(
+                $select,
+                $this->tableGateway->getAdapter(),
+                $resultSetPrototype
+            );
+            $paginator = new Paginator($paginatorAdapter);
+            return $paginator;
+        }
+        $resultSet = $this->tableGateway->select();
+        return $resultSet;
+    }
+
+	public function getOrder($id, $satus = 1)
 	{
 		$id  = (int) $id;
-		$rowset = $this->tableGateway->select(array('id_order' => $id));
+		$rowset = $this->tableGateway->select([
+		    'id_order' => $id,
+            'is_deleted' => '0',
+            'status' => $satus
+        ]);
+
 		$row = $rowset->current();
 		if (!$row) {
 			throw new \Exception("Could not find row $id");
@@ -53,15 +87,18 @@ class OrdersTable
 			$this->tableGateway->insert($data);
 		} else {
 			if ($this->getOrder($id)) {
-				$this->tableGateway->update($data, array('id' => $id));
+				$this->tableGateway->update($data, array('id_order' => $id));
 			} else {
-				throw new \Exception('Album id does not exist');
+				throw new \Exception('id_order does not exist');
 			}
 		}
 	}
 
-	public function deleteAlbum($id)
+	public function deleteOrder(int $id)
 	{
-		$this->tableGateway->delete(array('id_order' => (int) $id));
+        return $this->tableGateway->update([
+		    'status' => 0,
+            'is_deleted' => '1'
+        ], ['id_order' => (int) $id]);
 	}
 }

@@ -7,6 +7,7 @@
 
 namespace Aid\Controller;
 
+use Aid\JsonRpc\Employees;
 use Aid\JsonRpc\Moda;
 use Aid\Model\Order\OrdersTable;
 use Aid\Model\ApiAccess;
@@ -18,14 +19,14 @@ use Zend\Json\Server\Smd;
 
 class IndexController extends AbstractActionController
 {
-	private $ordersTable;
 	private $apiAccess;
-    private $rpcServer;
-	public function __construct(array $models, Server $server)
+    private $rpcOrders;
+    private $rpcEmployees;
+	public function __construct(ApiAccess $apiAccess, array $rpc)
 	{
-		$this->ordersTable = $models['OrdersTable'];
-		$this->apiAccess = $models['ApiAccess'];
-		$this->rpcServer = $server;
+		$this->apiAccess = $apiAccess;
+		$this->rpcOrders = $rpc["RpcOrder"];
+		$this->rpcEmployees = $rpc["RpcEmployee"];
 	}
 
     public function onDispatch(MvcEvent $e)
@@ -45,15 +46,49 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
-        $this->run();
+        $this->run($this->rpcOrders);
         exit();
     }
 
+    public function employeeAction()
+    {
+        $this->run($this->rpcEmployees);
+        exit();
+    }
 
-    private function run(){
-        $server = $this->rpcServer;
-        if ('GET' == $_SERVER['REQUEST_METHOD']) {
-            $server->setTarget('/tests')
+//    public function teAction()
+//    {
+//        $data['data'] = [
+//            'lname' => 'AAA',
+//            'fname' => 'FFF',
+//            'email' => 'asd@asd.com',
+//            'password' => md5('das21312asd')
+//        ];
+//
+//        $employee = new \Aid\Model\Employee\Employees();
+//
+//        $filter = $employee->getInputFilter();
+//
+//        $filter->setData($data);
+//
+//
+//
+//        if($filter->isValid())
+//        {
+//            $employee->exchangeArray($data);
+//            $this->employeesTable->saveEmployee($employee);
+//
+//            return true;
+//        }else{
+//            return "Error: not valid data";
+//        }
+//    }
+
+    private function run(Server $server)
+    {
+        if ('GET' == $_SERVER['REQUEST_METHOD'])
+        {
+            $server->setTarget('/aid')
                 ->setEnvelope(Smd::ENV_JSONRPC_2);
             $smd = $server->getServiceMap();
             $smd->setDojoCompatible(true);
@@ -63,5 +98,8 @@ class IndexController extends AbstractActionController
             return;
         }
         $server->handle();
+
+//        file_put_contents(__DIR__.'/../../../../logs/Aid/rpcserver.log', date("d-m-Y H:i:s")." || request ".$server->getRequest()." || response ".$server->getResponse().PHP_EOL, FILE_APPEND);
     }
+
 }

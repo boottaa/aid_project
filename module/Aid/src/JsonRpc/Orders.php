@@ -10,66 +10,66 @@ namespace Aid\JsonRpc;
 
 
 use Aid\Model\Order\OrdersTable;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\Select;
+use Zend\Json\Json;
+use Zend\Paginator\Adapter\DbSelect;
+use Zend\Paginator\Paginator;
+use Aid\Model\Order\Orders as dOrders;
 
 class Orders
 {
-	private $ordersTable;
+	private
+        $ordersTable,
+        $order;
 
-	public function __construct(OrdersTable $orders)
+	public function __construct(OrdersTable $orders, dOrders $order)
 	{
 		$this->ordersTable = $orders;
+		$this->order = $order;
 	}
 
 	public function getOrder(int $id){
 		return $this->ordersTable->getOrder($id);
 	}
 
-	/**
-	 * Return sum of two variables
-	 *
-	 * @param  int $x
-	 * @param  int $y
-	 * @return int
-	 */
-	public function add($x, $y)
+	public function fethList(int $page, int $limit)
 	{
-		return $x + $y;
+        $r = $this->ordersTable->fetchAll(true);
+        $r->setCurrentPageNumber((int) $page);
+        // set the number of items per page to 10
+        $r->setItemCountPerPage($limit);
+
+        $x = [];
+        $x['getPages'] = $r->getPages();
+
+        foreach ($r as $v)
+        {
+            $x['items'][] = $v;
+        }
+		return $x;
 	}
 
-	/**
-	 * Return difference of two variables
-	 *
-	 * @param  int $x
-	 * @param  int $y
-	 * @return int
-	 */
-	public function subtract($x, $y)
-	{
-		return $x - $y;
-	}
+    public function saveOrder(array $data)
+    {
+        $order = $this->order;
 
-	/**
-	 * Return product of two variables
-	 *
-	 * @param  int $x
-	 * @param  int $y
-	 * @return int
-	 */
-	public function multiply($x, $y)
-	{
-		return $x * $y;
-	}
+        $filter = $order->getInputFilter();
+        $filter->setData($data);
 
-	/**
-	 * Return the division of two variables
-	 *
-	 * @param  int $x
-	 * @param  int $y
-	 * @return float
-	 */
-	public function divide($x, $y)
-	{
-		return $x / $y;
-	}
+        if($filter->isValid())
+        {
+            $order->exchangeArray($data);
+            $this->ordersTable->saveOrder($order);
 
+            return true;
+        }else{
+            return "Error: not valid data";
+        }
+    }
+
+    public function deleteOrder(int $id)
+    {
+        return $this->ordersTable->deleteOrder($id);
+    }
 }

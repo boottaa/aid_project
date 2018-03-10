@@ -8,6 +8,8 @@
 namespace Aid;
 
 use Aid\Model\ApiAccess;
+use Aid\Model\Employee\Employees;
+use Aid\Model\Employee\EmployeesTable;
 use Aid\Model\Order\Orders;
 use Aid\Model\Order\OrdersTable;
 use Zend\Db\ResultSet\ResultSet;
@@ -28,6 +30,7 @@ class Module implements ConfigProviderInterface
 
 	public function getServiceConfig()
 	{
+
 		return array(
 			'factories' => array(
 				'Aid\Model\Order\OrdersTable' =>  function($sm) {
@@ -41,17 +44,38 @@ class Module implements ConfigProviderInterface
 					$resultSetPrototype->setArrayObjectPrototype(new Orders());
 					return new TableGateway('orders', $dbAdapter, null, $resultSetPrototype);
 				},
+                'RpcOrder' => function($sm){
+                    $class = new \Aid\JsonRpc\Orders($sm->get(OrdersTable::class), new Orders());
+                    $server = new Server();
+                    $server->setClass($class);
+                    return $server;
+                },
+
+                'Aid\Model\Employee\EmployeesTable' =>  function($sm) {
+                    $tableGateway = $sm->get('EmployeesTableGateway');
+                    $table = new EmployeesTable($tableGateway);
+                    return $table;
+                },
+                'EmployeesTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Employees());
+                    return new TableGateway('employee', $dbAdapter, null, $resultSetPrototype);
+                },
+                'RpcEmployee' => function($sm){
+                    $class = new \Aid\JsonRpc\Employees($sm->get(EmployeesTable::class), new Employees());
+                    $server = new Server();
+                    $server->setClass($class);
+                    return $server;
+                },
+
                 'Aid\Model\ApiAccess' => function($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $sql = new Sql($dbAdapter, 'api_access');
                     return new ApiAccess($sql);
                 },
-                'RpcServer' => function($sm){
-				    $class = new \Aid\JsonRpc\Orders($sm->get(OrdersTable::class));
-                    $server = new Server();
-                    $server->setClass($class);
-                    return $server;
-                }
+
+
 			),
 		);
 	}
@@ -61,11 +85,13 @@ class Module implements ConfigProviderInterface
 		return [
 			'factories' => [
 				Controller\IndexController::class => function ($container) {
-					return new Controller\IndexController([
-                        'OrdersTable' => $container->get(OrdersTable::class),
-                        'ApiAccess' => $container->get(ApiAccess::class),
-                    ],
-                        $container->get("RpcServer")
+					return new Controller\IndexController(
+					    $container->get(ApiAccess::class),
+                        [
+                            "RpcOrder" => $container->get("RpcOrder"),
+                            "RpcEmployee" => $container->get('RpcEmployee'),
+                        ]
+
 					);
 				}
 			]

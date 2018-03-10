@@ -14,7 +14,7 @@
 return array(
 	'db' => array(
 		'driver'         => 'Pdo',
-		'dsn'            => 'mysql:dbname=Aid;host=192.168.33.11',
+		'dsn'            => 'mysql:dbname=Aid;host=192.168.33.10',
 		'username'       => 'bootta',
 		'password'       => '1991',
 		'driver_options' => array(
