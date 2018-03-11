@@ -7,6 +7,7 @@
 
 namespace Aid;
 
+use Aid\Controller\Plugin\Service\PluginLoggerFactory;
 use Aid\Model\ApiAccess;
 use Aid\Model\Employee\Employees;
 use Aid\Model\Employee\EmployeesTable;
@@ -75,10 +76,17 @@ class Module implements ConfigProviderInterface
                     return new ApiAccess($sql);
                 },
 
-
 			),
 		);
 	}
+
+	public function getControllerPluginConfig(){
+        return [
+            'factories' => [
+                "PluginLogger" => PluginLoggerFactory::class,
+            ]
+        ];
+    }
 
 	public function getControllerConfig()
 	{
@@ -97,4 +105,6 @@ class Module implements ConfigProviderInterface
 			]
 		];
 	}
+
+
 }
