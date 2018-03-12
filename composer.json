@@ -24,5 +24,5 @@
           "Aid\\": "module/Aid/src/",
           "RpcTest\\": "module/RpcTest/src/"
       }
-    },
+    }
 }
