@@ -14,6 +14,7 @@ use Aid\Model\ApiAccess;
 use Interop\Container\ContainerInterface;
 use Zend\Json\Json;
 use Zend\Json\Server\Error;
+use Zend\Json\Server\Exception\ErrorException;
 use Zend\Json\Server\Exception\InvalidArgumentException;
 use Zend\Json\Server\Response;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -32,10 +33,10 @@ class IndexController extends AbstractActionController
 //        echo "<pre>";
 //        print_r($hash);
 //        die("***DIE***");
-        $client = new \Zend\Json\Server\Client("http://{$_SERVER['HTTP_HOST']}/aid/".$hash."/employee");
+        $client = new \Zend\Json\Server\Client("http://{$_SERVER['HTTP_HOST']}/aid/".$hash."");
 
         $data['data'] = [
-            "id_order" => "6",
+            "id" => "6",
 //            "status"  => '1',
 //            "address" => "asddddd",
 //            "phone"   => 1111222,
@@ -51,21 +52,24 @@ class IndexController extends AbstractActionController
             'rating'    => 100,
         ];
 
-        $client->call( 'saveEmployee', $dataE );
-
-        $e = $client->getLastResponse()->getError();
-
-        $res = $client->getLastResponse()->getResult();
+       try
+       {
+           $e = $client->call( 'getOrder', ['id' => 7]);
+       }catch (ErrorException $e)
+       {
+           $e = $client->getLastResponse()->getError();
+           echo $e->getMessage();
+           die();
+       }
 
         /////////////////DEBUG///////////////////////////
         echo "<div style='background: #000; padding: 10px; color: #00e300;'><b style='color: red;'>"
             .__FILE__
             ."</b><hr style='border: solid 2px blue;width: 100%;' /><pre>";
-        print_r($res);
+        print_r($e);
         echo "</div>";
         die();
         //////////////////////DEBUG//////////////////////
-        die();
     }
 
 

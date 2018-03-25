@@ -1,8 +1,12 @@
 <?php
 
 return [
-	'Zend\Router',
-	'Zend\Validator',
+    'Zend\\Db',
+	'Zend\\Router',
+	'Zend\\Validator',
+    'Zend\\Di',
+    'Zend\\Log',
+
 	'Application',
 	'Aid',
     'RpcTest'

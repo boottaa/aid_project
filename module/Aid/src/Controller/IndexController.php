@@ -8,6 +8,8 @@
 namespace Aid\Controller;
 
 use Aid\Model\ApiAccess;
+use Zend\Json\Server\Error;
+use Zend\Json\Server\Response;
 use Zend\Log\Logger;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\MvcEvent;
@@ -25,26 +27,26 @@ class IndexController extends AbstractActionController
      */
     private $logger;
 
-	public function __construct(ApiAccess $apiAccess, array $rpc)
+    //Если ошибки пишем сюда.
+    private $error = null;
+
+	public function __construct(Logger $logger, ApiAccess $apiAccess, array $rpc)
 	{
-		$this->apiAccess = $apiAccess;
+        $this->logger = $logger;
+        $this->apiAccess = $apiAccess;
 		$this->rpcOrders = $rpc["RpcOrder"];
 		$this->rpcEmployees = $rpc["RpcEmployee"];
 	}
 
     public function onDispatch(MvcEvent $e)
     {
-
-        $this->logger = $this->PluginLogger()->getLogger();
-
         //Преобразовываем в массив и передаем...
         $hash = str_split($this->params()->fromRoute('hash', ''));
         $checkAccess = $this->apiAccess->checkAccess($hash);
-        
+
         if(!isset($checkAccess['id']))
         {
-            echo "Access denied!";
-            die();
+            $this->error("Access denied!");
         }
 
         return parent::onDispatch($e);
@@ -64,20 +66,43 @@ class IndexController extends AbstractActionController
 
     private function run(Server $server)
     {
-        if ('GET' == $_SERVER['REQUEST_METHOD'])
+        try
         {
-            $server->setTarget('/aid')
-                ->setEnvelope(Smd::ENV_JSONRPC_2);
-            $smd = $server->getServiceMap();
-            $smd->setDojoCompatible(true);
+            if ('GET' == $_SERVER['REQUEST_METHOD'])
+            {
+                $server->setTarget('/aid')
+                    ->setEnvelope(Smd::ENV_JSONRPC_2);
+                $smd = $server->getServiceMap();
+                $smd->setDojoCompatible(true);
 
-            header('Content-Type: application/json');
-            echo $smd;
-            return;
+                header('Content-Type: application/json');
+                echo $smd;
+                return;
+            }
+            //Если есть ошибки в запросе то выводим их.
+            if (!empty($this->error))
+            {
+                $server->setResponse($this->error);
+            }
+
+            $server->handle();
+            $this->logger->info("REQUEST: ".$server->getRequest()." RESPONSE: ".$server->getResponse());
         }
-        $server->handle();
-        $this->logger->info("REQUEST: ".$server->getRequest()." RESPONSE: ".$server->getResponse());
+        catch (\Exception $e)
+        {
+            $this->logger->err($e->getMessage());
+        }
+    }
 
+    //NF=Пока так, но это не очень...
+    private function error($message = "")
+    {
+        $error = new Error($message);
+
+        $response = new Response();
+        $response->setError($error);
+
+        $this->error = $response;
     }
 
 }

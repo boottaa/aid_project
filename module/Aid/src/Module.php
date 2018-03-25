@@ -13,10 +13,12 @@ use Aid\Model\Employee\Employees;
 use Aid\Model\Employee\EmployeesTable;
 use Aid\Model\Order\Orders;
 use Aid\Model\Order\OrdersTable;
+use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Json\Server\Server;
+use Zend\Log\Logger;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
 
@@ -40,7 +42,7 @@ class Module implements ConfigProviderInterface
 					return $table;
 				},
 				'OrdersTableGateway' => function ($sm) {
-					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+					$dbAdapter = $sm->get(AdapterInterface::class);
 					$resultSetPrototype = new ResultSet();
 					$resultSetPrototype->setArrayObjectPrototype(new Orders());
 					return new TableGateway('orders', $dbAdapter, null, $resultSetPrototype);
@@ -58,7 +60,7 @@ class Module implements ConfigProviderInterface
                     return $table;
                 },
                 'EmployeesTableGateway' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $dbAdapter = $sm->get(AdapterInterface::class);
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new Employees());
                     return new TableGateway('employee', $dbAdapter, null, $resultSetPrototype);
@@ -71,7 +73,7 @@ class Module implements ConfigProviderInterface
                 },
 
                 'Aid\Model\ApiAccess' => function($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $dbAdapter = $sm->get(AdapterInterface::class);
                     $sql = new Sql($dbAdapter, 'api_access');
                     return new ApiAccess($sql);
                 },
@@ -80,20 +82,18 @@ class Module implements ConfigProviderInterface
 		);
 	}
 
-	public function getControllerPluginConfig(){
-        return [
-            'factories' => [
-                "PluginLogger" => PluginLoggerFactory::class,
-            ]
-        ];
-    }
-
 	public function getControllerConfig()
 	{
 		return [
 			'factories' => [
-				Controller\IndexController::class => function ($container) {
-					return new Controller\IndexController(
+				Controller\IndexController::class => function ($container, $reguest) {
+
+//		            print_r($reguest);
+//		            die();
+
+
+		            return new Controller\IndexController(
+                        $container->get(Logger::class),
 					    $container->get(ApiAccess::class),
                         [
                             "RpcOrder" => $container->get("RpcOrder"),
