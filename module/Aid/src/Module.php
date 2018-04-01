@@ -7,6 +7,7 @@
 
 namespace Aid;
 
+use Aid\Controller\Plugin\Load;
 use Aid\Controller\Plugin\Service\PluginLoggerFactory;
 use Aid\Model\ApiAccess;
 use Aid\Model\Employee\Employees;
@@ -17,6 +18,8 @@ use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Json\Server\Error;
+use Zend\Json\Server\Response;
 use Zend\Json\Server\Server;
 use Zend\Log\Logger;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
@@ -82,16 +85,25 @@ class Module implements ConfigProviderInterface
 		);
 	}
 
+	public function getControllerPluginConfig()
+    {
+        return [
+            'factories' => [
+                'Load' => function(){
+                    return new Load([
+                        Error::class => Error::class,
+                        Response::class => Response::class,
+                    ]);
+                },
+            ]
+        ];
+    }
+
 	public function getControllerConfig()
 	{
 		return [
 			'factories' => [
-				Controller\IndexController::class => function ($container, $reguest) {
-
-//		            print_r($reguest);
-//		            die();
-
-
+				Controller\IndexController::class => function ($container) {
 		            return new Controller\IndexController(
                         $container->get(Logger::class),
 					    $container->get(ApiAccess::class),

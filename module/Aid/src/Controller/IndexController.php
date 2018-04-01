@@ -7,6 +7,7 @@
 
 namespace Aid\Controller;
 
+use Aid\Controller\Plugin\Load;
 use Aid\Model\ApiAccess;
 use Zend\Json\Server\Error;
 use Zend\Json\Server\Response;
@@ -30,16 +31,26 @@ class IndexController extends AbstractActionController
     //Если ошибки пишем сюда.
     private $error = null;
 
+
+    /**
+     * @var Load;
+     */
+    private $load;
+
 	public function __construct(Logger $logger, ApiAccess $apiAccess, array $rpc)
 	{
         $this->logger = $logger;
         $this->apiAccess = $apiAccess;
 		$this->rpcOrders = $rpc["RpcOrder"];
 		$this->rpcEmployees = $rpc["RpcEmployee"];
+
 	}
 
     public function onDispatch(MvcEvent $e)
     {
+        //
+        $this->load = $this->Load();
+
         //Преобразовываем в массив и передаем...
         $hash = str_split($this->params()->fromRoute('hash', ''));
         $checkAccess = $this->apiAccess->checkAccess($hash);
@@ -54,6 +65,10 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
+
+
+//        $this->load->test();
+
         $this->run($this->rpcOrders);
         exit();
     }
@@ -97,9 +112,9 @@ class IndexController extends AbstractActionController
     //NF=Пока так, но это не очень...
     private function error($message = "")
     {
-        $error = new Error($message);
-
-        $response = new Response();
+        $error = $this->load->get(Error::class);
+        $error->setMessage($message);
+        $response = $this->load->get(Response::class);
         $response->setError($error);
 
         $this->error = $response;
