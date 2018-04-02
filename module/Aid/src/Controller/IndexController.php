@@ -97,8 +97,13 @@ class IndexController extends AbstractActionController
             //Если есть ошибки в запросе то выводим их.
             if (!empty($this->error))
             {
-                $server->setResponse($this->error);
+	            $server->fault(
+	            	$this->error['message'],
+		            $this->error['code'],
+		            $this->error['data']
+	            );
             }
+
 
             $server->handle();
             $this->logger->info("REQUEST: ".$server->getRequest()." RESPONSE: ".$server->getResponse());
@@ -109,15 +114,11 @@ class IndexController extends AbstractActionController
         }
     }
 
-    //NF=Пока так, но это не очень...
-    private function error($message = "")
+    private function error($message = null, $code = 404, $data = null)
     {
-        $error = $this->load->get(Error::class);
-        $error->setMessage($message);
-        $response = $this->load->get(Response::class);
-        $response->setError($error);
-
-        $this->error = $response;
+        $this->error['message'] = $message;
+	    $this->error['code'] = $code;
+	    $this->error['data'] = $data;
     }
 
 }
