@@ -10,7 +10,6 @@ namespace Aid\Controller;
 
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Mvc\MvcEvent;
 use Zend\Json\Server\Server;
 use Zend\Json\Server\Smd;
 use Aid\Model\ApiAccess;
@@ -35,9 +34,6 @@ class Base extends AbstractActionController
 	 * @var Server
 	 */
 	private $rpcServer;
-
-	//Если ошибки пишем сюда.
-	private $error = null;
 
 
 	/**
@@ -117,6 +113,7 @@ class Base extends AbstractActionController
 					$this->error['data']
 				);
 			}
+
 			$server->handle();
 			$this->logger->info("REQUEST: ".$server->getRequest()." RESPONSE: ".$server->getResponse());
 		}
@@ -126,17 +123,4 @@ class Base extends AbstractActionController
 		}
 		exit();
 	}
-
-	/**
-	 * @param null $message
-	 * @param int $code
-	 * @param null $data
-	 */
-	protected function error($message = null, $code = 404, $data = null)
-	{
-		$this->error['message'] = $message;
-		$this->error['code'] = $code;
-		$this->error['data'] = $data;
-	}
-
 }

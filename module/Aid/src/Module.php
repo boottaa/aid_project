@@ -59,14 +59,14 @@ class Module implements ConfigProviderInterface
                 },
 
 				'orders' => function($sm){
-					$class = new \Aid\JsonRpc\Orders($sm->get(OrdersTable::class), new Orders());
-					$server = new Server();
+					$class = new \Aid\JsonRpc\ClassHandlers\Orders($sm->get(OrdersTable::class), new Orders());
+					$server = new \Aid\JsonRpc\Server();
 					$server->setClass($class);
 					return $server;
 				},
                 'employees' => function($sm){
-                    $class = new \Aid\JsonRpc\Employees($sm->get(EmployeesTable::class), new Employees());
-                    $server = new Server();
+                    $class = new \Aid\JsonRpc\ClassHandlers\Employees($sm->get(EmployeesTable::class), new Employees());
+                    $server = new \Aid\JsonRpc\Server();
                     $server->setClass($class);
                     return $server;
                 },

@@ -14,7 +14,7 @@ use Zend\Mvc\MvcEvent;
 
 class IndexController extends Base
 {
-	public function __construct(Logger $logger, ApiAccess $apiAccess, Server $rpcServer)
+	public function __construct(Logger $logger, ApiAccess $apiAccess, \Aid\JsonRpc\Server $rpcServer)
 	{
 		$this->setLogger($logger);
 		$this->setApiAccess($apiAccess);
@@ -33,17 +33,23 @@ class IndexController extends Base
 
 		if(!isset($checkAccess['id']))
 		{
-			$this->error("Access denied!", 403);
+			$this->getRpcServer()->fault("Access denied!", 403);
 		}
 
 		return parent::onDispatch($e);
 	}
 
+	/**
+	 * URL: /aid/k33f3c8db70d437ce41cfbd1bbde0f413/orders
+	 */
     public function ordersAction()
     {
         $this->run();
     }
 
+	/**
+	 * URL: /aid/k33f3c8db70d437ce41cfbd1bbde0f413/employees
+	 */
     public function employeesAction()
     {
         $this->run();

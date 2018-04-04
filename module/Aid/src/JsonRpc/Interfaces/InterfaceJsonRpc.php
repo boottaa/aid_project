@@ -6,7 +6,7 @@
  * Time: 9:43
  */
 
-namespace Aid\JsonRpc;
+namespace Aid\JsonRpc\Interfaces;
 
 interface InterfaceJsonRpc
 {

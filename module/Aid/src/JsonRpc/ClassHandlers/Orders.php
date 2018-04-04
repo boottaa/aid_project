@@ -6,16 +6,12 @@
  * Time: 13:04
  */
 
-namespace Aid\JsonRpc;
+namespace Aid\JsonRpc\ClassHandlers;
 
-
+use Aid\JsonRpc\Interfaces\InterfaceJsonRpc;
 use Aid\Model\Order\OrdersTable;
-use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\Sql\Select;
-use Zend\Json\Json;
-use Zend\Paginator\Adapter\DbSelect;
-use Zend\Paginator\Paginator;
 use Aid\Model\Order\Orders as dOrders;
+use Zend\Json\Server\Exception\ErrorException;
 
 class Orders implements InterfaceJsonRpc
 {
@@ -70,7 +66,7 @@ class Orders implements InterfaceJsonRpc
 
             return true;
         }else{
-            return "Error: not valid data";
+            throw new ErrorException("Error: not valid data");//"Error: not valid data";
         }
     }
 

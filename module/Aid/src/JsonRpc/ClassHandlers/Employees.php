@@ -6,11 +6,12 @@
  * Time: 13:04
  */
 
-namespace Aid\JsonRpc;
+namespace Aid\JsonRpc\ClassHandlers;
 
-
+use Aid\JsonRpc\Interfaces\InterfaceJsonRpc;
 use Aid\Model\Employee\Employees as dEmployees;
 use Aid\Model\Employee\EmployeesTable;
+use Zend\Json\Server\Exception\ErrorException;
 
 class Employees implements InterfaceJsonRpc
 {
@@ -56,10 +57,9 @@ class Employees implements InterfaceJsonRpc
         {
             $employee->exchangeArray($data);
             $this->employeesTable->saveEmployee($employee);
-
             return true;
         }else{
-            return "Error: not valid data";
+	        throw new ErrorException("Error: not valid data");//"Error: not valid data";
         }
     }
 
