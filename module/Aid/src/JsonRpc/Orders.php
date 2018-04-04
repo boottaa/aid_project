@@ -20,7 +20,13 @@ use Aid\Model\Order\Orders as dOrders;
 class Orders implements InterfaceJsonRpc
 {
 	private
+		/**
+		 * @var OrdersTable
+		 */
         $ordersTable,
+		/**
+		 * @var dOrders
+		 */
         $order;
 
 	public function __construct(OrdersTable $orders, dOrders $order)

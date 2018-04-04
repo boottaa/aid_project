@@ -8,8 +8,10 @@
 
 namespace Aid\JsonRpc;
 
-
 interface InterfaceJsonRpc
 {
-
+	public function getItem(int $id);
+	public function fethList(int $page, int $limit);
+	public function add(array $data);
+	public function delete(int $id);
 }

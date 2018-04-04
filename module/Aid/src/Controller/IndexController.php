@@ -7,7 +7,6 @@
 
 namespace Aid\Controller;
 
-use Aid\JsonRpc\InterfaceJsonRpc;
 use Aid\Model\ApiAccess;
 use Zend\Json\Server\Server;
 use Zend\Log\Logger;
