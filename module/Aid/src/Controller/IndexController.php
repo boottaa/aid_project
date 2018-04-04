@@ -7,118 +7,48 @@
 
 namespace Aid\Controller;
 
-use Aid\Controller\Plugin\Load;
+use Aid\JsonRpc\InterfaceJsonRpc;
 use Aid\Model\ApiAccess;
-use Zend\Json\Server\Error;
-use Zend\Json\Server\Response;
-use Zend\Log\Logger;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Mvc\MvcEvent;
 use Zend\Json\Server\Server;
-use Zend\Json\Server\Smd;
+use Zend\Log\Logger;
+use Zend\Mvc\MvcEvent;
 
-class IndexController extends AbstractActionController
+class IndexController extends Base
 {
-	private $apiAccess;
-    private $rpcOrders;
-    private $rpcEmployees;
-
-    /**
-     * @var Logger
-     */
-    private $logger;
-
-    //Если ошибки пишем сюда.
-    private $error = null;
-
-
-    /**
-     * @var Load;
-     */
-    private $load;
-
-	public function __construct(Logger $logger, ApiAccess $apiAccess, array $rpc)
+	public function __construct(Logger $logger, ApiAccess $apiAccess, Server $rpcServer)
 	{
-        $this->logger = $logger;
-        $this->apiAccess = $apiAccess;
-		$this->rpcOrders = $rpc["RpcOrder"];
-		$this->rpcEmployees = $rpc["RpcEmployee"];
-
+		$this->setLogger($logger);
+		$this->setApiAccess($apiAccess);
+		$this->setRpcServer($rpcServer);
 	}
 
-    public function onDispatch(MvcEvent $e)
+	/**
+	 * @param MvcEvent $e
+	 * @return mixed
+	 */
+	public function onDispatch(MvcEvent $e)
+	{
+		//Преобразовываем в массив и передаем...
+		$hash = str_split($this->params()->fromRoute('hash', ''));
+		$checkAccess = $this->getApiAccess()->checkAccess($hash);
+
+		if(!isset($checkAccess['id']))
+		{
+			$this->error("Access denied!", 403);
+		}
+
+		return parent::onDispatch($e);
+	}
+
+    public function ordersAction()
     {
-        //
-        $this->load = $this->Load();
-
-        //Преобразовываем в массив и передаем...
-        $hash = str_split($this->params()->fromRoute('hash', ''));
-        $checkAccess = $this->apiAccess->checkAccess($hash);
-
-        if(!isset($checkAccess['id']))
-        {
-            $this->error("Access denied!");
-        }
-
-        return parent::onDispatch($e);
+        $this->run();
     }
 
-    public function indexAction()
+    public function employeesAction()
     {
-
-
-//        $this->load->test();
-
-        $this->run($this->rpcOrders);
-        exit();
+        $this->run();
     }
 
-    public function employeeAction()
-    {
-        $this->run($this->rpcEmployees);
-        exit();
-    }
-
-    private function run(Server $server)
-    {
-        try
-        {
-            if ('GET' == $_SERVER['REQUEST_METHOD'])
-            {
-                $server->setTarget('/aid')
-                    ->setEnvelope(Smd::ENV_JSONRPC_2);
-                $smd = $server->getServiceMap();
-                $smd->setDojoCompatible(true);
-
-                header('Content-Type: application/json');
-                echo $smd;
-                return;
-            }
-            //Если есть ошибки в запросе то выводим их.
-            if (!empty($this->error))
-            {
-	            $server->fault(
-	            	$this->error['message'],
-		            $this->error['code'],
-		            $this->error['data']
-	            );
-            }
-
-
-            $server->handle();
-            $this->logger->info("REQUEST: ".$server->getRequest()." RESPONSE: ".$server->getResponse());
-        }
-        catch (\Exception $e)
-        {
-            $this->logger->err($e->getMessage());
-        }
-    }
-
-    private function error($message = null, $code = 404, $data = null)
-    {
-        $this->error['message'] = $message;
-	    $this->error['code'] = $code;
-	    $this->error['data'] = $data;
-    }
 
 }

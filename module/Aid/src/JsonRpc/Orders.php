@@ -17,7 +17,7 @@ use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 use Aid\Model\Order\Orders as dOrders;
 
-class Orders
+class Orders implements InterfaceJsonRpc
 {
 	private
         $ordersTable,
@@ -29,7 +29,7 @@ class Orders
 		$this->order = $order;
 	}
 
-	public function getOrder(int $id){
+	public function getItem(int $id){
 		return $this->ordersTable->getOrder($id);
 	}
 
@@ -50,7 +50,7 @@ class Orders
 		return $x;
 	}
 
-    public function saveOrder(array $data)
+    public function add(array $data)
     {
         $order = $this->order;
 
@@ -68,7 +68,7 @@ class Orders
         }
     }
 
-    public function deleteOrder(int $id)
+    public function delete(int $id)
     {
         return $this->ordersTable->deleteOrder($id);
     }

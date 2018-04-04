@@ -39,43 +39,39 @@ class Module implements ConfigProviderInterface
 
 		return array(
 			'factories' => array(
-				'Aid\Model\Order\OrdersTable' =>  function($sm) {
-					$tableGateway = $sm->get('OrdersTableGateway');
-					$table = new OrdersTable($tableGateway);
-					return $table;
-				},
-				'OrdersTableGateway' => function ($sm) {
+
+				OrdersTable::class =>  function($sm) {
 					$dbAdapter = $sm->get(AdapterInterface::class);
 					$resultSetPrototype = new ResultSet();
 					$resultSetPrototype->setArrayObjectPrototype(new Orders());
-					return new TableGateway('orders', $dbAdapter, null, $resultSetPrototype);
+					$tableGateway = new TableGateway('orders', $dbAdapter, null, $resultSetPrototype);
+					$table = new OrdersTable($tableGateway);
+					return $table;
 				},
-                'RpcOrder' => function($sm){
-                    $class = new \Aid\JsonRpc\Orders($sm->get(OrdersTable::class), new Orders());
-                    $server = new Server();
-                    $server->setClass($class);
-                    return $server;
-                },
 
-                'Aid\Model\Employee\EmployeesTable' =>  function($sm) {
-                    $tableGateway = $sm->get('EmployeesTableGateway');
+				EmployeesTable::class =>  function($sm) {
+	                $dbAdapter = $sm->get(AdapterInterface::class);
+	                $resultSetPrototype = new ResultSet();
+	                $resultSetPrototype->setArrayObjectPrototype(new Employees());
+	                $tableGateway = new TableGateway('employee', $dbAdapter, null, $resultSetPrototype);
                     $table = new EmployeesTable($tableGateway);
                     return $table;
                 },
-                'EmployeesTableGateway' => function ($sm) {
-                    $dbAdapter = $sm->get(AdapterInterface::class);
-                    $resultSetPrototype = new ResultSet();
-                    $resultSetPrototype->setArrayObjectPrototype(new Employees());
-                    return new TableGateway('employee', $dbAdapter, null, $resultSetPrototype);
-                },
-                'RpcEmployee' => function($sm){
+
+				'orders' => function($sm){
+					$class = new \Aid\JsonRpc\Orders($sm->get(OrdersTable::class), new Orders());
+					$server = new Server();
+					$server->setClass($class);
+					return $server;
+				},
+                'employees' => function($sm){
                     $class = new \Aid\JsonRpc\Employees($sm->get(EmployeesTable::class), new Employees());
                     $server = new Server();
                     $server->setClass($class);
                     return $server;
                 },
 
-                'Aid\Model\ApiAccess' => function($sm) {
+                ApiAccess::class => function($sm) {
                     $dbAdapter = $sm->get(AdapterInterface::class);
                     $sql = new Sql($dbAdapter, 'api_access');
                     return new ApiAccess($sql);
@@ -104,14 +100,16 @@ class Module implements ConfigProviderInterface
 		return [
 			'factories' => [
 				Controller\IndexController::class => function ($container) {
+
+					$router = $container->get('router');
+					$request = $container->get('request');
+					$routerMatch = $router->match($request);
+					$rout = $routerMatch->getParam("action");
+					
 		            return new Controller\IndexController(
                         $container->get(Logger::class),
 					    $container->get(ApiAccess::class),
-                        [
-                            "RpcOrder" => $container->get("RpcOrder"),
-                            "RpcEmployee" => $container->get('RpcEmployee'),
-                        ]
-
+						$container->get($rout)
 					);
 				}
 			]

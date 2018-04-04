@@ -33,7 +33,7 @@ class IndexController extends AbstractActionController
 //        echo "<pre>";
 //        print_r($hash);
 //        die("***DIE***");
-        $client = new \Zend\Json\Server\Client("http://{$_SERVER['HTTP_HOST']}/aid/".$hash."");
+        $client = new \Zend\Json\Server\Client("http://{$_SERVER['HTTP_HOST']}/aid/".$hash."/orders");
 
         $data['data'] = [
             "id" => "6",
@@ -54,7 +54,7 @@ class IndexController extends AbstractActionController
 
        try
        {
-           $e = $client->call( 'getOrder', ['id' => 7]);
+           $e = $client->call( 'getItem', ['id' => 7]);
        }catch (ErrorException $e)
        {
            $e = $client->getLastResponse()->getError();

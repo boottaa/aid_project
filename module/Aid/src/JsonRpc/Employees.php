@@ -12,7 +12,7 @@ namespace Aid\JsonRpc;
 use Aid\Model\Employee\Employees as dEmployees;
 use Aid\Model\Employee\EmployeesTable;
 
-class Employees
+class Employees implements InterfaceJsonRpc
 {
     private
         $employeesTable,
@@ -45,7 +45,7 @@ class Employees
         return $x;
     }
 
-    public function saveEmployee(array $data)
+    public function add(array $data)
     {
         $employee = $this->employee;
 
@@ -63,7 +63,7 @@ class Employees
         }
     }
 
-    public function deleteEmployee(int $id)
+    public function delete(int $id)
     {
         return $this->employeesTable->deleteEmployee($id);
     }
