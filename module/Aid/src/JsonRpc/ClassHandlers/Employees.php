@@ -26,7 +26,11 @@ class Employees implements InterfaceJsonRpc
     }
 
     public function getItem(int $id){
-        return $this->employeesTable->getEmployee($id);
+	    try{
+		    return $this->employeesTable->getEmployee($id);
+	    }catch (\Exception $e){
+		    throw new ErrorException("Error: not found employee with id: ".$id);
+	    }
     }
 
     public function fethList(int $page, int $limit)

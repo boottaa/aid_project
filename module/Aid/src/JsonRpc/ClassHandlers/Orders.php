@@ -32,7 +32,11 @@ class Orders implements InterfaceJsonRpc
 	}
 
 	public function getItem(int $id){
-		return $this->ordersTable->getOrder($id);
+		try{
+			return $this->ordersTable->getOrder($id);
+		}catch (\Exception $e){
+			throw new ErrorException("Error: not found order with id: ".$id);
+		}
 	}
 
 	public function fethList(int $page, int $limit)
