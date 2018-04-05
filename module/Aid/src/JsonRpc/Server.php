@@ -10,6 +10,17 @@ namespace Aid\JsonRpc;
 
 
 use Zend\Json\Server\Error;
+use Zend\Json\Server\Request;
+use Zend\Json\Server\Exception;
+use Zend\Json\Server\Response;
+
+/**
+ * Handle request.
+ *
+ * @param  Request $request
+ * @return null|Response
+ * @throws Exception\InvalidArgumentException
+ */
 
 class Server extends \Zend\Json\Server\Server
 {
@@ -18,25 +29,23 @@ class Server extends \Zend\Json\Server\Server
 
 	public function handle($request = false)
 	{
-
+		if ((false !== $request) && ! $request instanceof Request) {
+			throw new Exception\InvalidArgumentException('Invalid request type provided; cannot handle');
+		}
 		if ($request) {
 			$this->setRequest($request);
 		}
-
-		if($this->errorStatus() == false){
+		if($this->isError() == false){
 			// Handle request
 			$this->handleRequest();
 		}
-
 		// Get response
 		$response = $this->getReadyResponse();
-
 		// Emit response?
 		if (! $this->returnResponse) {
 			echo $response;
 			return;
 		}
-
 		// or return it?
 		return $response;
 	}
@@ -50,12 +59,10 @@ class Server extends \Zend\Json\Server\Server
 	public function fault($fault = null, $code = 404, $data = null)
 	{
 		$this->error = true;
-		$error = new Error($fault, $code, $data);
-		$this->getResponse()->setError($error);
-		return $error;
+		parent::fault($fault = null, $code = 404, $data = null);
 	}
 
-	public function errorStatus()
+	public function isError()
 	{
 		return $this->error;
 	}
