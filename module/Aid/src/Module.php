@@ -23,7 +23,7 @@ use Zend\Json\Server\Response;
 use Zend\Json\Server\Server;
 use Zend\Log\Logger;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-
+use Zend\ServiceManager\Exception;
 
 class Module implements ConfigProviderInterface
 {
@@ -105,7 +105,14 @@ class Module implements ConfigProviderInterface
 					$request = $container->get('request');
 					$routerMatch = $router->match($request);
 					$rout = $routerMatch->getParam("action");
-					
+
+					if (! $container->has($rout)) {
+						throw new Exception\InvalidServiceException(sprintf(
+							'Rout writer by name %s not found',
+							$rout
+						));
+					}
+
 		            return new Controller\IndexController(
                         $container->get(Logger::class),
 					    $container->get(ApiAccess::class),
@@ -118,3 +125,4 @@ class Module implements ConfigProviderInterface
 
 
 }
+
