@@ -4,7 +4,7 @@ return [
     'Zend\\Db',
 	'Zend\\Router',
 	'Zend\\Validator',
-    'Zend\\Di',
+    //'Zend\\Di',
     'Zend\\Log',
 
 	'Application',

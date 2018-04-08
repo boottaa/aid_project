@@ -59,7 +59,7 @@ class Server extends \Zend\Json\Server\Server
 	public function fault($fault = null, $code = 404, $data = null)
 	{
 		$this->error = true;
-		parent::fault($fault = null, $code = 404, $data = null);
+		parent::fault($fault, $code, $data);
 	}
 
 	public function isError()
