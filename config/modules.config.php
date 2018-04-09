@@ -9,7 +9,9 @@ return [
 
 	'Application',
 	'Aid',
-    'RpcTest'
+	'AidView',
+
+    'RpcTest',
 ];
 
 ?>

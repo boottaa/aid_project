@@ -22,6 +22,7 @@
       "psr-4": {
           "Application\\": "module/Application/src/",
           "Aid\\": "module/Aid/src/",
+          "AidView\\": "module/AidView/src/",
           "RpcTest\\": "module/RpcTest/src/"
       }
     }
