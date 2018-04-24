@@ -14,7 +14,7 @@ $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' :
 return [
     'router' => [
         'routes' => [
-            'aid' => [
+            'aidview' => [
                 'type' => Segment::class,
                 'options' => [
                     'route'    => '/aidview[/:action]',
