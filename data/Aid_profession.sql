@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `profession`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `profession` (
   `id_profession` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
+  `title` varchar(100) NOT NULL,
   `date_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `is_deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_profession`)
