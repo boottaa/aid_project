@@ -55,5 +55,9 @@ class IndexController extends Base
         $this->run();
     }
 
+    public function indexAction()
+    {
+
+    }
 
 }

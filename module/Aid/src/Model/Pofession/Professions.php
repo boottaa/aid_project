@@ -10,7 +10,7 @@ namespace Aid\Model\Pofession;
 
 use Zend\InputFilter\InputFilter;
 
-class Pofessions
+class Professions
 {
     public $id_profession;
     public $title;

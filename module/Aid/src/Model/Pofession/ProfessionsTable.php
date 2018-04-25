@@ -8,15 +8,17 @@
 
 namespace Aid\Model\Pofession;
 
-
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 
-class PofessionsModel
+class ProfessionsTable
 {
+    /**
+     * @var TableGateway
+     */
     protected $tableGateway;
 
     public function __construct(TableGateway $tableGateway)
@@ -24,18 +26,17 @@ class PofessionsModel
         $this->tableGateway = $tableGateway;
     }
 
-    public function fetchAll($paginated=false, int $id_employee)
+    public function fetchAll($paginated=false)
     {
         if ($paginated) {
-            $select = new Select('employee_profession');
 
+            $select = new Select('profession');
             $select->where([
                 'is_deleted' => '0',
-                'id_employee' => $id_employee
             ]);
 
             $resultSetPrototype = new ResultSet();
-            $resultSetPrototype->setArrayObjectPrototype(new Pofessions());
+            $resultSetPrototype->setArrayObjectPrototype(new Professions());
             $paginatorAdapter = new DbSelect(
                 $select,
                 $this->tableGateway->getAdapter(),
@@ -48,44 +49,47 @@ class PofessionsModel
         return $resultSet;
     }
 
-    public function getProfessionToEmployee(int $id)
+    public function getProfession(int $id_profession)
     {
         $rowset = $this->tableGateway->select([
-            'id_employee' => $id,
+            'id_profession' => $id_profession,
             'is_deleted' => '0',
         ]);
 
         $row = $rowset->current();
         if (!$row) {
-            throw new \Exception("Could not find row $id");
+            throw new \Exception("Could not find row $id_profession");
         }
         return $row;
     }
 
-    public function addProfession(Pofessions $pofessions)
+    public function saveProfession(Professions $professions)
     {
-        $data = array(
-            'id_profession'  => $pofessions->id_profession,
-            'title'        => $pofessions->title,
-        );
+        $data = [
+            'id_profession' => $professions->id_profession,
+            'date_create'   => $professions->date_create,
+            'is_deleted'    => $professions->is_deleted,
+            'title'          => $professions->title,
+        ];
 
-        $id = (int) $pofessions->id_profession;
-        if ($id == 0) {
+        $id_profession = (int) $professions->id_profession;
+        if (empty($id_profession)) {
             $this->tableGateway->insert($data);
+            return $this->tableGateway->getLastInsertValue();
         } else {
-            if ($this->getEmployee($id)) {
-                $this->tableGateway->update($data, array('id_employee' => $id));
+            if ($this->getProfession($id_profession)) {
+                $this->tableGateway->update($data, ['id_profession' => $id_profession]);
             } else {
-                throw new \Exception('id_employee does not exist');
+                throw new \Exception('id_profession does not exist');
             }
         }
+
     }
 
-    public function deleteEmployee(int $id)
+    public function deleteProfession(int $id_profession)
     {
         return $this->tableGateway->update([
-            'status' => 0,
             'is_deleted' => '1'
-        ], ['id_order' => (int) $id]);
+        ], ['id_profession' => $id_profession]);
     }
 }
