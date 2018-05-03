@@ -40,21 +40,48 @@ class TestController extends AbstractActionController
     public function indexAction()
     {
 
+        $this->test_fetchAllEmployeeProfession();
 
+    }
+
+
+
+
+    public function test_fetchAllEmployeeProfession(){
+        echo "<pre>";
+        print_r($this->ep->fetchAll());
+        die();
+    }
+
+    public function test_getEmployeeProfession(){
         $p = new EmployeeProfessions();
         $p->exchangeArray([
-            'id_employee' => 2,
+            'id_employee' => 3,
+        ]);
+
+        echo "<pre>";
+        print_r($this->ep->getEmployeeProfession($p));
+        die();
+    }
+
+    public function test_DeleteEmployeeProfessions(){
+        $p = new EmployeeProfessions();
+        $p->exchangeArray([
+            'id_employee' => 4,
             'id_profession' => 1
         ]);
 
+        print_r($this->ep->deleteEmployeeProfession($p));
+        die();
+    }
 
+    public function test_InsertEmployeeProfessions(){
+        $p = new EmployeeProfessions();
+        $p->exchangeArray([
+            'id_employee' => 4,
+            'id_profession' => 1
+        ]);
         print_r($this->ep->saveEmployeeProfession($p));
-//       foreach ($this->p->fetchAll() as $item=>$v){
-//           print_r($v);
-//       }
-//
-//
-        
         die();
     }
 }

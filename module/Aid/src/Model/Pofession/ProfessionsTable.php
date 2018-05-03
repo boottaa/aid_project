@@ -26,10 +26,8 @@ class ProfessionsTable
         $this->tableGateway = $tableGateway;
     }
 
-    public function fetchAll($paginated=false)
+    public function fetchAll()
     {
-        if ($paginated) {
-
             $select = new Select('profession');
             $select->where([
                 'is_deleted' => '0',
@@ -43,10 +41,7 @@ class ProfessionsTable
                 $resultSetPrototype
             );
             $paginator = new Paginator($paginatorAdapter);
-            return $paginator;
-        }
-        $resultSet = $this->tableGateway->select();
-        return $resultSet;
+            return iterator_to_array($paginator);
     }
 
     public function getProfession(int $id_profession)
@@ -79,6 +74,7 @@ class ProfessionsTable
         } else {
             if ($this->getProfession($id_profession)) {
                 $this->tableGateway->update($data, ['id_profession' => $id_profession]);
+                return ['id_profession' => $id_profession];
             } else {
                 throw new \Exception('id_profession does not exist');
             }

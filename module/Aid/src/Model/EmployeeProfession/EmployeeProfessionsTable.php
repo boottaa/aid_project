@@ -20,43 +20,48 @@ class EmployeeProfessionsTable
         $this->tableGateway = $tableGateway;
     }
 
-    public function fetchAll($paginated=false)
+    public function fetchAll()
     {
-        if ($paginated) {
-            $select = new Select('employee_profession');
-            $select->where([
-                'is_deleted' => '0'
-            ]);
+        $select = new Select('employee_profession');
+        $select->where([
+            'is_deleted' => '0'
+        ]);
 
-            $resultSetPrototype = new ResultSet();
-            $resultSetPrototype->setArrayObjectPrototype(new EmployeeProfessions());
-            $paginatorAdapter = new DbSelect(
-                $select,
-                $this->tableGateway->getAdapter(),
-                $resultSetPrototype
-            );
-            $paginator = new Paginator($paginatorAdapter);
-            return $paginator;
-        }
-        $resultSet = $this->tableGateway->select();
-        return $resultSet;
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new EmployeeProfessions());
+        $paginatorAdapter = new DbSelect(
+            $select,
+            $this->tableGateway->getAdapter(),
+            $resultSetPrototype
+        );
+        $paginator = new Paginator($paginatorAdapter);
+
+        return iterator_to_array($paginator);
     }
 
-    public function getEmployeeProfession(int $id_employee)
+    public function getEmployeeProfession(EmployeeProfessions $professions)
     {
-        $rowset = $this->tableGateway->select([
+        $id_employee = $professions->id_employee;
+
+        $select = new Select('employee_profession');
+        $select->where([
             'id_employee' => $id_employee,
             'is_deleted' => '0',
         ]);
 
-        $row = $rowset->current();
-        if (!$row) {
-            throw new \Exception("Could not find row $id_employee");
-        }
-        return $row;
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new EmployeeProfessions());
+        $paginatorAdapter = new DbSelect(
+            $select,
+            $this->tableGateway->getAdapter(),
+            $resultSetPrototype
+        );
+        $paginator = new Paginator($paginatorAdapter);
+
+        return iterator_to_array($paginator);
     }
 
-    public function checkEmployeeProfession(int $id_employee, int $id_profession)
+    private function checkEmployeeProfession(int $id_employee, int $id_profession)
     {
         $rowset = $this->tableGateway->select([
             'id_employee' => $id_employee,
@@ -92,10 +97,14 @@ class EmployeeProfessionsTable
         return ['id_employee' => $id_employee, 'id_profession' => $id_profession];
     }
 
-    public function deleteEmployeeProfession(int $id_employee, int $id_profession)
+    public function deleteEmployeeProfession(EmployeeProfessions $professions)
     {
-        return $this->tableGateway->update([
+        $id_employee = (int) $professions->id_employee;
+        $id_profession = (int) $professions->id_profession;
+        $this->tableGateway->update([
             'is_deleted' => '1'
         ], ['id_employee' => $id_employee, 'id_profession' => $id_profession]);
+
+        return ['id_employee' => $id_employee, 'id_profession' => $id_profession];
     }
 }
