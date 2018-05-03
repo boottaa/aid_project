@@ -86,12 +86,10 @@ class EmployeeProfessionsTable
 
         if ($this->checkEmployeeProfession($id_employee, $id_profession)) {
             $this->tableGateway->update($data, ['id_employee' => $id_employee, 'id_profession' => $id_profession]);
-            return ['id_employee' => $id_employee, 'id_profession' => $id_profession];
         } else {
             $this->tableGateway->insert($data);
-            return $this->tableGateway->getLastInsertValue();
         }
-
+        return ['id_employee' => $id_employee, 'id_profession' => $id_profession];
     }
 
     public function deleteEmployeeProfession(int $id_employee, int $id_profession)

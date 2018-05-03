@@ -43,7 +43,7 @@ class TestController extends AbstractActionController
 
         $p = new EmployeeProfessions();
         $p->exchangeArray([
-            'id_employee' => 1,
+            'id_employee' => 2,
             'id_profession' => 1
         ]);
 
