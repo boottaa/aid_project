@@ -61,7 +61,7 @@ class IndexController extends AbstractActionController
 //            'id_employee' => 1
 //        ];
 
-        $this->sendRequest($data, 'professions', 'addProfessionToEmployee');
+        $this->sendRequest($data, 'professions', 'adeProfessionToEmployee');
     }
 
 
