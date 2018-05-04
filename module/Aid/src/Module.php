@@ -8,19 +8,22 @@
 namespace Aid;
 
 use Aid\Controller\Plugin\Load;
-use Aid\Controller\Plugin\Service\PluginLoggerFactory;
+
 use Aid\Model\ApiAccess;
 use Aid\Model\Employee\Employees;
 use Aid\Model\Employee\EmployeesTable;
+use Aid\Model\EmployeeProfession\EmployeeProfessions;
+use Aid\Model\EmployeeProfession\EmployeeProfessionsTable;
 use Aid\Model\Order\Orders;
 use Aid\Model\Order\OrdersTable;
+use Aid\Model\Pofession\Professions;
+use Aid\Model\Pofession\ProfessionsTable;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Json\Server\Error;
 use Zend\Json\Server\Response;
-use Zend\Json\Server\Server;
 use Zend\Log\Logger;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ServiceManager\Exception;
@@ -48,13 +51,28 @@ class Module implements ConfigProviderInterface
 					$table = new OrdersTable($tableGateway);
 					return $table;
 				},
-
 				EmployeesTable::class =>  function($sm) {
 	                $dbAdapter = $sm->get(AdapterInterface::class);
 	                $resultSetPrototype = new ResultSet();
 	                $resultSetPrototype->setArrayObjectPrototype(new Employees());
 	                $tableGateway = new TableGateway('employee', $dbAdapter, null, $resultSetPrototype);
                     $table = new EmployeesTable($tableGateway);
+                    return $table;
+                },
+                ProfessionsTable::class =>  function($sm) {
+                    $dbAdapter = $sm->get(AdapterInterface::class);
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Professions());
+                    $tableGateway = new TableGateway('profession', $dbAdapter, null, $resultSetPrototype);
+                    $table = new ProfessionsTable($tableGateway);
+                    return $table;
+                },
+                EmployeeProfessionsTable::class =>  function($sm) {
+                    $dbAdapter = $sm->get(AdapterInterface::class);
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new EmployeeProfessions());
+                    $tableGateway = new TableGateway('employee_profession', $dbAdapter, null, $resultSetPrototype);
+                    $table = new EmployeeProfessionsTable($tableGateway);
                     return $table;
                 },
 
@@ -70,6 +88,18 @@ class Module implements ConfigProviderInterface
                     $server->setClass($class);
                     return $server;
                 },
+                'professions' => function($sm){
+                    $class = new \Aid\JsonRpc\ClassHandlers\Profession(
+                        $sm->get(ProfessionsTable::class),
+                        new Professions(),
+                        $sm->get(EmployeeProfessionsTable::class),
+                        new EmployeeProfessions()
+                    );
+                    $server = new \Aid\JsonRpc\Server();
+                    $server->setClass($class);
+                    return $server;
+                },
+
 
                 ApiAccess::class => function($sm) {
                     $dbAdapter = $sm->get(AdapterInterface::class);
@@ -118,7 +148,15 @@ class Module implements ConfigProviderInterface
 					    $container->get(ApiAccess::class),
 						$container->get($rout)
 					);
-				}
+				},
+                Controller\TestController::class => function ($container) {
+		            return new Controller\TestController(
+		                [
+		                    'p' => $container->get(ProfessionsTable::class),
+                            'ep' => $container->get(EmployeeProfessionsTable::class),
+                        ]
+                    );
+                }
 			]
 		];
 	}

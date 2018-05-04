@@ -31,7 +31,7 @@ class IndexController extends Base
 		$hash = str_split($this->params()->fromRoute('hash', ''));
 		$checkAccess = $this->getApiAccess()->checkAccess($hash);
 
-		if(!isset($checkAccess['id']))
+		if(empty($checkAccess['id']) && ('POST' == $_SERVER['REQUEST_METHOD']))
 		{
 			$this->getRpcServer()->fault("Access denied!", 403);
 		}
@@ -55,5 +55,17 @@ class IndexController extends Base
         $this->run();
     }
 
+    /**
+     * URL: /aid/k33f3c8db70d437ce41cfbd1bbde0f413/professions
+     */
+    public function professionsAction()
+    {
+        $this->run();
+    }
+
+    public function indexAction()
+    {
+        $this->ordersAction();
+    }
 
 }

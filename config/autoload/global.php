@@ -16,7 +16,7 @@ use Zend\Log\Writer\Stream;
 return array(
 	'db' => array(
 		'driver'         => 'Pdo',
-		'dsn'            => 'mysql:dbname=Aid;host=192.168.33.10',
+		'dsn'            => 'mysql:dbname=Aid;host=192.168.33.11',
 		'username'       => 'bootta',
 		'password'       => '1991',
 		'driver_options' => array(

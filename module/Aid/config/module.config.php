@@ -29,6 +29,21 @@ return [
                     ],
                 ],
             ],
+//Для тестирование модели
+            'taid' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/taid[/:action][/:id]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\TestController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ]
         ],
     ],
 
