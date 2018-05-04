@@ -7,13 +7,18 @@
  */
 namespace Aid\Model\EmployeeProfession;
 
+use Zend\InputFilter\InputFilter;
+
 class EmployeeProfessions
 {
 	public $id_employee;
 	public $id_profession;
 	public $date_create;
 	public $is_deleted;
+	public $price;
+	public $experience;
 
+    protected $inputFilter;
 
 	public function exchangeArray($data)
 	{
@@ -21,5 +26,61 @@ class EmployeeProfessions
 		$this->id_profession  = (!empty($data['id_profession'])) ? $data['id_profession'] : null;
 		$this->date_create    = (!empty($data['date_create'])) ? $data['date_create'] : null;
 		$this->is_deleted     = (!empty($data['is_deleted'])) ? $data['is_deleted'] : '0';
+		$this->price          = (!empty($data['price'])) ? $data['price'] : '0';
+		$this->experience     = (!empty($data['experience'])) ? $data['experience'] : '';
 	}
+
+    public function getInputFilter()
+    {
+        if (!$this->inputFilter) {
+            $inputFilter = new InputFilter();
+
+            $inputFilter->add(array(
+                'name'     => 'id_employee',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'id_profession',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ));
+
+            $inputFilter->add([
+                'name'     => 'price',
+                'required' => false,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ]);
+
+            $inputFilter->add(array(
+                'name'     => 'experience',
+                'required' => false,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 3,
+                            'max'      => 100,
+                        ),
+                    ),
+                ),
+            ));
+
+            $this->inputFilter = $inputFilter;
+        }
+
+        return $this->inputFilter;
+    }
 }

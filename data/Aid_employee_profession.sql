@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
--- Host: 192.168.33.10    Database: Aid
+-- Host: 192.168.33.11    Database: Aid
 -- ------------------------------------------------------
--- Server version	5.5.57-0ubuntu0.14.04.1
+-- Server version	5.5.59-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,6 +27,8 @@ CREATE TABLE `employee_profession` (
   `id_profession` int(11) NOT NULL,
   `date_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `is_deleted` enum('0','1') NOT NULL DEFAULT '0' COMMENT '0 - не удален\n1 - удален\n',
+  `price` int(11) NOT NULL DEFAULT '0',
+  `experience` varchar(100) NOT NULL DEFAULT '' COMMENT 'Стаж работы по данной специальности.',
   PRIMARY KEY (`id_employee`,`id_profession`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Сответсвует рабочему и професии.';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -37,6 +39,7 @@ CREATE TABLE `employee_profession` (
 
 LOCK TABLES `employee_profession` WRITE;
 /*!40000 ALTER TABLE `employee_profession` DISABLE KEYS */;
+INSERT INTO `employee_profession` VALUES (1,1,'2018-05-04 12:12:38','0',100,'1 год'),(1,2,'2018-05-04 11:51:11','0',0,''),(1,3,'2018-05-04 11:51:31','0',0,''),(2,1,'2018-05-03 12:51:55','0',0,''),(3,1,'2018-05-03 12:54:28','0',0,''),(3,2,'2018-05-03 13:24:19','0',0,''),(4,1,'2018-05-04 12:22:34','0',0,'');
 /*!40000 ALTER TABLE `employee_profession` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-11 20:03:34
+-- Dump completed on 2018-05-04 16:19:22

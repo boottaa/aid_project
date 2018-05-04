@@ -40,7 +40,7 @@ class TestController extends AbstractActionController
     public function indexAction()
     {
 
-        $this->test_fetchAllEmployeeProfession();
+        $this->test_InsertEmployeeProfessions();
 
     }
 

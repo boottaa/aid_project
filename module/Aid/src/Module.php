@@ -88,6 +88,17 @@ class Module implements ConfigProviderInterface
                     $server->setClass($class);
                     return $server;
                 },
+                'professions' => function($sm){
+                    $class = new \Aid\JsonRpc\ClassHandlers\Profession(
+                        $sm->get(ProfessionsTable::class),
+                        new Professions(),
+                        $sm->get(EmployeeProfessionsTable::class),
+                        new EmployeeProfessions()
+                    );
+                    $server = new \Aid\JsonRpc\Server();
+                    $server->setClass($class);
+                    return $server;
+                },
 
 
                 ApiAccess::class => function($sm) {

@@ -66,11 +66,10 @@ class EmployeeProfessionsTable
         $rowset = $this->tableGateway->select([
             'id_employee' => $id_employee,
             'id_profession' => $id_profession,
-            'is_deleted' => '0',
         ]);
 
         $row = $rowset->current();
-
+        
         if (!$row) {
             return false;
         }
@@ -84,12 +83,19 @@ class EmployeeProfessionsTable
             'id_profession' => $professions->id_profession,
             'date_create'   => $professions->date_create,
             'is_deleted'    => $professions->is_deleted,
+            'price'         => $professions->price,
+            'experience'    => $professions->experience,
         );
 
         $id_employee = (int) $professions->id_employee;
         $id_profession = (int) $professions->id_profession;
 
         if ($this->checkEmployeeProfession($id_employee, $id_profession)) {
+
+            if (empty($data['is_deleted'])) {
+                $data += ['is_deleted' => 0];
+            }
+
             $this->tableGateway->update($data, ['id_employee' => $id_employee, 'id_profession' => $id_profession]);
         } else {
             $this->tableGateway->insert($data);

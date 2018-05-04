@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
--- Host: 192.168.33.10    Database: Aid
+-- Host: 192.168.33.11    Database: Aid
 -- ------------------------------------------------------
--- Server version	5.5.57-0ubuntu0.14.04.1
+-- Server version	5.5.59-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -33,7 +33,7 @@ CREATE TABLE `employee` (
   `date_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `is_deleted` enum('0','1') NOT NULL DEFAULT '0' COMMENT '0 - не удален\n1 - удален\n',
   PRIMARY KEY (`id_employee`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (1,'asd','asd','boo@asd.com',0,'',0,'2018-03-09 14:48:59','0'),(2,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-09 15:16:58','0'),(3,'фыв','фыв','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',0,'2018-03-10 12:17:53','0'),(4,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:14:55','0'),(5,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:16:44','0'),(6,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:18:07','0'),(7,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:35:22','0'),(8,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:35:22','0'),(9,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:35:23','0'),(10,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:35:23','0'),(11,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:35:24','0'),(12,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:35:25','0'),(13,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:35:25','0'),(14,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:35:25','0'),(15,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 15:19:39','0'),(16,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 15:22:22','0'),(17,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 15:28:53','0'),(18,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 15:31:03','0'),(19,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 15:35:43','0'),(20,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 16:00:40','0'),(21,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 17:48:22','0'),(22,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 17:57:56','0'),(23,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-11 12:25:40','0'),(24,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-11 12:33:47','0');
+INSERT INTO `employee` VALUES (1,'asd','asd','boo@asd.com',0,'',0,'2018-03-09 14:48:59','0'),(2,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-09 15:16:58','0'),(3,'фыв','фыв','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',0,'2018-03-10 12:17:53','0'),(4,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:14:55','0'),(5,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:16:44','0'),(6,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:18:07','0'),(7,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:35:22','0'),(8,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:35:22','0'),(9,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:35:23','0'),(10,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:35:23','0'),(11,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:35:24','0'),(12,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:35:25','0'),(13,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:35:25','0'),(14,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 13:35:25','0'),(15,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 15:19:39','0'),(16,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 15:22:22','0'),(17,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 15:28:53','0'),(18,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 15:31:03','0'),(19,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 15:35:43','0'),(20,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 16:00:40','0'),(21,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 17:48:22','0'),(22,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-10 17:57:56','0'),(23,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-11 12:25:40','0'),(24,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-03-11 12:33:47','0'),(25,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-04-24 07:44:36','0'),(26,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-04-24 07:53:43','0'),(27,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-04-24 07:55:27','0'),(28,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-04-24 08:21:37','0'),(29,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-05-04 08:43:43','0'),(30,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-05-04 08:44:20','0'),(31,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-05-04 11:00:47','0'),(32,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-05-04 11:01:19','0'),(33,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-05-04 11:02:48','0'),(34,'FFF','AAA','asd@asd.com',100,'47e1841c8f52d31cd3a4633bd14998c5',1,'2018-05-04 11:31:29','0');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-11 20:03:34
+-- Dump completed on 2018-05-04 16:19:22

@@ -29,20 +29,6 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
-        $hash = $this->params()->fromRoute('hash', '');
-//        echo "<pre>";
-//        print_r($hash);
-//        die("***DIE***");
-        $client = new \Zend\Json\Server\Client("http://{$_SERVER['HTTP_HOST']}/aid/".$hash."/employees");
-
-        $data['data'] = [
-            "id" => "6",
-//            "status"  => '1',
-//            "address" => "asddddd",
-//            "phone"   => 1111222,
-//            'email'   => "boo@dd.cc"
-        ];
-
         $dataE['data'] = [
             'lname' => 'AAA',
             'fname' => 'FFF',
@@ -52,31 +38,57 @@ class IndexController extends AbstractActionController
             'rating'    => 100,
         ];
 
-       try
-       {
-	       $e = $client->call( 'add', $dataE);
-       }
-       catch (ErrorException $e)
-       {
-           $e = $client->getLastResponse()->getError();
-           echo $e->getMessage();
-           die();
-       }
+        $this->sendRequest($dataE);
+    }
 
-        /////////////////DEBUG///////////////////////////
-        echo "<div style='background: #000; padding: 10px; color: #00e300;'><b style='color: red;'>"
-            .__FILE__
-            ."</b><hr style='border: solid 2px blue;width: 100%;' /><pre>";
-        print_r($e);
-        echo "</div>";
-        die();
-        //////////////////////DEBUG//////////////////////
+    public function professionAction()
+    {
+        //addProfession
+        $data['data'] = [
+            'title' => 'БОГ'
+        ];
+
+        //addProfessionToEmployee
+        $data['data'] = [
+            'id_employee' => 1,
+            'id_profession' => 1,
+            'price' => 100,
+            'experience' => '1 год'
+        ];
+
+        //getProfessionToEmployee
+//        $data['data'] = [
+//            'id_employee' => 1
+//        ];
+
+        $this->sendRequest($data, 'professions', 'addProfessionToEmployee');
     }
 
 
 
 
+    public function sendRequest(array $data, $action = 'employees', $method = 'add', $debug = true)
+    {
+        $hash = $this->params()->fromRoute('hash', '');
+        $client = new \Zend\Json\Server\Client("http://{$_SERVER['HTTP_HOST']}/aid/".$hash."/".$action);
 
+        try
+        {
+            $e = $client->call( $method, $data);
+        }
+        catch (ErrorException $e)
+        {
+            $e = $client->getLastResponse()->getError();
+        }
 
+        if ($debug){
+            echo "<div style='background: #000; padding: 10px; color: #00e300;'><b style='color: red;'>"
+                .__FILE__.' action: '.$action.' method: '.$method
+                ."</b><hr style='border: solid 2px blue;width: 100%;' /><pre>";
+            print_r($e);
+            echo "</div>";
+        }
 
+        die();
+    }
 }

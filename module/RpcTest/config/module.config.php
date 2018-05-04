@@ -19,9 +19,9 @@ return [
             'test' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route'    => '/rpctest[/:hash][/:id]',
+                    'route'    => '/rpctest[/:hash][/:action][/:id]',
                     'constraints' => [
-//	                    'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+	                    'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'hash' => '[a-zA-Z][a-zA-Z0-9_-]*',
 	                    'id'     => '[0-9]+',
                     ],
