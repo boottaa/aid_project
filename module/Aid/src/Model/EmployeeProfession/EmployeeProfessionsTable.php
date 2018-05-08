@@ -78,14 +78,15 @@ class EmployeeProfessionsTable
 
     public function saveEmployeeProfession(EmployeeProfessions $professions)
     {
-        $data = array(
+        $data = [
             'id_employee'   => $professions->id_employee,
             'id_profession' => $professions->id_profession,
             'date_create'   => $professions->date_create,
             'is_deleted'    => $professions->is_deleted,
             'price'         => $professions->price,
             'experience'    => $professions->experience,
-        );
+            'description'   => $professions->description,
+        ];
 
         $id_employee = (int) $professions->id_employee;
         $id_profession = (int) $professions->id_profession;

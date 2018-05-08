@@ -70,7 +70,8 @@ class Profession
 
             return true;
         } else {
-            throw new ErrorException("Error: not valid data");//"Error: not valid data";
+            //"Error: not valid data"
+            throw new ErrorException("Error: not valid data. ".$filter->getMessages());
         }
     }
 
@@ -93,7 +94,8 @@ class Profession
 
             return true;
         } else {
-            throw new ErrorException("Error: not valid data");//"Error: not valid data";
+            //"Error: not valid data";
+            throw new ErrorException("Error: not valid data. ".$filter->getMessages());
         }
     }
 
@@ -112,7 +114,8 @@ class Profession
             $employeeProfessions->exchangeArray($data);
             $result = $this->employeeProfessionsTable->getEmployeeProfession($employeeProfessions);
         } else {
-            throw new ErrorException("Error: not valid data");//"Error: not valid data";
+            //"Error: not valid data";
+            throw new ErrorException("Error: not valid data. ".$filter->getMessages());
         }
 
         return $result;

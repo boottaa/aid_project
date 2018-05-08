@@ -53,7 +53,8 @@ class IndexController extends AbstractActionController
             'id_employee' => 1,
             'id_profession' => 1,
             'price' => 100,
-            'experience' => '1 год'
+            'experience' => '1 год',
+            'description' => "HAHAHAH"
         ];
 
         //getProfessionToEmployee

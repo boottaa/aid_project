@@ -17,6 +17,7 @@ class EmployeeProfessions
 	public $is_deleted;
 	public $price;
 	public $experience;
+	public $description;
 
     protected $inputFilter;
 
@@ -28,6 +29,7 @@ class EmployeeProfessions
 		$this->is_deleted     = (!empty($data['is_deleted'])) ? $data['is_deleted'] : '0';
 		$this->price          = (!empty($data['price'])) ? $data['price'] : '0';
 		$this->experience     = (!empty($data['experience'])) ? $data['experience'] : '';
+		$this->description    = (!empty($data['description'])) ? $data['description'] : '';
 	}
 
     public function getInputFilter()
@@ -73,6 +75,25 @@ class EmployeeProfessions
                             'encoding' => 'UTF-8',
                             'min'      => 3,
                             'max'      => 100,
+                        ),
+                    ),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'description',
+                'required' => false,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 3,
+                            'max'      => 10000,
                         ),
                     ),
                 ),

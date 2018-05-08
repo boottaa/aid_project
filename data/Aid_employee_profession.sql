@@ -29,6 +29,7 @@ CREATE TABLE `employee_profession` (
   `is_deleted` enum('0','1') NOT NULL DEFAULT '0' COMMENT '0 - не удален\n1 - удален\n',
   `price` int(11) NOT NULL DEFAULT '0',
   `experience` varchar(100) NOT NULL DEFAULT '' COMMENT 'Стаж работы по данной специальности.',
+  `description` text,
   PRIMARY KEY (`id_employee`,`id_profession`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Сответсвует рабочему и професии.';
 /*!40101 SET character_set_client = @saved_cs_client */;
