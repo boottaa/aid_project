@@ -8,7 +8,7 @@ VAGRANTFILE_API_VERSION = '2'
 sudo su
 apt-add-repository ppa:ondrej/php
 apt-get update
-apt-get install -y apache2 git curl php7.1 php7.1-bcmath php7.1-bz2 php7.1-cli php7.1-curl php7.1-intl php7.1-json php7.1-mbstring php7.1-opcache php7.1-soap php7.1-sqlite3 php7.1-xml php7.1-xsl php7.1-zip php7.1-mysql libapache2-mod-php7.1
+apt-get install -y apache2 git curl php7.1 php7.1-bcmath php7.1-bz2 php7.1-cli php7.1-curl php7.1-intl php7.1-json php7.1-mbstring php7.1-opcache php7.1-soap php7.1-sqlite3 php7.1-xml php7.1-xsl php7.1-zip php7.1-mysql libapache2-mod-php7.1 mcrypt php7.1-mcrypt php7.1-mbstring phpunit
 
 # Configure Apache
 echo '<VirtualHost *:80>
