@@ -37,6 +37,16 @@ class Module implements ConfigProviderInterface
         return include __DIR__ . '/../config/module.config.php';
     }
 
+    private function includeTable($sm, $tableName, $descTable, $classTable)
+    {
+        $dbAdapter = $sm->get(AdapterInterface::class);
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype($descTable);
+        $tableGateway = new TableGateway($tableName, $dbAdapter, null, $resultSetPrototype);
+        $table = new $classTable($tableGateway);
+        return $table;
+    }
+
 	public function getServiceConfig()
 	{
 
@@ -44,36 +54,25 @@ class Module implements ConfigProviderInterface
 			'factories' => array(
 
 				OrdersTable::class =>  function($sm) {
-					$dbAdapter = $sm->get(AdapterInterface::class);
-					$resultSetPrototype = new ResultSet();
-					$resultSetPrototype->setArrayObjectPrototype(new Orders());
-					$tableGateway = new TableGateway('orders', $dbAdapter, null, $resultSetPrototype);
-					$table = new OrdersTable($tableGateway);
-					return $table;
+                    return $this->includeTable($sm, 'orders', new Orders(), OrdersTable::class);
 				},
+
 				EmployeesTable::class =>  function($sm) {
-	                $dbAdapter = $sm->get(AdapterInterface::class);
-	                $resultSetPrototype = new ResultSet();
-	                $resultSetPrototype->setArrayObjectPrototype(new Employees());
-	                $tableGateway = new TableGateway('employee', $dbAdapter, null, $resultSetPrototype);
-                    $table = new EmployeesTable($tableGateway);
-                    return $table;
+                    return $this->includeTable($sm, 'employee', new Employees(), EmployeesTable::class);
                 },
+
                 ProfessionsTable::class =>  function($sm) {
-                    $dbAdapter = $sm->get(AdapterInterface::class);
-                    $resultSetPrototype = new ResultSet();
-                    $resultSetPrototype->setArrayObjectPrototype(new Professions());
-                    $tableGateway = new TableGateway('profession', $dbAdapter, null, $resultSetPrototype);
-                    $table = new ProfessionsTable($tableGateway);
-                    return $table;
+                    return $this->includeTable($sm, 'profession', new Professions(), ProfessionsTable::class);
                 },
                 EmployeeProfessionsTable::class =>  function($sm) {
-                    $dbAdapter = $sm->get(AdapterInterface::class);
-                    $resultSetPrototype = new ResultSet();
-                    $resultSetPrototype->setArrayObjectPrototype(new EmployeeProfessions());
-                    $tableGateway = new TableGateway('employee_profession', $dbAdapter, null, $resultSetPrototype);
-                    $table = new EmployeeProfessionsTable($tableGateway);
-                    return $table;
+                    return $this->includeTable($sm, 'employee_profession', new EmployeeProfessions(), EmployeeProfessionsTable::class);
+
+//                    $dbAdapter = $sm->get(AdapterInterface::class);
+//                    $resultSetPrototype = new ResultSet();
+//                    $resultSetPrototype->setArrayObjectPrototype(new EmployeeProfessions());
+//                    $tableGateway = new TableGateway('employee_profession', $dbAdapter, null, $resultSetPrototype);
+//                    $table = new EmployeeProfessionsTable($tableGateway);
+//                    return $table;
                 },
 
 				'orders' => function($sm){

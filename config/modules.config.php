@@ -12,6 +12,7 @@ return [
 	'AidView',
 
     'RpcTest',
+    'Test',
 ];
 
 ?>

@@ -23,7 +23,8 @@
           "Application\\": "module/Application/src/",
           "Aid\\": "module/Aid/src/",
           "AidView\\": "module/AidView/src/",
-          "RpcTest\\": "module/RpcTest/src/"
+          "RpcTest\\": "module/RpcTest/src/",
+          "Test\\": "module/Test/src/"
       }
     }
 }
