@@ -78,4 +78,10 @@ class Orders implements InterfaceJsonRpc
     {
         return $this->ordersTable->deleteOrder($id);
     }
+
+    public function getJsonRpcServer(){
+        $server = new \Aid\JsonRpc\Server();
+        $server->setClass($this);
+        return $server;
+    }
 }

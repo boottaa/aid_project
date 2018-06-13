@@ -71,4 +71,10 @@ class Employees implements InterfaceJsonRpc
     {
         return $this->employeesTable->deleteEmployee($id);
     }
+
+    public function getJsonRpcServer(){
+        $server = new \Aid\JsonRpc\Server();
+        $server->setClass($this);
+        return $server;
+    }
 }

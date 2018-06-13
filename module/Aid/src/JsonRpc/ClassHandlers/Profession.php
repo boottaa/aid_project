@@ -120,4 +120,10 @@ class Profession
 
         return $result;
     }
+
+    public function getJsonRpcServer(){
+        $server = new \Aid\JsonRpc\Server();
+        $server->setClass($this);
+        return $server;
+    }
 }

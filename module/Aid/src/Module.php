@@ -66,37 +66,23 @@ class Module implements ConfigProviderInterface
                 },
                 EmployeeProfessionsTable::class =>  function($sm) {
                     return $this->includeTable($sm, 'employee_profession', new EmployeeProfessions(), EmployeeProfessionsTable::class);
-
-//                    $dbAdapter = $sm->get(AdapterInterface::class);
-//                    $resultSetPrototype = new ResultSet();
-//                    $resultSetPrototype->setArrayObjectPrototype(new EmployeeProfessions());
-//                    $tableGateway = new TableGateway('employee_profession', $dbAdapter, null, $resultSetPrototype);
-//                    $table = new EmployeeProfessionsTable($tableGateway);
-//                    return $table;
                 },
 
 				'orders' => function($sm){
-					$class = new \Aid\JsonRpc\ClassHandlers\Orders($sm->get(OrdersTable::class), new Orders());
-					$server = new \Aid\JsonRpc\Server();
-					$server->setClass($class);
-					return $server;
+                    return (new \Aid\JsonRpc\ClassHandlers\Orders($sm->get(OrdersTable::class), new Orders()))
+                        ->getJsonRpcServer();
 				},
-                'employees' => function($sm){
-                    $class = new \Aid\JsonRpc\ClassHandlers\Employees($sm->get(EmployeesTable::class), new Employees());
-                    $server = new \Aid\JsonRpc\Server();
-                    $server->setClass($class);
-                    return $server;
+                'employees' => function ($sm) {
+                    return (new \Aid\JsonRpc\ClassHandlers\Employees($sm->get(EmployeesTable::class), new Employees()))
+                        ->getJsonRpcServer();
                 },
                 'professions' => function($sm){
-                    $class = new \Aid\JsonRpc\ClassHandlers\Profession(
+                    return (new \Aid\JsonRpc\ClassHandlers\Profession(
                         $sm->get(ProfessionsTable::class),
                         new Professions(),
                         $sm->get(EmployeeProfessionsTable::class),
                         new EmployeeProfessions()
-                    );
-                    $server = new \Aid\JsonRpc\Server();
-                    $server->setClass($class);
-                    return $server;
+                    ))->getJsonRpcServer();
                 },
 
 
