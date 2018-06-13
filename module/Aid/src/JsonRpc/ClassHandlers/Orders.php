@@ -8,12 +8,13 @@
 
 namespace Aid\JsonRpc\ClassHandlers;
 
+use Aid\JsonRpc\Interfaces\getJsonRpcClass;
 use Aid\JsonRpc\Interfaces\InterfaceJsonRpc;
 use Aid\Model\Order\OrdersTable;
 use Aid\Model\Order\Orders as dOrders;
 use Zend\Json\Server\Exception\ErrorException;
 
-class Orders implements InterfaceJsonRpc
+class Orders implements InterfaceJsonRpcm, getJsonRpcClass
 {
 	private
 		/**

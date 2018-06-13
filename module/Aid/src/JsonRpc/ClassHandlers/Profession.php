@@ -1,6 +1,7 @@
 <?php
 namespace Aid\JsonRpc\ClassHandlers;
 
+use Aid\JsonRpc\Interfaces\getJsonRpcClass;
 use Aid\Model\EmployeeProfession\EmployeeProfessions;
 use Aid\Model\EmployeeProfession\EmployeeProfessionsTable;
 use Aid\Model\Pofession\Professions as dProfessions;
@@ -12,7 +13,7 @@ use Zend\Json\Server\Exception\ErrorException;
  *
  * @package Aid\JsonRpc\ClassHandlers
  */
-class Profession
+class Profession implements getJsonRpcClass
 {
     private
         /**

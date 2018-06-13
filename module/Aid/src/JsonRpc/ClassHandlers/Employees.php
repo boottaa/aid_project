@@ -8,12 +8,13 @@
 
 namespace Aid\JsonRpc\ClassHandlers;
 
+use Aid\JsonRpc\Interfaces\getJsonRpcClass;
 use Aid\JsonRpc\Interfaces\InterfaceJsonRpc;
 use Aid\Model\Employee\Employees as dEmployees;
 use Aid\Model\Employee\EmployeesTable;
 use Zend\Json\Server\Exception\ErrorException;
 
-class Employees implements InterfaceJsonRpc
+class Employees implements InterfaceJsonRpc, getJsonRpcClass
 {
     private
         $employeesTable,
