@@ -14,7 +14,7 @@ use Aid\Model\Order\OrdersTable;
 use Aid\Model\Order\Orders as dOrders;
 use Zend\Json\Server\Exception\ErrorException;
 
-class Orders implements InterfaceJsonRpcm, getJsonRpcClass
+class Orders implements InterfaceJsonRpc, getJsonRpcClass
 {
 	private
 		/**

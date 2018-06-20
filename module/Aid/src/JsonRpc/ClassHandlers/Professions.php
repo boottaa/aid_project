@@ -13,7 +13,7 @@ use Zend\Json\Server\Exception\ErrorException;
  *
  * @package Aid\JsonRpc\ClassHandlers
  */
-class Profession implements getJsonRpcClass
+class Professions implements getJsonRpcClass
 {
     private
         /**

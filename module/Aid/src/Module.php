@@ -77,7 +77,7 @@ class Module implements ConfigProviderInterface
                         ->getJsonRpcServer();
                 },
                 'professions' => function($sm){
-                    return (new \Aid\JsonRpc\ClassHandlers\Profession(
+                    return (new \Aid\JsonRpc\ClassHandlers\Professions(
                         $sm->get(ProfessionsTable::class),
                         new Professions(),
                         $sm->get(EmployeeProfessionsTable::class),
@@ -95,6 +95,7 @@ class Module implements ConfigProviderInterface
 			),
 		);
 	}
+
 
 	public function getControllerPluginConfig()
     {
