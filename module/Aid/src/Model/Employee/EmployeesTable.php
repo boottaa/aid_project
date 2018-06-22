@@ -87,6 +87,12 @@ class EmployeesTable
                 throw new \Exception('id_employee does not exist');
             }
         }
+
+        if(!empty($id)){
+            return $id;
+        }else{
+            return $this->tableGateway->getLastInsertValue();
+        }
     }
 
     public function deleteEmployee(int $id)
@@ -94,6 +100,6 @@ class EmployeesTable
         return $this->tableGateway->update([
             'status' => 0,
             'is_deleted' => '1'
-        ], ['id_order' => (int) $id]);
+        ], ['id_employee' => (int) $id]);
     }
 }

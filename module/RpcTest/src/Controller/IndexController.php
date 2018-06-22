@@ -41,7 +41,7 @@ class IndexController extends AbstractActionController
         $this->sendRequest($dataE);
     }
 
-    public function professionAction()
+    public function professionsAction()
     {
         //addProfession
         $data['data'] = [
@@ -58,11 +58,11 @@ class IndexController extends AbstractActionController
         ];
 
         //getProfessionToEmployee
-//        $data['data'] = [
-//            'id_employee' => 1
-//        ];
+        $data['data'] = [
+            'id' => 1
+        ];
 
-        $this->sendRequest($data, 'professions', 'adeProfessionToEmployee');
+        $this->sendRequest(['data' => ['id_employee' => 1]], 'professions', 'getProfessionToEmployee', true);
     }
 
 

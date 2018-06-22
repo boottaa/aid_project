@@ -61,8 +61,8 @@ class Employees implements InterfaceJsonRpc, getJsonRpcClass
         if($filter->isValid())
         {
             $employee->exchangeArray($data);
-            $this->employeesTable->saveEmployee($employee);
-            return true;
+            return $this->employeesTable->saveEmployee($employee);;
+
         }else{
 	        throw new ErrorException("Error: not valid data");//"Error: not valid data";
         }

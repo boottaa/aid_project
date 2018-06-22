@@ -92,6 +92,12 @@ class OrdersTable
 				throw new \Exception('id_order does not exist');
 			}
 		}
+		if(!empty($id)){
+		    return $id;
+        }else{
+		    return $this->tableGateway->getLastInsertValue();
+        }
+
 	}
 
 	public function deleteOrder(int $id)

@@ -16,7 +16,8 @@
         "zendframework/zend-json-server": "^3.0",
         "zendframework/zend-paginator": "^2.8",
         "zendframework/zend-inputfilter": "^2.8",
-        "zendframework/zend-log": "^2.9"
+        "zendframework/zend-log": "^2.9",
+        "vkcom/vk-php-sdk": "^0.2.0"
     },
     "autoload": {
       "psr-4": {

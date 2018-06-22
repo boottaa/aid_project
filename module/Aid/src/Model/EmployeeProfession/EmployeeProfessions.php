@@ -47,7 +47,7 @@ class EmployeeProfessions
 
             $inputFilter->add(array(
                 'name'     => 'id_profession',
-                'required' => true,
+                'required' => false,
                 'filters'  => array(
                     array('name' => 'Int'),
                 ),

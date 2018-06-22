@@ -67,18 +67,23 @@ class ProfessionsTable
             'title'          => $professions->title,
         ];
 
-        $id_profession = (int) $professions->id_profession;
-        if (empty($id_profession)) {
+        $id = (int) $professions->id_profession;
+        if (empty($id)) {
             $this->tableGateway->insert($data);
-            return $this->tableGateway->getLastInsertValue();
         } else {
-            if ($this->getProfession($id_profession)) {
-                $this->tableGateway->update($data, ['id_profession' => $id_profession]);
-                return ['id_profession' => $id_profession];
+            if ($this->getProfession($id)) {
+                $this->tableGateway->update($data, ['id_profession' => $id]);
             } else {
                 throw new \Exception('id_profession does not exist');
             }
         }
+
+        if(!empty($id)){
+            return $id;
+        }else{
+            return $this->tableGateway->getLastInsertValue();
+        }
+
 
     }
 

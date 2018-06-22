@@ -39,11 +39,7 @@ class TestController extends AbstractActionController
 
     public function indexAction()
     {
-
-
-
-        phpinfo();
-
+        $this->test_getEmployeeProfession();
         die();
         //        $this->test_InsertEmployeeProfessions();
 
@@ -61,7 +57,7 @@ class TestController extends AbstractActionController
     public function test_getEmployeeProfession(){
         $p = new EmployeeProfessions();
         $p->exchangeArray([
-            'id_employee' => 3,
+            'id_employee' => 41,
         ]);
 
         echo "<pre>";

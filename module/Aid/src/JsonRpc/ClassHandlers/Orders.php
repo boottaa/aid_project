@@ -63,15 +63,15 @@ class Orders implements InterfaceJsonRpc, getJsonRpcClass
 
         $filter = $order->getInputFilter();
         $filter->setData($data);
-
+        
+        
         if($filter->isValid())
         {
             $order->exchangeArray($data);
-            $this->ordersTable->saveOrder($order);
+            return $this->ordersTable->saveOrder($order);
 
-            return true;
         }else{
-            throw new ErrorException("Error: not valid data");//"Error: not valid data";
+            throw new ErrorException("Error: not valid data. Messages: ".  json_encode($filter->getMessages()));//"Error: not valid data";
         }
     }
 

@@ -67,9 +67,8 @@ class Professions implements getJsonRpcClass
 
         if ($filter->isValid()) {
             $professions->exchangeArray($data);
-            $this->professionsTable->saveProfession($professions);
 
-            return true;
+            return $this->professionsTable->saveProfession($professions);
         } else {
             //"Error: not valid data"
             throw new ErrorException("Error: not valid data. ".$filter->getMessages());
@@ -83,7 +82,7 @@ class Professions implements getJsonRpcClass
      *
      * @return bool
      */
-    public function adeProfessionToEmployee(array $data)
+    public function addEmployeeProfession(array $data)
     {
         $employeeProfessions = $this->employeeProfessions;
 
@@ -103,20 +102,23 @@ class Professions implements getJsonRpcClass
     /**
      * @param array $data
      *
-     * @return array
      */
     public function getProfessionToEmployee(array $data)
     {
+
+
         $employeeProfessions = $this->employeeProfessions;
 
         $filter = $employeeProfessions->getInputFilter();
         $filter->setData($data);
+
         if ($filter->isValid()) {
             $employeeProfessions->exchangeArray($data);
             $result = $this->employeeProfessionsTable->getEmployeeProfession($employeeProfessions);
         } else {
+
             //"Error: not valid data";
-            throw new ErrorException("Error: not valid data. ".$filter->getMessages());
+            throw new ErrorException("Error: not valid data. Messages: ".json_encode($filter->getMessages()));
         }
 
         return $result;
