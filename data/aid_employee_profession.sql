@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
--- Host: 192.168.33.11    Database: Aid
+-- Host: 192.168.33.11    Database: aid
 -- ------------------------------------------------------
--- Server version	5.5.59-0ubuntu0.14.04.1
+-- Server version	5.7.22-0ubuntu18.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,32 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `api_access`
+-- Table structure for table `employee_profession`
 --
 
-DROP TABLE IF EXISTS `api_access`;
+DROP TABLE IF EXISTS `employee_profession`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `api_access` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `hash` varchar(32) CHARACTER SET latin1 DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `applications` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+CREATE TABLE `employee_profession` (
+  `id_employee` int(11) NOT NULL,
+  `id_profession` int(11) NOT NULL,
   `date_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `is_deleted` enum('0','1') CHARACTER SET latin1 NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `idx_hash` (`hash`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `is_deleted` enum('0','1') NOT NULL DEFAULT '0' COMMENT '0 - не удален\n1 - удален\n',
+  `price` int(11) NOT NULL DEFAULT '0',
+  `experience` varchar(100) NOT NULL DEFAULT '' COMMENT 'Стаж работы по данной специальности.',
+  `description` text,
+  PRIMARY KEY (`id_employee`,`id_profession`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Сответсвует рабочему и професии.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `api_access`
+-- Dumping data for table `employee_profession`
 --
 
-LOCK TABLES `api_access` WRITE;
-/*!40000 ALTER TABLE `api_access` DISABLE KEYS */;
-INSERT INTO `api_access` VALUES (1,'33f3c8db70d437ce41cfbd1bbde0f413',1,'web_aid_project','2018-03-08 09:06:38','0');
-/*!40000 ALTER TABLE `api_access` ENABLE KEYS */;
+LOCK TABLES `employee_profession` WRITE;
+/*!40000 ALTER TABLE `employee_profession` DISABLE KEYS */;
+INSERT INTO `employee_profession` VALUES (1,1,'2018-06-04 12:45:41','0',100,'1 год','HAHAHAH'),(4,1,'2018-05-17 14:11:54','0',0,'',''),(41,12,'2018-06-22 09:42:35','0',100,'2 года','TEST TEST TEST TEST'),(41,13,'2018-06-22 09:44:22','0',100,'2 года','TEST TEST TEST TEST');
+/*!40000 ALTER TABLE `employee_profession` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-04 16:19:22
+-- Dump completed on 2018-06-22 13:41:57

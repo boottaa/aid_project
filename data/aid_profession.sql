@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
--- Host: 192.168.33.11    Database: Aid
+-- Host: 192.168.33.11    Database: aid
 -- ------------------------------------------------------
--- Server version	5.5.59-0ubuntu0.14.04.1
+-- Server version	5.7.22-0ubuntu18.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,32 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `employee_profession`
+-- Table structure for table `profession`
 --
 
-DROP TABLE IF EXISTS `employee_profession`;
+DROP TABLE IF EXISTS `profession`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `employee_profession` (
-  `id_employee` int(11) NOT NULL,
-  `id_profession` int(11) NOT NULL,
+CREATE TABLE `profession` (
+  `id_profession` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(250) NOT NULL,
   `date_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `is_deleted` enum('0','1') NOT NULL DEFAULT '0' COMMENT '0 - не удален\n1 - удален\n',
-  `price` int(11) NOT NULL DEFAULT '0',
-  `experience` varchar(100) NOT NULL DEFAULT '' COMMENT 'Стаж работы по данной специальности.',
-  `description` text,
-  PRIMARY KEY (`id_employee`,`id_profession`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Сответсвует рабочему и професии.';
+  `is_deleted` enum('0','1') NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_profession`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `employee_profession`
+-- Dumping data for table `profession`
 --
 
-LOCK TABLES `employee_profession` WRITE;
-/*!40000 ALTER TABLE `employee_profession` DISABLE KEYS */;
-INSERT INTO `employee_profession` VALUES (1,1,'2018-05-04 12:12:38','0',100,'1 год'),(1,2,'2018-05-04 11:51:11','0',0,''),(1,3,'2018-05-04 11:51:31','0',0,''),(2,1,'2018-05-03 12:51:55','0',0,''),(3,1,'2018-05-03 12:54:28','0',0,''),(3,2,'2018-05-03 13:24:19','0',0,''),(4,1,'2018-05-04 12:22:34','0',0,'');
-/*!40000 ALTER TABLE `employee_profession` ENABLE KEYS */;
+LOCK TABLES `profession` WRITE;
+/*!40000 ALTER TABLE `profession` DISABLE KEYS */;
+INSERT INTO `profession` VALUES (1,'Сантехник','2018-03-10 12:20:03','0'),(2,'Электрик','2018-03-10 12:20:03','0'),(3,'ТВ мастер','2018-03-10 12:20:03','0'),(4,'ПК мастер','2018-03-10 12:20:03','0'),(5,'Ремонт стиральных машинок','2018-03-10 12:20:03','0'),(6,'hello','2018-04-25 06:25:02','1'),(7,'hello','2018-04-25 06:27:05','1'),(8,'БОГ','2018-05-04 11:31:38','0'),(9,'БОГ','2018-05-04 11:32:13','0'),(10,'БОГ','2018-05-04 11:32:15','0'),(11,'БОГ','2018-05-04 11:32:33','0'),(12,'TEST_PROF','2018-06-22 09:28:10','0'),(13,'TEST_PROF','2018-06-22 09:44:19','0');
+/*!40000 ALTER TABLE `profession` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-04 16:19:22
+-- Dump completed on 2018-06-22 13:41:57
