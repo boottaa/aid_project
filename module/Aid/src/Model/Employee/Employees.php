@@ -35,6 +35,8 @@ class Employees
         $this->status       = (!empty($data['status'])) ? $data['status'] : '1';
         $this->date_create  = (!empty($data['date_create'])) ? $data['date_create'] : null;
         $this->is_deleted   = (!empty($data['is_deleted'])) ? $data['is_deleted'] : '0';
+        //FOR TESTING
+        return $this;
     }
 
     public function getInputFilter()

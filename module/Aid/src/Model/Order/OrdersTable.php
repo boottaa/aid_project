@@ -23,35 +23,24 @@ class OrdersTable
 		$this->tableGateway = $tableGateway;
 	}
 
-//	public function fetchAll()
-//	{
-//		$resultSet = $this->tableGateway->select();
-//
-//		return $resultSet;
-//	}
-
-    public function fetchAll($paginated=false, $satus = 1)
+    public function fetchAll($satus = 1)
     {
-        if ($paginated) {
+        $select = new Select('orders');
+        $select->where([
+            'is_deleted' => '0',
+            'status' => $satus
+        ]);
 
-            $select = new Select('orders');
-            $select->where([
-                'is_deleted' => '0',
-                'status' => $satus
-            ]);
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new Orders());
+        $paginatorAdapter = new DbSelect(
+            $select,
+            $this->tableGateway->getAdapter(),
+            $resultSetPrototype
+        );
+        $paginator = new Paginator($paginatorAdapter);
 
-            $resultSetPrototype = new ResultSet();
-            $resultSetPrototype->setArrayObjectPrototype(new Orders());
-            $paginatorAdapter = new DbSelect(
-                $select,
-                $this->tableGateway->getAdapter(),
-                $resultSetPrototype
-            );
-            $paginator = new Paginator($paginatorAdapter);
-            return $paginator;
-        }
-        $resultSet = $this->tableGateway->select();
-        return $resultSet;
+        return $paginator;
     }
 
 	public function getOrder($id, $satus = 1)

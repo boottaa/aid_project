@@ -30,6 +30,9 @@ class EmployeeProfessions
 		$this->price          = (!empty($data['price'])) ? $data['price'] : '0';
 		$this->experience     = (!empty($data['experience'])) ? $data['experience'] : '';
 		$this->description    = (!empty($data['description'])) ? $data['description'] : '';
+
+		//FOR TESTING
+        return $this;
 	}
 
     public function getInputFilter()

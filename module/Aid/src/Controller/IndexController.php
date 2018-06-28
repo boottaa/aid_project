@@ -29,6 +29,7 @@ class IndexController extends Base
 	{
 		//Преобразовываем в массив и передаем...
 		$hash = str_split($this->params()->fromRoute('hash', ''));
+
 		$checkAccess = $this->getApiAccess()->checkAccess($hash);
 
 		if(empty($checkAccess['id']) && ('POST' == $_SERVER['REQUEST_METHOD']))

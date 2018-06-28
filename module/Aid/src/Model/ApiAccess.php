@@ -24,12 +24,12 @@ class ApiAccess
         //Удаляем первый символ
         unset($hash[0]);
         //Получаем массив символов и приобразуем его в строку.
-        $h = implode("", $hash);
-
+        $hash = implode("", $hash);
+        
         $select = $this->sql
             ->select()
-            ->where(['hash' => $h]);
-
+            ->where(['hash' => $hash]);
+        
         return $this->sql->prepareStatementForSqlObject($select)->execute()->current();
     }
 }

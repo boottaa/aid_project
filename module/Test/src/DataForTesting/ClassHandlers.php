@@ -6,11 +6,16 @@
  * Time: 10:24
  */
 
-namespace Test\Controller;
+namespace Test\DataForTesting;
 
-class DataForTesting
+class ClassHandlers
 {
 
+    /**
+     * HASH for testing web API
+     *
+     * 33f3c8db70d437ce41cfbd1bbde0f413
+     */
     public const HASH = 'k33f3c8db70d437ce41cfbd1bbde0f413';
 
     /**

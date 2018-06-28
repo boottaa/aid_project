@@ -41,7 +41,8 @@ class ProfessionsTable
                 $resultSetPrototype
             );
             $paginator = new Paginator($paginatorAdapter);
-            return iterator_to_array($paginator);
+            //iterator_to_array
+            return $paginator;
     }
 
     public function getProfession(int $id_profession)

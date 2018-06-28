@@ -5,12 +5,10 @@ use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
-$protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
-
 return [
     'router' => [
         'routes' => [
-            'home' => [
+            'test' => [
                 'type' => Segment::class,
                 'options' => [
                     'route'    => '/test[/:action]',
@@ -23,13 +21,25 @@ return [
                     ],
                 ],
             ],
+            'test_models' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/test/models',
+                    'defaults' => [
+                        'controller' => Controller\ModelsController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
-    'controllers' => [
-        'factories' => [
-            Controller\IndexController::class => InvokableFactory::class,
-        ],
-    ],
+
+
+//    'controllers' => [
+//        'factories' => [
+//            Controller\IndexController::class => InvokableFactory::class,
+//        ],
+//    ],
     'view_manager' => [
         'template_path_stack' => [
             __DIR__ . '/../view',

@@ -36,7 +36,7 @@ class EmployeeProfessionsTable
         );
         $paginator = new Paginator($paginatorAdapter);
 
-        return iterator_to_array($paginator);
+        return $paginator;
     }
 
     public function getEmployeeProfession(EmployeeProfessions $professions)
