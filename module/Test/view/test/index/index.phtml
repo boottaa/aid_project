@@ -49,29 +49,7 @@
         </nav>
 
         <div class="container">
-            <h1>ClassHandlers</h1>
-            <hr />
-            <div class="row">
-                <div class="col-6">
-                <?php foreach ($items as $class=>$methods): ?>
-                    <h3><?= $class ?></h3>
-                    <form method="post">
-                    <?php foreach ($methods as $method): ?>
-
-                        <input type="submit" name="method" class="btn btn-link" value="<?=$method ?>"><br />
-                        <input type="hidden" name="class" value="<?= $class ?>">
-                    <?php endforeach; ?>
-                    </form>
-                <?php endforeach; ?>
-                </div>
-                <?php if(!empty($postData)): ?>
-                <div class="col-6" >
-                    <pre style="background: black; color: #00e300; overflow: auto; min-height: 600px;">
-                    <?php print_r($postData); ?>
-                    </pre>
-                </div>
-                <?php endif; ?>
-            </div>
+            <h1>Hello</h1>
         </div>
     </body>
 

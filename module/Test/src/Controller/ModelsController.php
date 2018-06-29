@@ -37,6 +37,10 @@ class ModelsController extends AbstractActionController
     private function send($class, $method)
     {
         $data = Models::getData($class, $method);
+//        echo __FILE__."<hr /><pre>";
+//        print_r($data);
+//        die();
+
         $res = call_user_func([$this->tables[$class], $method], $data);
 
         if(preg_match('/save(\w)?/m',$method)){

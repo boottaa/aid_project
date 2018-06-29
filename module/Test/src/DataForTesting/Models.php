@@ -13,6 +13,7 @@ use Aid\Model\Employee\Employees;
 use Aid\Model\Employee\EmployeesTable;
 use Aid\Model\EmployeeProfession\EmployeeProfessions;
 use Aid\Model\EmployeeProfession\EmployeeProfessionsTable;
+use Aid\Model\Order\Orders;
 use Aid\Model\Order\OrdersTable;
 use Aid\Model\Pofession\Professions;
 use Aid\Model\Pofession\ProfessionsTable;
@@ -49,7 +50,7 @@ class Models
                     ]),
                 ],
                 'deleteEmployee' => [
-                    $_SESSION[$class]['id'],
+                    @$_SESSION[$class]['id'],
                 ]
             ],
             ProfessionsTable::class => [
@@ -62,29 +63,50 @@ class Models
                     ]),
                 ],
                 'deleteProfession' => [
-                    @$_SESSION[$class]['id']?:6
+                    @$_SESSION[$class]['id']
                 ],
             ],
             EmployeeProfessionsTable::class => [
-                'saveEmployeeProfessionsTable' => [
+                'saveEmployeeProfession' => [
                     (new EmployeeProfessions())->exchangeArray([
-                        'fname' => 'TEST_MODEL',
-                        'lname' => 'x2x',
-                        'email' => 'aaa@fs.ru',
-                        'rating' => '50',
-                        'password' => 'test',
-                        'status' => 1
+                        'id_employee' => @$_SESSION[EmployeesTable::class]['id'] ?? 1,
+                        'id_profession' => @$_SESSION[ProfessionsTable::class]['id'] ?? 1,
+                        'price' => '50',
+                        'experience' => '2 года',
+                        'description' => 'test',
                     ]),
-                ]
-//                'id_employee'   => $professions->id_employee,
-//            'id_profession' => $professions->id_profession,
-//            'date_create'   => $professions->date_create,
-//            'is_deleted'    => $professions->is_deleted,
-//            'price'         => $professions->price,
-//            'experience'    => $professions->experience,
-//            'description'   => $professions->description,
+                ],
+
+                'getEmployeeProfession' => [
+                    (new EmployeeProfessions())->exchangeArray([
+                        'id_employee' => @$_SESSION[$class]['id'] ?? 1
+                    ])
+                ],
+                'deleteEmployeeProfession' => [
+                    (new EmployeeProfessions())->exchangeArray([
+                        'id_employee' => @$_SESSION[EmployeesTable::class]['id'] ?? 1,
+                        'id_profession' => @$_SESSION[ProfessionsTable::class]['id'] ?? 1,
+                    ])
+                ],
             ],
-            OrdersTable::class => []
+            OrdersTable::class => [
+                'getOrder' => [
+                    @$_SESSION[$class]['id']?:6
+                ],
+                'saveOrder' => [
+                    (new Orders())->exchangeArray([
+                        'id_user' => 1,
+                        'id_employee' => @$_SESSION[EmployeesTable::class]['id'] ?? 1,
+                        'status' => 1,
+                        'address' => 'test',
+                        'phone' => 777777,
+                        'email' => 'test@te.ru'
+                    ]),
+                ],
+                'deleteOrder' => [
+                    @$_SESSION[$class]['id']
+                ],
+            ]
         ];
 
         if(isset($data[$class][$method][$count]))
