@@ -37,13 +37,14 @@ class Module implements ConfigProviderInterface
         return include __DIR__ . '/../config/module.config.php';
     }
 
-    private function includeTable($sm, $tableName, $descTable, $classTable)
+    private function includeTable($sm, $tableName, $classTable)
     {
+        
         $dbAdapter = $sm->get(AdapterInterface::class);
-        $resultSetPrototype = new ResultSet();
-        $resultSetPrototype->setArrayObjectPrototype($descTable);
-        $tableGateway = new TableGateway($tableName, $dbAdapter, null, $resultSetPrototype);
+
+        $tableGateway = new TableGateway($tableName, $dbAdapter);
         $table = new $classTable($tableGateway);
+        
         return $table;
     }
 
@@ -53,8 +54,8 @@ class Module implements ConfigProviderInterface
 		return array(
 			'factories' => array(
 
-				OrdersTable::class =>  function($sm) {
-                    return $this->includeTable($sm, 'orders', new Orders(), OrdersTable::class);
+				Orders::class =>  function($sm) {
+                    return $this->includeTable($sm, 'orders', Orders::class);
 				},
 
 				EmployeesTable::class =>  function($sm) {
@@ -69,7 +70,7 @@ class Module implements ConfigProviderInterface
                 },
 
 				'orders' => function($sm){
-                    return (new \Aid\JsonRpc\ClassHandlers\Orders($sm->get(OrdersTable::class), new Orders()))
+                    return (new \Aid\JsonRpc\ClassHandlers\Orders($sm->get(Orders::class), $sm->get(Logger::class)))
                         ->getJsonRpcServer();
 				},
                 'employees' => function ($sm) {

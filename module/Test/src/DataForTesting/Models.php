@@ -89,21 +89,21 @@ class Models
                     ])
                 ],
             ],
-            OrdersTable::class => [
-                'getOrder' => [
-                    @$_SESSION[$class]['id']?:6
+            Orders::class => [
+                'getOnly' => [
+                    'id' => @$_SESSION[$class]['id']?:6
                 ],
-                'saveOrder' => [
-                    (new Orders())->exchangeArray([
+                'save' => [
+                    [
                         'id_user' => 1,
                         'id_employee' => @$_SESSION[EmployeesTable::class]['id'] ?? 1,
                         'status' => 1,
                         'address' => 'test',
                         'phone' => 777777,
                         'email' => 'test@te.ru'
-                    ]),
+                    ],
                 ],
-                'deleteOrder' => [
+                'delete' => [
                     @$_SESSION[$class]['id']
                 ],
             ]

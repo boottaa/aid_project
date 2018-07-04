@@ -13,28 +13,30 @@ use Aid\JsonRpc\Interfaces\InterfaceJsonRpc;
 use Aid\Model\Order\OrdersTable;
 use Aid\Model\Order\Orders as dOrders;
 use Zend\Json\Server\Exception\ErrorException;
+use Zend\Log\Logger;
 
 class Orders implements InterfaceJsonRpc, getJsonRpcClass
 {
-	private
-		/**
-		 * @var OrdersTable
-		 */
-        $ordersTable,
-		/**
-		 * @var dOrders
-		 */
-        $order;
+    /**
+     * @var OrdersTable
+     */
+	private $ordersTable;
 
-	public function __construct(OrdersTable $orders, dOrders $order)
+    /**
+     * @var Logger
+     */
+	private $logger;
+
+	public function __construct(\Aid\Model\Order\Orders $orders, Logger $logger)
 	{
 		$this->ordersTable = $orders;
-		$this->order = $order;
+		$this->logger = $logger;
+//		$this->order = $order;
 	}
 
 	public function getItem(int $id){
 		try{
-			return $this->ordersTable->getOrder($id);
+			return $this->ordersTable->getOnly(['id' => $id]);
 		}catch (\Exception $e){
 			throw new ErrorException("Error: not found order with id: ".$id);
 		}
@@ -59,19 +61,17 @@ class Orders implements InterfaceJsonRpc, getJsonRpcClass
 
     public function add(array $data)
     {
-        $order = $this->order;
+        $ex = $this->ordersTable->exchangeArray($data);
 
-        $filter = $order->getInputFilter();
-        $filter->setData($data);
-        
-        
-        if($filter->isValid())
+        if($ex->getInputFilter()->isValid())
         {
-            $order->exchangeArray($data);
-            return $this->ordersTable->saveOrder($order);
+            $r = $ex->save($this->logger);
+            $this->logger->err("MMMEESS ".$r);
+            return "44";
 
         }else{
-            throw new ErrorException("Error: not valid data. Messages: ".  json_encode($filter->getMessages()));//"Error: not valid data";
+            $this->logger->err("not valid data. Messages: ".  json_encode($ex->getInputFilter()->getMessages()));
+            throw new ErrorException("Error: not valid data. Messages: ".  json_encode($ex->getInputFilter()->getMessages()));//"Error: not valid data";
         }
     }
 

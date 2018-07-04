@@ -93,7 +93,7 @@ class ClassHandlers
                 'addEmployeeProfession' => [
                     ['data' =>
                         [
-                            'id_employee' => $_SESSION['employees']['add']?:2,
+                            'id_employee' => @$_SESSION['employees']['add']?:2,
                             'id_profession' => @$_SESSION['professions']['addProfession']?:2,
                             'price' => 100,
                             'experience' => '2 года',

@@ -4,6 +4,7 @@ namespace Test;
 use Aid\Model\ApiAccess;
 use Aid\Model\Employee\EmployeesTable;
 use Aid\Model\EmployeeProfession\EmployeeProfessionsTable;
+use Aid\Model\Order\Orders;
 use Aid\Model\Order\OrdersTable;
 use Aid\Model\Pofession\ProfessionsTable;
 use Zend\EventManager\EventInterface;
@@ -38,7 +39,7 @@ class Module implements ConfigProviderInterface
                         EmployeesTable::class => $sm->get(EmployeesTable::class),
                         ProfessionsTable::class => $sm->get(ProfessionsTable::class),
                         EmployeeProfessionsTable::class => $sm->get(EmployeeProfessionsTable::class),
-                        OrdersTable::class => $sm->get(OrdersTable::class)
+                        Orders::class => $sm->get(Orders::class)
                     ]);
                 },
                 Controller\IndexController::class => InvokableFactory::class
