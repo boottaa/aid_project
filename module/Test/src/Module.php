@@ -2,6 +2,7 @@
 namespace Test;
 
 use Aid\Model\ApiAccess;
+use Aid\Model\Employee\Employees;
 use Aid\Model\Employee\EmployeesTable;
 use Aid\Model\EmployeeProfession\EmployeeProfessionsTable;
 use Aid\Model\Order\Orders;
@@ -36,7 +37,7 @@ class Module implements ConfigProviderInterface
                 {
                     return new Controller\ModelsController([
                         ApiAccess::class => $sm->get(ApiAccess::class),
-                        EmployeesTable::class => $sm->get(EmployeesTable::class),
+                        Employees::class => $sm->get(Employees::class),
                         ProfessionsTable::class => $sm->get(ProfessionsTable::class),
                         EmployeeProfessionsTable::class => $sm->get(EmployeeProfessionsTable::class),
                         Orders::class => $sm->get(Orders::class)

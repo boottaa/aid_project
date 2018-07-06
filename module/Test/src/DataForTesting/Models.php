@@ -35,20 +35,18 @@ class Models
                     str_split(self::HASH)
                 ]
             ],
-            EmployeesTable::class => [
+            Employees::class => [
                 'getEmployee' => [
                     @$_SESSION[$class]['id']?:6
                 ],
-                'saveEmployee' => [
-                    (new Employees())->exchangeArray([
+                'save' => [
                         'fname' => 'TEST_MODEL',
                         'lname' => 'x2x',
                         'email' => 'aaa@fs.ru',
                         'rating' => '50',
                         'password' => 'test',
                         'status' => 1
-                    ]),
-                ],
+                    ],
                 'deleteEmployee' => [
                     @$_SESSION[$class]['id'],
                 ]

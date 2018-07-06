@@ -25,7 +25,7 @@ interface Base
 
     public function getOnly(array $where);
 
-    public function delete(int $id);
+    public function delete(array $where);
 
     public function save($d);
 

@@ -113,12 +113,12 @@ abstract class Base implements Models\Base
 
     }
 
-    public function delete(int $id)
+    public function delete(array $where)
     {
         return $this->tableGateway->update([
             'status' => 0,
             'is_deleted' => '1'
-        ], ['id' => (int) $id]);
+        ], $where);
     }
 
     abstract function getInputFilter();

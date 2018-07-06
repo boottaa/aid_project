@@ -7,9 +7,10 @@
  */
 namespace Aid\Model\EmployeeProfession;
 
+use Aid\Model\Base;
 use Zend\InputFilter\InputFilter;
 
-class EmployeeProfessions
+class EmployeeProfessions extends Base
 {
 	public $id_employee;
 	public $id_profession;

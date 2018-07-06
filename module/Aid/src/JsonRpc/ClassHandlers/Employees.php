@@ -20,9 +20,9 @@ class Employees implements InterfaceJsonRpc, getJsonRpcClass
         $employeesTable,
         $employee;
 
-    public function __construct(EmployeesTable $table, dEmployees $employees)
+    public function __construct(\Aid\Model\Employee\Employees $employees)
     {
-        $this->employeesTable = $table;
+        $this->employeesTable = $employees;
         $this->employee = $employees;
     }
 

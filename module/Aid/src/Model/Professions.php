@@ -6,11 +6,12 @@
  * Date: 09.03.2018
  * Time: 15:08
  */
-namespace Aid\Model\Pofession;
+namespace Aid\Model;
 
+use Aid\Model\Base;
 use Zend\InputFilter\InputFilter;
 
-class Professions
+class Professions extends Base
 {
     public $id_profession;
     public $title;

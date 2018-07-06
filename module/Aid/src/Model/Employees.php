@@ -8,36 +8,31 @@
  */
 namespace Aid\Model\Employee;
 
+use Aid\Model\Base;
 use Zend\InputFilter\InputFilter;
 
-class Employees
+class Employees extends Base
 {
-    public $id_employee;
-    public $fname;
-    public $lname;
-    public $email;
-    public $rating;
-    public $password;
-    public $status;
-    public $date_create;
-    public $is_deleted;
+//    public $id_employee;
+//    public $fname;
+//    public $lname;
+//    public $email;
+//    public $rating;
+//    public $password;
+//    public $status;
+//    public $date_create;
+//    public $is_deleted;
 
-    protected $inputFilter;
-
-    public function exchangeArray($data)
-    {
-        $this->id_employee  = (!empty($data['id_employee'])) ? $data['id_employee'] : null;
-        $this->fname        = (!empty($data['fname'])) ? $data['fname'] : null;
-        $this->lname        = (!empty($data['lname'])) ? $data['lname'] : null;
-        $this->email        = (!empty($data['email'])) ? $data['email'] : null;
-        $this->rating       = (!empty($data['rating'])) ? $data['rating'] : null;
-        $this->password     = (!empty($data['password'])) ? $data['password'] : null;
-        $this->status       = (!empty($data['status'])) ? $data['status'] : '1';
-        $this->date_create  = (!empty($data['date_create'])) ? $data['date_create'] : null;
-        $this->is_deleted   = (!empty($data['is_deleted'])) ? $data['is_deleted'] : '0';
-        //FOR TESTING
-        return $this;
-    }
+    protected $data = [
+        'id_employee' => null,
+        'fname'  => null,
+        'lname' => null,
+        'email' => null,
+        'rating' => 1,
+        'password' => null,
+        'status' => 1,
+        'date_create' => null
+    ];
 
     public function getInputFilter()
     {

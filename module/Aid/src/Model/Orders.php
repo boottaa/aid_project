@@ -5,7 +5,7 @@
  * Date: 07.03.18
  * Time: 15:00
  */
-namespace Aid\Model\Order;
+namespace Aid\Model;
 
 use Aid\Model\Base;
 use Zend\InputFilter\InputFilter;
