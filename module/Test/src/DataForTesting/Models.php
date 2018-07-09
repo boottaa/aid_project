@@ -9,14 +9,11 @@
 namespace Test\DataForTesting;
 
 use Aid\Model\ApiAccess;
-use Aid\Model\Employee\Employees;
-use Aid\Model\Employee\EmployeesTable;
-use Aid\Model\EmployeeProfession\EmployeeProfessions;
-use Aid\Model\EmployeeProfession\EmployeeProfessionsTable;
-use Aid\Model\Order\Orders;
-use Aid\Model\Order\OrdersTable;
-use Aid\Model\Pofession\Professions;
-use Aid\Model\Pofession\ProfessionsTable;
+
+use Aid\Model\EmployeeProfessions;
+use Aid\Model\Employees;
+
+use Aid\Model\Professions;
 
 class Models
 {
@@ -51,7 +48,7 @@ class Models
                     @$_SESSION[$class]['id'],
                 ]
             ],
-            ProfessionsTable::class => [
+            Professions::class => [
                 'getProfession' => [
                     @$_SESSION[$class]['id']?:6
                 ],
@@ -64,11 +61,11 @@ class Models
                     @$_SESSION[$class]['id']
                 ],
             ],
-            EmployeeProfessionsTable::class => [
+            EmployeeProfessions::class => [
                 'saveEmployeeProfession' => [
                     (new EmployeeProfessions())->exchangeArray([
-                        'id_employee' => @$_SESSION[EmployeesTable::class]['id'] ?? 1,
-                        'id_profession' => @$_SESSION[ProfessionsTable::class]['id'] ?? 1,
+                        'id_employee' => @$_SESSION[Employees::class]['id'] ?? 1,
+                        'id_profession' => @$_SESSION[Professions::class]['id'] ?? 1,
                         'price' => '50',
                         'experience' => '2 года',
                         'description' => 'test',
@@ -82,8 +79,8 @@ class Models
                 ],
                 'deleteEmployeeProfession' => [
                     (new EmployeeProfessions())->exchangeArray([
-                        'id_employee' => @$_SESSION[EmployeesTable::class]['id'] ?? 1,
-                        'id_profession' => @$_SESSION[ProfessionsTable::class]['id'] ?? 1,
+                        'id_employee' => @$_SESSION[Employees::class]['id'] ?? 1,
+                        'id_profession' => @$_SESSION[Professions::class]['id'] ?? 1,
                     ])
                 ],
             ],
@@ -94,7 +91,7 @@ class Models
                 'save' => [
                     [
                         'id_user' => 1,
-                        'id_employee' => @$_SESSION[EmployeesTable::class]['id'] ?? 1,
+                        'id_employee' => @$_SESSION[Employees::class]['id'] ?? 1,
                         'status' => 1,
                         'address' => 'test',
                         'phone' => 777777,

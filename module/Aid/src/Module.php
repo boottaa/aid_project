@@ -10,16 +10,10 @@ namespace Aid;
 use Aid\Controller\Plugin\Load;
 
 use Aid\Model\ApiAccess;
-use Aid\Model\Employee\Employees;
-use Aid\Model\Employee\EmployeesTable;
-use Aid\Model\EmployeeProfession\EmployeeProfessions;
-use Aid\Model\EmployeeProfession\EmployeeProfessionsTable;
-use Aid\Model\Order\Orders;
-use Aid\Model\Order\OrdersTable;
-use Aid\Model\Pofession\Professions;
-use Aid\Model\Pofession\ProfessionsTable;
+use Aid\Model\Employees;
+use Aid\Model\Orders;
+use Aid\Model\Professions;
 use Zend\Db\Adapter\AdapterInterface;
-use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Json\Server\Error;
@@ -62,7 +56,7 @@ class Module implements ConfigProviderInterface
                     return $this->includeTable($sm, 'employee', Employees::class);
                 },
 
-                ProfessionsTable::class =>  function($sm) {
+                Professions::class =>  function($sm) {
                     return $this->includeTable($sm, 'profession', Professions::class);
                 },
 //                EmployeeProfessionsTable::class =>  function($sm) {

@@ -13,22 +13,13 @@ use Zend\InputFilter\InputFilter;
 
 class Professions extends Base
 {
-    public $id_profession;
-    public $title;
-    public $date_create;
-    public $is_deleted;
+    protected $data = [
+        'id_profession' => null,
+        'title'  => null,
+        'date_create' => null,
+        'is_deleted' => 0,
+    ];
 
-    protected $inputFilter;
-
-    public function exchangeArray($data)
-    {
-        $this->id_profession  = (!empty($data['id_profession'])) ? $data['id_profession'] : null;
-	    $this->title          = (!empty($data['title'])) ? $data['title'] : null;
-        $this->date_create    = (!empty($data['date_create'])) ? $data['date_create'] : null;
-        $this->is_deleted     = (!empty($data['is_deleted'])) ? $data['is_deleted'] : '0';
-        //FOR TESTING
-        return $this;
-    }
 
     public function getInputFilter()
     {

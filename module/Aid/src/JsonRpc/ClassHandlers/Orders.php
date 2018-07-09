@@ -27,11 +27,10 @@ class Orders implements InterfaceJsonRpc, getJsonRpcClass
      */
 	private $logger;
 
-	public function __construct(\Aid\Model\Order\Orders $orders, Logger $logger)
+	public function __construct(\Aid\Model\Orders $orders, Logger $logger)
 	{
 		$this->ordersTable = $orders;
 		$this->logger = $logger;
-//		$this->order = $order;
 	}
 
 	public function getItem(int $id){

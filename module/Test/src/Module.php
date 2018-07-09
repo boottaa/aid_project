@@ -2,16 +2,12 @@
 namespace Test;
 
 use Aid\Model\ApiAccess;
-use Aid\Model\Employee\Employees;
-use Aid\Model\Employee\EmployeesTable;
-use Aid\Model\EmployeeProfession\EmployeeProfessionsTable;
-use Aid\Model\Order\Orders;
-use Aid\Model\Order\OrdersTable;
-use Aid\Model\Pofession\ProfessionsTable;
-use Zend\EventManager\EventInterface;
-use Zend\ModuleManager\Feature\BootstrapListenerInterface;
+use Aid\Model\Employees;
+use Aid\Model\Orders;
+use Aid\Model\EmployeeProfessions;
+use Aid\Model\Professions;
+
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ServiceManager\ConfigInterface;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 class Module implements ConfigProviderInterface
@@ -38,8 +34,8 @@ class Module implements ConfigProviderInterface
                     return new Controller\ModelsController([
                         ApiAccess::class => $sm->get(ApiAccess::class),
                         Employees::class => $sm->get(Employees::class),
-                        ProfessionsTable::class => $sm->get(ProfessionsTable::class),
-                        EmployeeProfessionsTable::class => $sm->get(EmployeeProfessionsTable::class),
+                        Professions::class => $sm->get(Professions::class),
+//                        EmployeeProfessions::class => $sm->get(EmployeeProfessions::class),
                         Orders::class => $sm->get(Orders::class)
                     ]);
                 },

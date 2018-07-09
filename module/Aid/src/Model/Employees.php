@@ -6,7 +6,7 @@
  * Date: 09.03.2018
  * Time: 15:08
  */
-namespace Aid\Model\Employee;
+namespace Aid\Model;
 
 use Aid\Model\Base;
 use Zend\InputFilter\InputFilter;
