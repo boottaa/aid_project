@@ -13,18 +13,9 @@ use Zend\InputFilter\InputFilter;
 
 class Employees extends Base
 {
-//    public $id_employee;
-//    public $fname;
-//    public $lname;
-//    public $email;
-//    public $rating;
-//    public $password;
-//    public $status;
-//    public $date_create;
-//    public $is_deleted;
 
     protected $data = [
-        'id_employee' => null,
+        'id' => null,
         'fname'  => null,
         'lname' => null,
         'email' => null,

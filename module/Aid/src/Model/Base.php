@@ -83,29 +83,27 @@ abstract class Base implements Models\Base
         return $row;
     }
 
-    public function save($l)
+    public function save()
     {
-        $data = $this->data;
-        $id = (int) $data['id'];
+        $id = 0;
 
+        $data = $this->data;
+
+        if(isset($data['id'])){
+            $id = (int) $data['id'];
+        }
         if ($id == 0) {
-            $l->notice("AAAAA");
             $this->tableGateway->insert($data);
         } else {
-            $l->notice("xSSSS");
             if ($this->getOnly(['id' => $id])) {
-                $l->notice("asddd");
                 $this->tableGateway->update($data, array('id' => $id));
             } else {
-                $l->notice("dassss");
                 throw new \Exception('id does not exist');
             }
         }
         if(!empty($id)){
-            $l->notice("errr");
             return $id;
         }else{
-            $l->notice("ddddd".$this->tableGateway->getLastInsertValue());
             return $this->tableGateway->getLastInsertValue();
         }
 

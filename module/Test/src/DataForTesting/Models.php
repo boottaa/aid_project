@@ -13,6 +13,7 @@ use Aid\Model\ApiAccess;
 use Aid\Model\EmployeeProfessions;
 use Aid\Model\Employees;
 
+use Aid\Model\Orders;
 use Aid\Model\Professions;
 
 class Models
@@ -37,13 +38,15 @@ class Models
                     @$_SESSION[$class]['id']?:6
                 ],
                 'save' => [
-                        'fname' => 'TEST_MODEL',
-                        'lname' => 'x2x',
-                        'email' => 'aaa@fs.ru',
-                        'rating' => '50',
-                        'password' => 'test',
-                        'status' => 1
-                    ],
+                    [
+                            'fname' => 'TEST_MODEL',
+                            'lname' => 'x2x',
+                            'email' => 'aaa@fs.ru',
+                            'rating' => '50',
+                            'password' => 'test',
+                            'status' => 1
+                    ]
+                ],
                 'deleteEmployee' => [
                     @$_SESSION[$class]['id'],
                 ]
@@ -53,9 +56,9 @@ class Models
                     @$_SESSION[$class]['id']?:6
                 ],
                 'saveProfession' => [
-                    (new Professions())->exchangeArray([
+                    [
                         'title' => 'TEST_MODEL',
-                    ]),
+                    ],
                 ],
                 'deleteProfession' => [
                     @$_SESSION[$class]['id']
@@ -63,25 +66,25 @@ class Models
             ],
             EmployeeProfessions::class => [
                 'saveEmployeeProfession' => [
-                    (new EmployeeProfessions())->exchangeArray([
+                    [
                         'id_employee' => @$_SESSION[Employees::class]['id'] ?? 1,
                         'id_profession' => @$_SESSION[Professions::class]['id'] ?? 1,
                         'price' => '50',
                         'experience' => '2 года',
                         'description' => 'test',
-                    ]),
+                    ],
                 ],
 
                 'getEmployeeProfession' => [
-                    (new EmployeeProfessions())->exchangeArray([
+                    [
                         'id_employee' => @$_SESSION[$class]['id'] ?? 1
-                    ])
+                    ]
                 ],
                 'deleteEmployeeProfession' => [
-                    (new EmployeeProfessions())->exchangeArray([
+                    [
                         'id_employee' => @$_SESSION[Employees::class]['id'] ?? 1,
                         'id_profession' => @$_SESSION[Professions::class]['id'] ?? 1,
-                    ])
+                    ]
                 ],
             ],
             Orders::class => [
@@ -103,7 +106,7 @@ class Models
                 ],
             ]
         ];
-
+        
         if(isset($data[$class][$method][$count]))
             $result = $data[$class][$method][$count];
 

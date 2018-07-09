@@ -34,7 +34,9 @@ class ModelsController extends AbstractActionController
     private function send($class, $method)
     {
         $data = Models::getData($class, $method);
-        $res = call_user_func([$this->tables[$class], $method], $data);
+
+        call_user_func([$this->tables[$class], 'exchangeArray'], $data);
+        $res = call_user_func([$this->tables[$class], $method]);
 
         
 

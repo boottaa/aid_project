@@ -27,7 +27,7 @@ interface Base
 
     public function delete(array $where);
 
-    public function save($d);
+    public function save();
 
 
 }
