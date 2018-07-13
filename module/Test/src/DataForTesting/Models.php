@@ -34,8 +34,10 @@ class Models
                 ]
             ],
             Employees::class => [
-                'getEmployee' => [
-                    @$_SESSION[$class]['id']?:6
+                'getOnly' => [
+                    [
+                        'id' => @$_SESSION[Employees::class]['id']?:6
+                    ]
                 ],
                 'save' => [
                     [
@@ -52,10 +54,12 @@ class Models
                 ]
             ],
             Professions::class => [
-                'getProfession' => [
-                    @$_SESSION[$class]['id']?:6
+                'getOnly' => [
+                    [
+                        'id' => @$_SESSION[$class]['id']?:6
+                    ]
                 ],
-                'saveProfession' => [
+                'save' => [
                     [
                         'title' => 'TEST_MODEL',
                     ],
@@ -89,7 +93,9 @@ class Models
             ],
             Orders::class => [
                 'getOnly' => [
-                    'id' => @$_SESSION[$class]['id']?:6
+                    [
+                        'id' => @$_SESSION[$class]['id']?:6
+                    ]
                 ],
                 'save' => [
                     [
@@ -106,7 +112,7 @@ class Models
                 ],
             ]
         ];
-        
+
         if(isset($data[$class][$method][$count]))
             $result = $data[$class][$method][$count];
 

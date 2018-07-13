@@ -13,6 +13,11 @@ use Zend\Db\Sql\Sql;
 
 class ApiAccess
 {
+    private $sql;
+    public function __construct(Sql $sql)
+    {
+        $this->sql = $sql;
+    }
 
     public function checkAccess(array $hash)
     {
