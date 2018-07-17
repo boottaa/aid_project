@@ -54,7 +54,7 @@ class Orders extends Base
 
             $inputFilter->add(array(
                 'name'     => 'status',
-                'required' => true,
+                'required' => false,
                 'filters'  => array(
                     array('name' => 'Int'),
                 ),
@@ -62,7 +62,7 @@ class Orders extends Base
 
             $inputFilter->add(array(
                 'name'     => 'address',
-                'required' => true,
+                'required' => false,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),

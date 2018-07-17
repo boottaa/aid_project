@@ -38,6 +38,9 @@ abstract class Base implements Models\Base
 
     public function exchangeArray(array $data)
     {
+
+        
+        
         /**
          * @var $inputFilter InputFilter
          */
@@ -48,7 +51,7 @@ abstract class Base implements Models\Base
         if($inputFilter->isValid()){
             $this->data = $data;
         }else{
-            new \Exception("ERRORS: ".json_encode($inputFilter->getMessages()));
+            throw new \Exception("ERRORS: ".json_encode($inputFilter->getMessages()));
         }
 
         //FOR TESTING
@@ -112,7 +115,6 @@ abstract class Base implements Models\Base
     public function delete(array $where)
     {
         return $this->tableGateway->update([
-            'status' => 0,
             'is_deleted' => '1'
         ], $where);
     }

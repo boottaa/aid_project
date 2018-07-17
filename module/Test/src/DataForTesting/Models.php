@@ -49,8 +49,8 @@ class Models
                             'status' => 1
                     ]
                 ],
-                'deleteEmployee' => [
-                    @$_SESSION[$class]['id'],
+                'delete' => [
+                    'id' => @$_SESSION[$class]['id']?:1,
                 ]
             ],
             Professions::class => [
@@ -100,15 +100,15 @@ class Models
                 'save' => [
                     [
                         'id_user' => 1,
-                        'id_employee' => @$_SESSION[Employees::class]['id'] ?? 1,
+                        'id_employee' => @$_SESSION[Employees::class]['id'] ?: 1,
                         'status' => 1,
-                        'address' => 'test',
+                        'address' => 'test test test test test testtesttest',
                         'phone' => 777777,
                         'email' => 'test@te.ru'
                     ],
                 ],
                 'delete' => [
-                    @$_SESSION[$class]['id']
+                    'id' => @$_SESSION[$class]['id']?:1
                 ],
             ]
         ];
