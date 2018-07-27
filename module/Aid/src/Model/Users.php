@@ -23,6 +23,7 @@ class Users extends Base
         'is_deleted' => null,
         'status' => 1,
         'date_update' => null,
+        'type' => '',//ENUM
     ];
 
     public function getInputFilter()
