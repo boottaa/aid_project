@@ -10,11 +10,13 @@ namespace Aid\Model;
 use Aid\Model\Base;
 use Zend\InputFilter\InputFilter;
 
-class EmployeeProfessions extends Base
+class UsersProfession extends Base
 {
 
+    protected $table = 'users_profession';
+
     protected $data = [
-        'id_employee' => null,
+        'id_user' => null,
         'id_profession'  => null,
         'date_create' => null,
         'is_deleted' => 1,

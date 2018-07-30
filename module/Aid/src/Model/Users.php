@@ -13,6 +13,8 @@ use Zend\InputFilter\InputFilter;
 
 class Users extends Base
 {
+    protected $table = 'users';
+
     protected $data = [
         'id' => null,
         'phone' => null,

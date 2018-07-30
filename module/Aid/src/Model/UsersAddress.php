@@ -1,25 +1,25 @@
 <?php
-
 /**
  * Created by PhpStorm.
- * User: boott
- * Date: 09.03.2018
- * Time: 15:08
+ * User: bootta
+ * Date: 05.04.18
+ * Time: 16:26
  */
 namespace Aid\Model;
 
 use Aid\Model\Base;
 use Zend\InputFilter\InputFilter;
 
-class Professions extends Base
+class UsersAddress extends Base
 {
-    protected $table = '';
+
+    protected $table = 'users_address';
 
     protected $data = [
-        'id_profession' => null,
-        'title'  => null,
-        'date_create' => null,
+        'id_user' => null,
+        'address'  => null,
         'is_deleted' => 0,
+        'date_update' => null,
     ];
 
 
@@ -29,8 +29,16 @@ class Professions extends Base
             $inputFilter = new InputFilter();
 
             $inputFilter->add(array(
-                'name'     => 'title',
+                'name'     => 'id_user',
                 'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'address',
+                'required' => false,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
@@ -41,7 +49,7 @@ class Professions extends Base
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 3,
-                            'max'      => 250,
+                            'max'      => 1000,
                         ),
                     ),
                 ),

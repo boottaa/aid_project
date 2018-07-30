@@ -33,7 +33,6 @@ class Module implements ConfigProviderInterface
                 {
                     return new Controller\ModelsController([
                         ApiAccess::class => $sm->get(ApiAccess::class),
-                        Employees::class => $sm->get(Employees::class),
                         Professions::class => $sm->get(Professions::class),
 //                        EmployeeProfessions::class => $sm->get(EmployeeProfessions::class),
                         Orders::class => $sm->get(Orders::class)

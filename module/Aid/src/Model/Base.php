@@ -14,15 +14,15 @@ use Zend\InputFilter\InputFilter;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 use Aid\Interfaces\Models;
+use Zend\Db\Adapter\AdapterInterface;
 
-abstract class Base implements Models\Base
+abstract class Base implements Models\All
 {
     /**
      * @var TableGateway
      */
     protected $tableGateway;
-
-    private $table = '';
+    protected $table;
 
     protected $data = [];
     /**
@@ -30,17 +30,13 @@ abstract class Base implements Models\Base
      */
     protected $inputFilter;
 
-    public function __construct(TableGateway $tableGateway)
+    public function __construct(AdapterInterface $dbAdapter)
     {
-        $this->tableGateway = $tableGateway;
-        $this->table = $tableGateway->getTable();
+        $this->tableGateway = new TableGateway($this->table, $dbAdapter);
     }
 
     public function exchangeArray(array $data)
     {
-
-        
-        
         /**
          * @var $inputFilter InputFilter
          */

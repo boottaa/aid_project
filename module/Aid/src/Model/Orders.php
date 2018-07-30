@@ -12,6 +12,8 @@ use Zend\InputFilter\InputFilter;
 
 class Orders extends Base
 {
+    protected $table = 'orders';
+
     protected $data = [
         'id' => null,
         'id_user'  => null,

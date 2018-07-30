@@ -36,8 +36,8 @@ class Module implements ConfigProviderInterface
         
         $dbAdapter = $sm->get(AdapterInterface::class);
 
-        $tableGateway = new TableGateway($tableName, $dbAdapter);
-        $table = new $classTable($tableGateway);
+//        $tableGateway = new TableGateway($tableName, $dbAdapter);
+        $table = new $classTable($dbAdapter);
         
         return $table;
     }
