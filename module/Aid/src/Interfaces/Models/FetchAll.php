@@ -8,13 +8,15 @@
 
 namespace Aid\Interfaces\Models;
 
+use Zend\Paginator\Paginator;
+
 interface FetchAll
 {
 
     /**
      * @param int $status
      *
-     * @return array
+     * @return Paginator
      */
-    public function fetchAll($status = 1);
+    public function fetchAll(int $status = 1): Paginator;
 }

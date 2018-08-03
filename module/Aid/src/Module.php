@@ -9,6 +9,7 @@ namespace Aid;
 
 use Aid\Controller\Plugin\Load;
 
+use Aid\JsonRpc\ClassHandlers\InitBase;
 use Aid\Model\ApiAccess;
 use Aid\Model\Employees;
 use Aid\Model\Orders;
@@ -21,6 +22,7 @@ use Zend\Json\Server\Response;
 use Zend\Log\Logger;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ServiceManager\Exception;
+use Zend\ServiceManager\ServiceManager;
 
 class Module implements ConfigProviderInterface
 {
@@ -31,57 +33,38 @@ class Module implements ConfigProviderInterface
         return include __DIR__ . '/../config/module.config.php';
     }
 
-    private function includeTable($sm, $tableName, $classTable)
-    {
-        
-        $dbAdapter = $sm->get(AdapterInterface::class);
-
-//        $tableGateway = new TableGateway($tableName, $dbAdapter);
-        $table = new $classTable($dbAdapter);
-        
-        return $table;
-    }
 
 	public function getServiceConfig()
 	{
 
+
 		return array(
 			'factories' => array(
 
-				Orders::class =>  function($sm) {
-                    return $this->includeTable($sm, 'orders', Orders::class);
+                InitBase::class => function($sm) {
+                    return new InitBase();
+                },
+                'orders' =>  function($sm) {
+                    /**
+                     * @global $sm ServiceManager
+                     */
+                    $model = new Orders($sm->get(AdapterInterface::class));
+                    return $sm->get(InitBase::class)->init($model);
 				},
 
-				Employees::class =>  function($sm) {
-                    return $this->includeTable($sm, 'employee', Employees::class);
-                },
-
-                Professions::class =>  function($sm) {
-                    return $this->includeTable($sm, 'profession', Professions::class);
-                },
-//                EmployeeProfessionsTable::class =>  function($sm) {
-//                    return $this->includeTable($sm, 'employee_profession', new EmployeeProfessions(), EmployeeProfessionsTable::class);
-//                },
-
-				'orders' => function($sm){
-                    return (new \Aid\JsonRpc\ClassHandlers\Orders($sm->get(Orders::class), $sm->get(Logger::class)))
-                        ->getJsonRpcServer();
-				},
-                'employees' => function ($sm) {
-                    return (new \Aid\JsonRpc\ClassHandlers\Employees($sm->get(Employees::class)))
-                        ->getJsonRpcServer();
-                },
-//                'professions' => function($sm){
-//                    return (new \Aid\JsonRpc\ClassHandlers\Professions(
-//                        $sm->get(ProfessionsTable::class),
-//                        new Professions(),
-//                        $sm->get(EmployeeProfessionsTable::class),
-//                        new EmployeeProfessions()
-//                    ))->getJsonRpcServer();
+//                'professions' =>  function($sm) {
+//                    /**
+//                     * @var $sm ServiceManager
+//                     */
+//                    $dbAdapter = $sm->get(AdapterInterface::class);
+//                    return (new \Aid\JsonRpc\ClassHandlers\InitBase())->init(Orders::class, $dbAdapter);
 //                },
 
 
                 ApiAccess::class => function($sm) {
+                    /**
+                     * @var $sm ServiceManager
+                     */
                     $dbAdapter = $sm->get(AdapterInterface::class);
                     $sql = new Sql($dbAdapter, 'api_access');
                     return new ApiAccess($sql);

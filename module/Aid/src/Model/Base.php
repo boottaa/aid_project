@@ -22,7 +22,7 @@ abstract class Base implements Models\All
      * @var TableGateway
      */
     protected $tableGateway;
-    protected $table;
+    protected $table = '';
 
     protected $data = [];
     /**
@@ -32,9 +32,19 @@ abstract class Base implements Models\All
 
     public function __construct(AdapterInterface $dbAdapter)
     {
+        if (empty($this->table)) {
+            throw new \Exception("Error: table is empty");
+        }
+
         $this->tableGateway = new TableGateway($this->table, $dbAdapter);
     }
 
+    /**
+     * @param array $data
+     *
+     * @return $this
+     * @throws \Exception
+     */
     public function exchangeArray(array $data)
     {
         /**
@@ -50,11 +60,10 @@ abstract class Base implements Models\All
             throw new \Exception("ERRORS: ".json_encode($inputFilter->getMessages()));
         }
 
-        //FOR TESTING
         return $this;
     }
 
-    public function fetchAll($satus = 1)
+    public function fetchAll(int $satus = 1): Paginator
     {
         $select = new Select($this->table);
         $select->where([

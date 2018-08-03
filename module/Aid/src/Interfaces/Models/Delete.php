@@ -13,7 +13,7 @@ interface Delete
     /**
      * @param array $where
      *
-     * @return mixed
+     * @return int
      */
     public function delete(array $where);
 }

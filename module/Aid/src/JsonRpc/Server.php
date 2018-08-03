@@ -51,10 +51,10 @@ class Server extends \Zend\Json\Server\Server
 	}
 
 	/**
-	 * @param null $fault
-	 * @param int $code
-	 * @param null $data
-	 * @return Error
+     * @param  string $fault
+     * @param  int $code
+     * @param  mixed $data
+     * @return Error
 	 */
 	public function fault($fault = null, $code = 404, $data = null)
 	{

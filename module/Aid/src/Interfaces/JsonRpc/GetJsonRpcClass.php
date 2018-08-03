@@ -6,9 +6,9 @@
  * Time: 14:44
  */
 
-namespace Aid\JsonRpc\Interfaces;
+namespace Aid\Interfaces\JsonRpc;
 
-interface getJsonRpcClass
+interface GetJsonRpcClass
 {
     public function getJsonRpcServer();
 }

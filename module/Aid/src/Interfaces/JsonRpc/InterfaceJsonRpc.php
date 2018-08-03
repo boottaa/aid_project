@@ -6,12 +6,12 @@
  * Time: 9:43
  */
 
-namespace Aid\JsonRpc\Interfaces;
+namespace Aid\Interfaces\JsonRpc;
 
 interface InterfaceJsonRpc
 {
 	public function getItem(int $id);
 	public function fethList(int $page, int $limit);
 	public function add(array $data);
-	public function delete(int $id);
+	public function delete(array $where);
 }

@@ -13,7 +13,7 @@ use Zend\InputFilter\InputFilter;
 
 class Professions extends Base
 {
-    protected $table = '';
+    protected $table = 'profession';
 
     protected $data = [
         'id_profession' => null,
