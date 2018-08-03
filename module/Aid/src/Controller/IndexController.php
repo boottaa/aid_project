@@ -40,7 +40,7 @@ class IndexController extends Base
 	}
 
 	/**
-	 * URL: /aid/k33f3c8db70d437ce41cfbd1bbde0f413/run/orders
+	 * @inheritdoc: /aid/k33f3c8db70d437ce41cfbd1bbde0f413/run/orders (model name)
 	 */
     public function runAction()
     {
