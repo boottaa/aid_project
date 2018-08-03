@@ -8,6 +8,7 @@
 namespace Aid\Controller;
 
 use Aid\Model\ApiAccess;
+use Zend\Json\Server\Exception\BadMethodCallException;
 use Zend\Log\Logger;
 use Zend\Mvc\MvcEvent;
 
@@ -26,15 +27,14 @@ class IndexController extends Base
 	 */
 	public function onDispatch(MvcEvent $e)
 	{
-		//Преобразовываем в массив и передаем...
-		$hash = str_split($this->params()->fromRoute('hash', ''));
+		$hash = $this->params()->fromRoute('hash', '');
+		$checkAccess = $this->getApiAccess()->checkAccess(str_split($hash));
 
-		$checkAccess = $this->getApiAccess()->checkAccess($hash);
-
-		if(empty($checkAccess['id']) && ('POST' == $_SERVER['REQUEST_METHOD']))
-		{
-			$this->getRpcServer()->fault("Access denied!", 403);
-		}
+        if (empty($checkAccess['id']) && ('POST' == $_SERVER['REQUEST_METHOD'])) {
+            $this->getRpcServer()->fault("Access denied!", 403);
+        } elseif (empty($checkAccess['id'])) {
+            throw new BadMethodCallException("BAD KEY: " . $hash);
+        }
 
 		return parent::onDispatch($e);
 	}

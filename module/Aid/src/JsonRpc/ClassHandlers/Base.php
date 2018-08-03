@@ -20,7 +20,6 @@ abstract class Base implements InterfaceJsonRpc
      */
     protected function init(All $model){
         $this->model = $model;
-
         $server = new Server();
         $server->setClass($this);
         return $server;
@@ -60,6 +59,8 @@ abstract class Base implements InterfaceJsonRpc
         {
             $x['items'][] = $v;
         }
+        
+
         return $x;
     }
 

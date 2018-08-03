@@ -53,13 +53,12 @@
             <hr />
             <div class="row">
                 <div class="col-6">
-                <?php foreach ($items as $class=>$methods): ?>
-                    <h3><?= $class ?></h3>
+                <?php foreach ($items as $action=>$methods): ?>
+                    <h3><?=$action?></h3>
                     <form method="post">
                     <?php foreach ($methods as $method): ?>
-
                         <input type="submit" name="method" class="btn btn-link" value="<?=$method ?>"><br />
-                        <input type="hidden" name="class" value="<?= $class ?>">
+                        <input type="hidden" name="action" value="<?= $action ?>">
                     <?php endforeach; ?>
                     </form>
                 <?php endforeach; ?>

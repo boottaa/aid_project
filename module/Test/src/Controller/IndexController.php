@@ -1,6 +1,7 @@
 <?php
 namespace Test\Controller;
 
+use Aid\Model\Orders;
 use Test\DataForTesting\ClassHandlers;
 use Zend\Json\Server\Exception\ErrorException;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -21,7 +22,7 @@ class IndexController extends AbstractActionController
 
     public function sendRequest(array $data, $action, $method, $hash)
     {
-        $client = new \Zend\Json\Server\Client("http://{$_SERVER['HTTP_HOST']}/aid/".$hash."/".$action);
+        $client = new \Zend\Json\Server\Client("http://{$_SERVER['HTTP_HOST']}/aid/".$hash."/run/".$action);
 
         try
         {
@@ -39,7 +40,7 @@ class IndexController extends AbstractActionController
         return $e;
     }
 
-
+//http://192.168.33.11/test/models
     public function indexAction()
     {
         return new ViewModel();
@@ -51,7 +52,7 @@ class IndexController extends AbstractActionController
         $request = $this->getRequest();
         if($request->isPost()){
 
-            $class = strtolower($request->getPost('class', null));
+            $class = strtolower($request->getPost('action', null));
             $methods = $request->getPost('method', null);
             @$action = end(explode('\\', $class));
 
@@ -63,28 +64,18 @@ class IndexController extends AbstractActionController
                 throw new \Exception("Ошибка: для класса: ".$action." метод: ".$methods." не удалось найти данные");
             }
         }
-        
-
-        $classes = [
-            \Aid\JsonRpc\ClassHandlers\Employees::class => [],
-            \Aid\JsonRpc\ClassHandlers\Orders::class => [],
-            \Aid\JsonRpc\ClassHandlers\Professions::class => []
+        $r = [
+            'orders' => [
+                'getItem',
+                'fethList',
+            ],
         ];
 
-        $r = [];
-        foreach ($classes as $c => $v){
-            $methods = get_class_methods($c);
-
-
-            @$smGetClass = strtolower(end(explode('\\', $c)));
-
-
-            array_walk($methods, function($value, $key) use (&$r, $c)
-            {
-                if($value == '__construct' || $value == 'getJsonRpcServer') return;
-                $r[$c][] = $value;
-            });
-        }
+//        $postData = $this->sendRequest(['id' => 2], 'professions', 'getItem', ClassHandlers::HASH);
+//
+//        echo __FILE__."<hr /><pre>";
+//        print_r($postData);
+//        die();
 
         return new ViewModel(['items' => $r, 'postData' => $postData]);
     }
