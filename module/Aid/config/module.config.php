@@ -17,10 +17,11 @@ return [
             'aid' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route'    => '/aid[/:hash][/:action][/:id]',
+                    'route'    => '/aid[/:hash][/:action][/:model][/:id]',
                     'constraints' => [
                         'hash' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'model' => '[a-zA-Z][a-zA-Z0-9_-]*',
 	                    'id'     => '[0-9]+',
                     ],
                     'defaults' => [
@@ -29,21 +30,6 @@ return [
                     ],
                 ],
             ],
-//Для тестирование модели
-            'taid' => [
-                'type' => Segment::class,
-                'options' => [
-                    'route'    => '/taid[/:action][/:id]',
-                    'constraints' => [
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
-                    ],
-                    'defaults' => [
-                        'controller' => Controller\TestController::class,
-                        'action'     => 'index',
-                    ],
-                ],
-            ]
         ],
     ],
 

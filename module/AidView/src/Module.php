@@ -7,7 +7,6 @@
 
 namespace AidView;
 
-use Aid\Controller\Plugin\Service\PluginLoggerFactory;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
 class Module implements ConfigProviderInterface

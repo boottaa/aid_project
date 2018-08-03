@@ -8,7 +8,6 @@
 namespace Aid\Controller;
 
 use Aid\Model\ApiAccess;
-use Zend\Json\Server\Server;
 use Zend\Log\Logger;
 use Zend\Mvc\MvcEvent;
 
@@ -41,32 +40,13 @@ class IndexController extends Base
 	}
 
 	/**
-	 * URL: /aid/k33f3c8db70d437ce41cfbd1bbde0f413/orders
+	 * URL: /aid/k33f3c8db70d437ce41cfbd1bbde0f413/run/orders
 	 */
-    public function ordersAction()
+    public function runAction()
     {
         $this->run();
     }
 
-	/**
-	 * URL: /aid/k33f3c8db70d437ce41cfbd1bbde0f413/employees
-	 */
-    public function employeesAction()
-    {
-        $this->run();
-    }
 
-    /**
-     * URL: /aid/k33f3c8db70d437ce41cfbd1bbde0f413/professions
-     */
-    public function professionsAction()
-    {
-        $this->run();
-    }
-
-    public function indexAction()
-    {
-        $this->ordersAction();
-    }
 
 }

@@ -1,25 +1,36 @@
 <?php
 namespace Aid\JsonRpc\ClassHandlers;
 
-use Aid\Interfaces\JsonRpc\GetJsonRpcClass;
 use Aid\Interfaces\JsonRpc\InterfaceJsonRpc;
 use Aid\Interfaces\Models\All;
 use Aid\JsonRpc\Server;
 use Zend\Json\Server\Exception\ErrorException;
 
-abstract class Base implements InterfaceJsonRpc, GetJsonRpcClass
+abstract class Base implements InterfaceJsonRpc
 {
     /**
      * @var All
      */
     private $model;
 
-
-    protected function setModel(All $model){
+    /**
+     * @param All $model
+     *
+     * @return Server
+     */
+    protected function init(All $model){
         $this->model = $model;
-        return $this;
+
+        $server = new Server();
+        $server->setClass($this);
+        return $server;
     }
 
+    /**
+     * @param int $id
+     *
+     * @return mixed
+     */
     public function getItem(int $id){
         try{
             return $this->model->getOnly(['id' => $id]);
@@ -28,6 +39,13 @@ abstract class Base implements InterfaceJsonRpc, GetJsonRpcClass
         }
     }
 
+    /**
+     * @param int $page
+     * @param int $limit
+     * @param int $status
+     *
+     * @return array
+     */
     public function fethList(int $page, int $limit, int $status = 1)
     {
         $r = $this->model->fetchAll($status);
@@ -69,13 +87,4 @@ abstract class Base implements InterfaceJsonRpc, GetJsonRpcClass
         return $this->model->delete($where);
     }
 
-    /**
-     * @return Server
-     */
-    public function getJsonRpcServer(): Server
-    {
-        $server = new Server();
-        $server->setClass($this);
-        return $server;
-    }
 }
