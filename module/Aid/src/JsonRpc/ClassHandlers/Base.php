@@ -14,6 +14,11 @@ abstract class Base implements InterfaceJsonRpc
     private $model;
 
     /**
+     * @var Server
+     */
+    private $server;
+
+    /**
      * @param All $model
      *
      * @return Server
@@ -22,7 +27,8 @@ abstract class Base implements InterfaceJsonRpc
         $this->model = $model;
         $server = new Server();
         $server->setClass($this);
-        return $server;
+        $this->server = $server;
+        return $this->server;
     }
 
     /**
@@ -72,10 +78,12 @@ abstract class Base implements InterfaceJsonRpc
     public function add(array $data)
     {
         try {
-            $this->model->exchangeArray($data)->save();
+            return $this->model->exchangeArray($data)->save();
         }catch (\Exception $e){
-//            $this->fault($e->getMessage(), 500);
+            $this->server->fault($e->getMessage(), 500);
         }
+
+        return 0;
     }
 
     /**
@@ -83,9 +91,9 @@ abstract class Base implements InterfaceJsonRpc
      *
      * @return int
      */
-    public function delete(array $where)
+    public function delete(array $data)
     {
-        return $this->model->delete($where);
+         return $this->model->delete($data);
     }
 
 }

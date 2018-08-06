@@ -22,11 +22,14 @@ class IndexController extends AbstractActionController
 
     public function sendRequest(array $data, $action, $method, $hash)
     {
-        $client = new \Zend\Json\Server\Client("http://{$_SERVER['HTTP_HOST']}/aid/".$hash."/run/".$action);
+        $url = "http://{$_SERVER['HTTP_HOST']}/aid/".$hash."/run/".$action;
+
+        
+        $client = new \Zend\Json\Server\Client($url);
 
         try
         {
-            $e = $client->call( $method, $data);
+            $e = $client->call($method, $data);
         }
         catch (ErrorException $e)
         {
@@ -52,10 +55,9 @@ class IndexController extends AbstractActionController
         $request = $this->getRequest();
         if($request->isPost()){
 
-            $class = strtolower($request->getPost('action', null));
+            $action = strtolower($request->getPost('action', null));
             $methods = $request->getPost('method', null);
-            @$action = end(explode('\\', $class));
-
+            
             $data = ClassHandlers::data($action, $methods);
 
             if (!empty($data)) {
@@ -68,14 +70,12 @@ class IndexController extends AbstractActionController
             'orders' => [
                 'getItem',
                 'fethList',
+                'add',
+                'delete',
             ],
         ];
 
 //        $postData = $this->sendRequest(['id' => 2], 'professions', 'getItem', ClassHandlers::HASH);
-//
-//        echo __FILE__."<hr /><pre>";
-//        print_r($postData);
-//        die();
 
         return new ViewModel(['items' => $r, 'postData' => $postData]);
     }

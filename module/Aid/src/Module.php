@@ -86,7 +86,10 @@ class Module implements ConfigProviderInterface
 		            return new Controller\IndexController(
                         $container->get(Logger::class),
 					    $container->get(ApiAccess::class),
-                        $jsonRpcServer
+                        $jsonRpcServer,
+
+                        //Тест модель ---- // ----
+                        ['orders' => new Orders($container->get(AdapterInterface::class))]
 					);
 				},
 			]

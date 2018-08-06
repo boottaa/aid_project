@@ -8,17 +8,22 @@
 namespace Aid\Controller;
 
 use Aid\Model\ApiAccess;
+use Aid\Model\Orders;
 use Zend\Json\Server\Exception\BadMethodCallException;
 use Zend\Log\Logger;
 use Zend\Mvc\MvcEvent;
 
 class IndexController extends Base
 {
-	public function __construct(Logger $logger, ApiAccess $apiAccess, \Aid\JsonRpc\Server $rpcServer)
+    private $test = [];
+
+	public function __construct(Logger $logger, ApiAccess $apiAccess, \Aid\JsonRpc\Server $rpcServer, array $test = [])
 	{
 		$this->setLogger($logger);
 		$this->setApiAccess($apiAccess);
 		$this->setRpcServer($rpcServer);
+
+		$this->test = $test;
 	}
 
 	/**
@@ -45,6 +50,22 @@ class IndexController extends Base
     public function runAction()
     {
         $this->run();
+    }
+
+
+    //Тест модел
+    public function teAction()
+    {
+        /**
+         * @var $o Orders
+         */
+        $o = $this->test['orders'];
+        
+        echo __FILE__."<hr /><pre>";
+        print_r($o->delete(['id' => 81]));
+        die();
+        
+        
     }
 
 

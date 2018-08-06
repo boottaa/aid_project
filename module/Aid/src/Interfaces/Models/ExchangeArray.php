@@ -18,7 +18,7 @@ interface ExchangeArray
     public function exchangeArray(array $data);
 
     /**
-     * @return void
+     * @return mixed
      */
     public function save();
 }

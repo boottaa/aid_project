@@ -30,32 +30,6 @@ class ClassHandlers
         $result = [];
 
         $data = [
-
-            //module/Aid/src/JsonRpc/ClassHandlers/Employees.php
-            'employees' => [
-                'getItem' => [
-                    ['id' => @$_SESSION['employees']['add']?:1],
-
-                ],
-                'fethList' => [
-                    ['page' => 1, 'limit' => 10],
-                ],
-                'add' => [
-                    ['data' => [
-                            'fname' => 'TEST_AUT',
-                            'lname' => 'TEST_AUT',
-                            'email' => 'TEST_AUT@te.ru',
-                            'rating' => 50,
-                            'password' => 'TEST_AUT',
-                            'status' => 1,
-                        ]
-                    ]
-                ],
-                'delete' => [
-                    ['id' => @$_SESSION['employees']['add']?:1]
-                ]
-            ],
-
             //module/Aid/src/JsonRpc/ClassHandlers/Orders.php
             'orders' => [
                 'getItem' => [
@@ -76,7 +50,7 @@ class ClassHandlers
                     ]
                 ],
                 'delete' => [
-                    ['id' => @$_SESSION['orders']['add']?:1]
+                   ['data' => ['id' => @$_SESSION['orders']['add']?:1]]
                 ]
             ],
 
