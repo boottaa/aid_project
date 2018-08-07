@@ -9,6 +9,8 @@
 namespace Aid\Controller;
 
 
+use Aid\Interfaces\Models\Auth;
+use Zend\Log\LoggerInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Json\Server\Server;
 use Zend\Json\Server\Smd;
@@ -27,7 +29,7 @@ class Base extends AbstractActionController
 	 */
 	private $logger;
 	/**
-	 * @var ApiAccess
+	 * @var Auth
 	 */
 	private $apiAccess;
 	/**
@@ -63,26 +65,39 @@ class Base extends AbstractActionController
 	/**
 	 * @param Logger $logger
 	 */
-	public function setLogger(Logger $logger)
+	public function setLogger(LoggerInterface $logger)
 	{
 		$this->logger = $logger;
 	}
 
 	/**
-	 * @return ApiAccess
+	 * @return Auth
 	 */
 	public function getApiAccess()
 	{
 		return $this->apiAccess;
 	}
 
-	/**
-	 * @param ApiAccess $apiAccess
-	 */
-	public function setApiAccess(ApiAccess $apiAccess)
-	{
-		$this->apiAccess = $apiAccess;
-	}
+    /**
+     * @param Auth $apiAccess
+     */
+    public function setApiAccess(Auth $apiAccess)
+    {
+        $this->apiAccess = $apiAccess;
+    }
+
+    /**
+     * Get hash without k (first)
+     *
+     * @return string
+     */
+	public function getHash()
+    {
+        $hash = $this->params()->fromRoute('hash', '');
+        $hash = str_split($hash);
+        unset($hash[0]);
+        return implode("", $hash);
+    }
 
 	/**
 	 * @param Server $server

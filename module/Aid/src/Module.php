@@ -14,8 +14,8 @@ use Aid\Model\Professions;
 use Aid\Model\Users;
 use Aid\Model\UsersAddress;
 use Aid\Model\UsersProfession;
+use Aid\Helpers\Auth\AuthFactory;
 use Zend\Db\Adapter\AdapterInterface;
-use Zend\Db\Sql\Sql;
 use Zend\Log\Logger;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\Router\Http\Literal;
@@ -42,15 +42,9 @@ class Module implements ConfigProviderInterface
                 UsersAddress::class => ServerFactory::class,
                 UsersProfession::class => ServerFactory::class,
 
-                ApiAccess::class => function($sm) {
-                    /**
-                     * @var $sm ServiceManager
-                     */
-                    $dbAdapter = $sm->get(AdapterInterface::class);
-                    $sql = new Sql($dbAdapter, 'api_access');
-                    return new ApiAccess($sql);
-                },
+                ApiAccess::class => AuthFactory::class,
 			],
+            //alias rout to model
             'aliases' => [
                 'orders' => Orders::class,
                 'users' => Users::class,

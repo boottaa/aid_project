@@ -7,17 +7,19 @@
 
 namespace Aid\Controller;
 
+use Aid\Interfaces\Models\Auth;
 use Aid\Model\ApiAccess;
 use Aid\Model\Orders;
 use Zend\Json\Server\Exception\BadMethodCallException;
 use Zend\Log\Logger;
+use Zend\Log\LoggerInterface;
 use Zend\Mvc\MvcEvent;
 
 class IndexController extends Base
 {
     private $test = [];
 
-	public function __construct(Logger $logger, ApiAccess $apiAccess, \Aid\JsonRpc\Server $rpcServer, array $test = [])
+	public function __construct(LoggerInterface $logger, Auth $apiAccess, \Aid\JsonRpc\Server $rpcServer, array $test = [])
 	{
 		$this->setLogger($logger);
 		$this->setApiAccess($apiAccess);
@@ -32,12 +34,12 @@ class IndexController extends Base
 	 */
 	public function onDispatch(MvcEvent $e)
 	{
-		$hash = $this->params()->fromRoute('hash', '');
-		$checkAccess = $this->getApiAccess()->checkAccess(str_split($hash));
+	    $hash = $this->getHash();
+		$checkAccess = $this->getApiAccess()->check($hash);
 
-        if (empty($checkAccess['id']) && ('POST' == $_SERVER['REQUEST_METHOD'])) {
+        if (empty($checkAccess) && ('POST' == $_SERVER['REQUEST_METHOD'])) {
             $this->getRpcServer()->fault("Access denied!", 403);
-        } elseif (empty($checkAccess['id'])) {
+        } elseif (empty($checkAccess)) {
             throw new BadMethodCallException("BAD KEY: " . $hash);
         }
 

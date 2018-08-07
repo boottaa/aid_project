@@ -1,5 +1,5 @@
 <?php
-namespace Aid\JsonRpc\ClassHandlers;
+namespace Aid\JsonRpc;
 
 use Aid\Interfaces\JsonRpc\InterfaceJsonRpc;
 use Aid\Interfaces\Models\All;

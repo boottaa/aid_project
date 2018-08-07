@@ -15,9 +15,9 @@ interface Construct
     /**
      * Construct constructor.
      *
-     * @param AdapterInterface $tableGateway
+     * @param AdapterInterface $dbAdapter
      *
      * @return void
      */
-    public function __construct(AdapterInterface $tableGateway);
+    public function __construct(AdapterInterface $dbAdapter);
 }
