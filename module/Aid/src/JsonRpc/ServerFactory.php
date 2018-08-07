@@ -17,7 +17,7 @@ use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class ServerFactory extends Base implements FactoryInterface
+class ServerFactory implements FactoryInterface
 {
     /**
      * Create an object
@@ -38,7 +38,9 @@ class ServerFactory extends Base implements FactoryInterface
         if (class_exists($requestedName)) {
             $model = new $requestedName($dataBaseAdapter);
             if($model instanceof All){
-                return $this->init($model);
+                $server = new Server();
+                $server->setClass(new Base($model));
+                return $server;
             }
             throw new \Exception('Class '.$requestedName.' not instanceof to All');
         }else{

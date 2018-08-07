@@ -73,6 +73,12 @@ class IndexController extends AbstractActionController
                 'add',
                 'delete',
             ],
+            'users' => [
+                'getItem',
+                'fethList',
+                'add',
+                'delete',
+            ],
         ];
 
 //        $postData = $this->sendRequest(['id' => 2], 'professions', 'getItem', ClassHandlers::HASH);

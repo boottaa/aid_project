@@ -6,7 +6,7 @@ use Aid\Interfaces\Models\All;
 use Aid\JsonRpc\Server;
 use Zend\Json\Server\Exception\ErrorException;
 
-abstract class Base implements InterfaceJsonRpc
+class Base implements InterfaceJsonRpc
 {
     /**
      * @var All
@@ -23,12 +23,8 @@ abstract class Base implements InterfaceJsonRpc
      *
      * @return Server
      */
-    protected function init(All $model){
+    public function __construct(All $model){
         $this->model = $model;
-        $server = new Server();
-        $server->setClass($this);
-        $this->server = $server;
-        return $this->server;
     }
 
     /**
@@ -39,8 +35,8 @@ abstract class Base implements InterfaceJsonRpc
     public function getItem(int $id){
         try{
             return $this->model->getOnly(['id' => $id]);
-        }catch (\Exception $e){
-            throw new ErrorException("Error: not found order with id: ".$id);
+        }catch (\Throwable $e){
+            $this->server->fault($e->getMessage());
         }
     }
 

@@ -31,6 +31,7 @@ class Module implements ConfigProviderInterface
         return include __DIR__ . '/../config/module.config.php';
     }
 
+    //Для расширения или изменения в поведение cконфигурируем тут, не нужно костылять в самих обработчиках.
 	public function getServiceConfig()
 	{
 		return array(
@@ -40,7 +41,6 @@ class Module implements ConfigProviderInterface
                 Professions::class => ServerFactory::class,
                 UsersAddress::class => ServerFactory::class,
                 UsersProfession::class => ServerFactory::class,
-
 
                 ApiAccess::class => function($sm) {
                     /**

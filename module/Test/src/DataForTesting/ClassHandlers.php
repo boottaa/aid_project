@@ -54,33 +54,31 @@ class ClassHandlers
                 ]
             ],
 
-            //module/Aid/src/JsonRpc/ClassHandlers/Professions.php
-            'professions' => [
-                'addProfession' => [
+            'users' => [
+                'getItem' => [
+                    ['id' => @$_SESSION['orders']['add']?:1],
+
+                ],
+                'fethList' => [
+                    ['page' => 1, 'limit' => 10],
+                ],
+                'add' => [
                     ['data' =>
                         [
-                            'title' => 'TEST_PROF',
+                            'phone' => 11111111,
+                            'email' => 'vasia@bigTest.com',
+                            'password' => '111111111',
+                            'fname' => 'TESTFNAME',
+                            'lname' => 'TESTLNAME',
+                            'status' => 1,
                         ]
                     ]
                 ],
+                'delete' => [
+                    ['data' => ['id' => @$_SESSION['orders']['add']?:1]]
+                ]
+            ],
 
-                'addEmployeeProfession' => [
-                    ['data' =>
-                        [
-                            'id_employee' => @$_SESSION['employees']['add']?:2,
-                            'id_profession' => @$_SESSION['professions']['addProfession']?:2,
-                            'price' => 100,
-                            'experience' => '2 года',
-                            'description' => 'TEST TEST TEST TEST',
-                        ]
-                    ],
-                ],
-
-                'getProfessionToEmployee' => [
-                    [ 'data' => ['id_employee' => @$_SESSION['employees']['add']?:2] ],
-
-                ],
-            ]
 
         ];
 
