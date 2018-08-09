@@ -27,28 +27,28 @@ class Server extends \Zend\Json\Server\Server
 	//Если ошибки пишем сюда true.
 	private $error = false;
 
-	public function handle($request = false)
-	{
-		if ((false !== $request) && ! $request instanceof Request) {
-			throw new Exception\InvalidArgumentException('Invalid request type provided; cannot handle');
-		}
-		if ($request) {
-			$this->setRequest($request);
-		}
-		if($this->isError() == false){
-			// Handle request
-			$this->handleRequest();
-		}
-		// Get response
-		$response = $this->getReadyResponse();
-		// Emit response?
-		if (! $this->returnResponse) {
-			echo $response;
-			return;
-		}
-		// or return it?
-		return $response;
-	}
+//	public function handle($request = false)
+//	{
+//		if ((false !== $request) && ! $request instanceof Request) {
+//			throw new Exception\InvalidArgumentException('Invalid request type provided; cannot handle');
+//		}
+//		if ($request) {
+//			$this->setRequest($request);
+//		}
+//		if($this->isError() == false){
+//			// Handle request
+//			$this->handleRequest();
+//		}
+//		// Get response
+//		$response = $this->getReadyResponse();
+//		// Emit response?
+//		if (! $this->returnResponse) {
+//			echo $response;
+//			return;
+//		}
+//		// or return it?
+//		return $response;
+//	}
 
 	/**
      * @param  string $fault

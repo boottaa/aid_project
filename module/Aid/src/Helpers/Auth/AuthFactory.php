@@ -12,6 +12,7 @@ use Aid\Model\ApiAccess;
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
 use Zend\Db\Adapter\AdapterInterface;
+use Zend\Log\Logger;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\FactoryInterface;
@@ -34,8 +35,9 @@ class AuthFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
+        $logger = $container->get(Logger::class);
         $dbAdapter = $container->get(AdapterInterface::class);
-        $apiAccess = new ApiAccess($dbAdapter);
+        $apiAccess = new ApiAccess($dbAdapter, $logger);
 
         return $apiAccess;
     }

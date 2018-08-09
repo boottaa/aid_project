@@ -83,7 +83,7 @@ class Module implements ConfigProviderInterface
                         $jsonRpcServer,
 
                         //Тест модель ---- // ----
-                        ['orders' => new Orders($container->get(AdapterInterface::class))]
+                        ['orders' => '']
 					);
 				},
 			]

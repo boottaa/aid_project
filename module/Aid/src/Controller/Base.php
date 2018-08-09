@@ -10,6 +10,7 @@ namespace Aid\Controller;
 
 
 use Aid\Interfaces\Models\Auth;
+use Zend\Json\Server\Error;
 use Zend\Log\LoggerInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Json\Server\Server;
@@ -119,15 +120,6 @@ class Base extends AbstractActionController
 				exit();
 			}
 
-			//Если есть ошибки в запросе то выводим их.
-			if (!empty($this->error))
-			{
-				$server->fault(
-					$this->error['message'],
-					$this->error['code'],
-					$this->error['data']
-				);
-			}
 
 			$server->handle();
 			$this->getLogger()->info("REQUEST: ".$server->getRequest()." RESPONSE: ".$server->getResponse());

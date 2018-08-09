@@ -56,7 +56,7 @@ class ClassHandlers
 
             'users' => [
                 'getItem' => [
-                    ['id' => @$_SESSION['orders']['add']?:1],
+                    ['id' => @$_SESSION['users']['add']?:1],
 
                 ],
                 'fethList' => [
@@ -75,11 +75,72 @@ class ClassHandlers
                     ]
                 ],
                 'delete' => [
-                    ['data' => ['id' => @$_SESSION['orders']['add']?:1]]
+                    ['data' => ['id' => @$_SESSION['users']['add']?:1]]
                 ]
             ],
 
+            'professions' => [
+                'getItem' => [
+                    ['id' => @$_SESSION['professions']['add']?:1],
 
+                ],
+                'fethList' => [
+                    ['page' => 1, 'limit' => 10],
+                ],
+                'add' => [
+                    ['data' =>
+                        [
+                            'title' => 'TESTTITLE',
+                        ]
+                    ]
+                ],
+                'delete' => [
+                    ['data' => ['id' => @$_SESSION['professions']['add']?:1]]
+                ]
+            ],
+
+            'users_address' => [
+                'getItem' => [
+                    ['id' => @$_SESSION['users_address']['add']?:1],
+
+                ],
+                'fethList' => [
+                    ['page' => 1, 'limit' => 10, 'status' => 0],
+                ],
+                'add' => [
+                    ['data' =>
+                        [
+                            'id_user' =>  @$_SESSION['users']['add']?:1,
+                            'address' => 'TEST ADDRESS',
+                        ]
+                    ]
+                ],
+                'delete' => [
+                    ['data' => ['id' => @$_SESSION['users_address']['add']?:1]]
+                ]
+            ],
+
+            'users_profession' => [
+                'getItem' => [
+                    ['id' => @$_SESSION['users_profession']['add']?:1],
+
+                ],
+                'fethList' => [
+                    ['page' => 1, 'limit' => 10, 'status' => 0],
+                ],
+                'add' => [
+                    ['data' =>
+                        [
+                            'price' => 1111,
+                            'experience' => '1 год',
+                            'description' => 'Просто ТЕСТ',
+                        ]
+                    ]
+                ],
+                'delete' => [
+                    ['data' => ['id' => @$_SESSION['users_profession']['add']?:1]]
+                ]
+            ],
         ];
 
         if (isset($data[$class][$method][$count]))

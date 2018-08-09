@@ -11,6 +11,7 @@ namespace Aid\Model;
 use Zend\Db\Sql\Select;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\InputFilter\InputFilter;
+use Zend\Log\LoggerInterface;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 use Aid\Interfaces\Models;
@@ -18,21 +19,29 @@ use Zend\Db\Adapter\AdapterInterface;
 
 abstract class Base implements Models\All
 {
+
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
     /**
      * @var TableGateway
      */
     protected $tableGateway;
     protected $table = '';
-
     protected $data = [];
     /**
      * @var InputFilter
      */
     protected $inputFilter;
 
-    public function __construct(AdapterInterface $dbAdapter)
+    public function __construct(AdapterInterface $dbAdapter, LoggerInterface $logger)
     {
+        $this->logger = $logger;
+
         if (empty($this->table)) {
+            $this->logger->err("table is empty");
             throw new \Exception("Error: table is empty");
         }
 
@@ -83,7 +92,6 @@ abstract class Base implements Models\All
     public function getOnly(array $where)
     {
         $rowset = $this->tableGateway->select($where);
-
         $row = $rowset->current();
         if (!$row) {
             throw new \Exception("Could not find row ".implode(', ', $where));

@@ -9,6 +9,7 @@
 namespace Aid\Interfaces\Models;
 
 use Zend\Db\Adapter\AdapterInterface;
+use Zend\Log\LoggerInterface;
 
 interface Construct
 {
@@ -19,5 +20,5 @@ interface Construct
      *
      * @return void
      */
-    public function __construct(AdapterInterface $dbAdapter);
+    public function __construct(AdapterInterface $dbAdapter, LoggerInterface $logger);
 }

@@ -12,6 +12,7 @@ use Aid\Interfaces\Models\All;
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
 use Zend\Db\Adapter\AdapterInterface;
+use Zend\Log\Logger;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\FactoryInterface;
@@ -35,7 +36,9 @@ class ServerFactory implements FactoryInterface
     {
         $dataBaseAdapter = $container->get(AdapterInterface::class);
         if (class_exists($requestedName)) {
-            $model = new $requestedName($dataBaseAdapter);
+            $logger = $container->get(Logger::class);
+
+            $model = new $requestedName($dataBaseAdapter, $logger);
             if($model instanceof All){
                 $server = new Server();
                 $server->setClass(new Base($model));

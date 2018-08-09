@@ -18,9 +18,16 @@ use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\InputFilter\InputFilter;
+use Zend\Log\LoggerInterface;
 
 class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Auth
 {
+
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
     /**
      * @var TableGateway
      */
@@ -48,7 +55,7 @@ class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Au
      *
      * @return void
      */
-    public function __construct(AdapterInterface $dbAdapter)
+    public function __construct(AdapterInterface $dbAdapter, LoggerInterface $logger)
     {
         if (empty($this->table)) {
             throw new \Exception("Error: table is empty");

@@ -4,6 +4,8 @@ namespace Aid\JsonRpc;
 use Aid\Interfaces\JsonRpc\InterfaceJsonRpc;
 use Aid\Interfaces\Models\All;
 use Aid\JsonRpc\Server;
+use Zend\Json\Exception\InvalidArgumentException;
+use Zend\Json\Server\Error;
 use Zend\Json\Server\Exception\ErrorException;
 
 class Base implements InterfaceJsonRpc
@@ -14,14 +16,7 @@ class Base implements InterfaceJsonRpc
     private $model;
 
     /**
-     * @var Server
-     */
-    private $server;
-
-    /**
      * @param All $model
-     *
-     * @return Server
      */
     public function __construct(All $model){
         $this->model = $model;
@@ -32,11 +27,12 @@ class Base implements InterfaceJsonRpc
      *
      * @return mixed
      */
-    public function getItem(int $id){
-        try{
+    public function getItem(int $id)
+    {
+        try {
             return $this->model->getOnly(['id' => $id]);
-        }catch (\Throwable $e){
-            $this->server->fault($e->getMessage());
+        } catch (\Throwable $e) {
+            throw new InvalidArgumentException("ERROR " . $e->getMessage(), Error::ERROR_INVALID_PARAMS);
         }
     }
 
@@ -61,7 +57,6 @@ class Base implements InterfaceJsonRpc
         {
             $x['items'][] = $v;
         }
-        
 
         return $x;
     }
@@ -76,10 +71,8 @@ class Base implements InterfaceJsonRpc
         try {
             return $this->model->exchangeArray($data)->save();
         }catch (\Exception $e){
-            $this->server->fault($e->getMessage(), 500);
+            throw new InvalidArgumentException("ERROR " . $e->getMessage(), Error::ERROR_INVALID_PARAMS);
         }
-
-        return 0;
     }
 
     /**
