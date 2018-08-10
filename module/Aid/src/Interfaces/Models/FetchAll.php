@@ -18,5 +18,5 @@ interface FetchAll
      *
      * @return Paginator
      */
-    public function fetchAll(int $status = 1): Paginator;
+    public function fetchAll(array $where = []): Paginator;
 }

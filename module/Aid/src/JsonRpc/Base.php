@@ -45,7 +45,7 @@ class Base implements InterfaceJsonRpc
      */
     public function fethList(int $page, int $limit, int $status = 1)
     {
-        $r = $this->model->fetchAll($status);
+        $r = $this->model->fetchAll(['status' => $status]);
         $r->setCurrentPageNumber($page);
         // set the number of items per page to 10
         $r->setItemCountPerPage($limit);

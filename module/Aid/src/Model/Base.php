@@ -72,13 +72,12 @@ abstract class Base implements Models\All
         return $this;
     }
 
-    public function fetchAll(int $satus = 1): Paginator
+    public function fetchAll(array $where = []): Paginator
     {
         $select = new Select($this->table);
         $select->where([
             'is_deleted' => '0',
-            'status' => $satus
-        ]);
+        ] + $where);
 
         $paginatorAdapter = new DbSelect(
             $select,
