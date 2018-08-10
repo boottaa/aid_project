@@ -195,7 +195,7 @@ class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Au
 
         $row = $rowset->current();
         if (!$row) {
-            throw new \Exception("Could not find row ".implode(', ', $where));
+            throw new \Exception("Access denied! ");
         }
         return $row;
     }

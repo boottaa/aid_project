@@ -80,9 +80,9 @@ class Base implements InterfaceJsonRpc
      *
      * @return int
      */
-    public function delete(array $data)
+    public function delete(array $where)
     {
-         return $this->model->delete($data);
+         return $this->model->delete($where);
     }
 
 }

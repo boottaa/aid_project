@@ -10,12 +10,10 @@ namespace Aid\Controller;
 
 
 use Aid\Interfaces\Models\Auth;
-use Zend\Json\Server\Error;
 use Zend\Log\LoggerInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Json\Server\Server;
 use Zend\Json\Server\Smd;
-use Aid\Model\ApiAccess;
 use Zend\Log\Logger;
 
 /**

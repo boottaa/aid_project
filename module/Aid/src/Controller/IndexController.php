@@ -8,10 +8,9 @@
 namespace Aid\Controller;
 
 use Aid\Interfaces\Models\Auth;
-use Aid\Model\ApiAccess;
 use Aid\Model\Orders;
 use Zend\Json\Server\Exception\BadMethodCallException;
-use Zend\Log\Logger;
+use Zend\Json\Server\Server;
 use Zend\Log\LoggerInterface;
 use Zend\Mvc\MvcEvent;
 
@@ -19,7 +18,7 @@ class IndexController extends Base
 {
     private $test = [];
 
-	public function __construct(LoggerInterface $logger, Auth $apiAccess, \Aid\JsonRpc\Server $rpcServer, array $test = [])
+	public function __construct(LoggerInterface $logger, Auth $apiAccess,Server $rpcServer, array $test = [])
 	{
 		$this->setLogger($logger);
 		$this->setApiAccess($apiAccess);
