@@ -34,7 +34,10 @@ class IndexController extends Base
 	public function onDispatch(MvcEvent $e)
 	{
 	    $hash = $this->getHash();
-		$checkAccess = $this->getApiAccess()->check($hash);
+        $class = $this->params()->fromRoute('model', '');
+        $method = $this->getRpcServer()->getRequest()->getMethod();
+
+		$checkAccess = $this->getApiAccess()->check($hash, $class, $method);
 
         if (empty($checkAccess) && ('POST' == $_SERVER['REQUEST_METHOD'])) {
             $this->getRpcServer()->fault("Access denied!", 403);

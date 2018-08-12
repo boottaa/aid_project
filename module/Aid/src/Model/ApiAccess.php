@@ -201,15 +201,17 @@ class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Au
     }
 
     /**
-     * @param string $hash
-     *
+     * @param string $hash - Определяем пользователя
+     * @param string $class - Есть ли у пользователя доступ к классу
+     * @param string $method - Если у пользователя доступ к методу класса
      * @return bool
      */
-    public function check(string $hash): bool
+    public function check(string $hash, string $class, string $method): bool
     {
-        if ( !empty( $this->getOnly(['hash' => $hash]) ) ) {
+        try {
+            $this->getOnly(['hash' => $hash]);
             return true;
-        }else{
+        }catch (\Exception $e){
             return false;
         }
     }

@@ -98,6 +98,8 @@ class Base extends AbstractActionController
         return implode("", $hash);
     }
 
+
+
 	/**
 	 * @param Server $server
 	 */
