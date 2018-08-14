@@ -9,6 +9,7 @@ namespace Aid\Controller;
 
 use Aid\Interfaces\Models\Auth;
 use Aid\Model\Orders;
+use Zend\Http\PhpEnvironment\RemoteAddress;
 use Zend\Json\Server\Exception\BadMethodCallException;
 use Zend\Json\Server\Server;
 use Zend\Log\LoggerInterface;
@@ -33,16 +34,20 @@ class IndexController extends Base
 	 */
 	public function onDispatch(MvcEvent $e)
 	{
+	    $user_ip = (new RemoteAddress())->getIpAddress();
+
 	    $hash = $this->getHash();
         $class = $this->params()->fromRoute('model', '');
         $method = $this->getRpcServer()->getRequest()->getMethod();
 
-		$checkAccess = $this->getApiAccess()->check($hash, $class, $method);
+		$checkAccess = $this->getApiAccess()->check($user_ip, $hash, $class, $method);
 
-        if (empty($checkAccess) && ('POST' == $_SERVER['REQUEST_METHOD'])) {
-            $this->getRpcServer()->fault("Access denied!", 403);
-        } elseif (empty($checkAccess)) {
-            throw new BadMethodCallException("BAD KEY: " . $hash);
+        if ('POST' == $_SERVER['REQUEST_METHOD']) {
+            if(!$checkAccess) $this->getRpcServer()->fault("Access denied!", 403);
+        }elseif ('GET' == $_SERVER['REQUEST_METHOD']){
+
+        }else{
+            throw new BadMethodCallException("BAD REQUEST");
         }
 
 		return parent::onDispatch($e);

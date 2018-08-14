@@ -8,6 +8,7 @@
 
 namespace Aid\Model;
 
+use Aid\Helpers\Auth\Rights;
 use Aid\Interfaces\Models\Auth;
 use Aid\Interfaces\Models\Construct;
 use Aid\Interfaces\Models\Delete;
@@ -32,6 +33,12 @@ class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Au
      * @var TableGateway
      */
     protected $tableGateway;
+
+    /**
+     * @var Rights
+     */
+    protected $acl;
+    
     protected $table = 'api_access';
 
     protected $data = [
@@ -60,7 +67,9 @@ class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Au
         if (empty($this->table)) {
             throw new \Exception("Error: table is empty");
         }
+        $this->logger = $logger;
 
+        $this->acl = new Rights();
         $this->tableGateway = new TableGateway($this->table, $dbAdapter);
     }
 
@@ -206,11 +215,15 @@ class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Au
      * @param string $method - Если у пользователя доступ к методу класса
      * @return bool
      */
-    public function check(string $hash, string $class, string $method): bool
+    public function check(string $user_ip, string $hash, string $class, string $method = null): bool
     {
         try {
-            $this->getOnly(['hash' => $hash]);
-            return true;
+            $row = iterator_to_array($this->getOnly(['hash' => $hash]));
+            $user = $row['applications'];
+            $this->logger->info("CHECK_ACCESS - IP: ".$user_ip." HASH: ".$hash." CLASS: ".$class." METHOD: ".$method);
+
+            return $this->acl->isAllowed($user, $class, $method);
+
         }catch (\Exception $e){
             return false;
         }

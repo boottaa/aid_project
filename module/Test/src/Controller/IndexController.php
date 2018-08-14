@@ -1,11 +1,11 @@
 <?php
 namespace Test\Controller;
 
-use Aid\Model\Orders;
 use Test\DataForTesting\ClassHandlers;
 use Zend\Json\Server\Exception\ErrorException;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\MvcEvent;
+use Zend\Permissions\Acl\Acl;
 use Zend\View\Model\ViewModel;
 
 
@@ -102,6 +102,33 @@ class IndexController extends AbstractActionController
 //        $postData = $this->sendRequest(['id' => 2], 'professions', 'getItem', ClassHandlers::HASH);
 
         return new ViewModel(['items' => $r, 'postData' => $postData]);
+    }
+
+    public function aclAction()
+    {
+        $acl = new Acl();
+
+        $dashboard = new GenericResource("dashboard");
+        $site = new GenericResource("site");
+
+        $guest = new GenericRole("guest");
+        $admin = new GenericRole("admin");
+
+        $acl
+            ->addResource($dashboard)
+            ->addResource($site)
+            ->addRole($guest)
+            ->addRole($admin, $guest);
+
+
+        $acl->allow('guest', 'site', 'view');
+        $acl->allow('admin', 'dashboard', ['edit', 'view', 'delete']);
+
+
+        echo $acl->isAllowed('admin', 'dashboard', 'edit');
+
+
+        die("<br /> ACL <br />");
     }
 
 }

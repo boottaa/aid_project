@@ -10,5 +10,5 @@ namespace Aid\Interfaces\Models;
 
 interface Auth
 {
-    public function check(string $hash, string $class, string $method): bool;
+    public function check(string $user_ip, string $hash, string $class, string $method = null): bool;
 }

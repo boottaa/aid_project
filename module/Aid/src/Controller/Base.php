@@ -119,10 +119,8 @@ class Base extends AbstractActionController
 				echo $smd;
 				exit();
 			}
-
-
 			$server->handle();
-			$this->getLogger()->info("REQUEST: ".$server->getRequest()." RESPONSE: ".$server->getResponse());
+//			$this->getLogger()->debug("REQUEST: ".$server->getRequest()." RESPONSE: ".$server->getResponse());
 		}
 		catch (\Exception $e)
 		{
