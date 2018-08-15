@@ -34,15 +34,13 @@ class IndexController extends Base
 	 */
 	public function onDispatch(MvcEvent $e)
 	{
-	    $user_ip = (new RemoteAddress())->getIpAddress();
-
+	    $userIp = (new RemoteAddress())->getIpAddress();
 	    $hash = $this->getHash();
         $class = $this->params()->fromRoute('model', '');
         $method = $this->getRpcServer()->getRequest()->getMethod();
 
-		$checkAccess = $this->getApiAccess()->check($user_ip, $hash, $class, $method);
-
         if ('POST' == $_SERVER['REQUEST_METHOD']) {
+            $checkAccess = $this->getApiAccess()->check($userIp, $hash, $class, $method);
             if(!$checkAccess) $this->getRpcServer()->fault("Access denied!", 403);
         }elseif ('GET' == $_SERVER['REQUEST_METHOD']){
 

@@ -19,7 +19,7 @@ return [
                 'options' => [
                     'route'    => '/aid[/:hash][/:action][/:model][/:id]',
                     'constraints' => [
-                        'hash' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'hash' => 'k[a-z0-9_-]*',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'model' => '[a-zA-Z][a-zA-Z0-9_-]*',
 	                    'id'     => '[0-9]+',

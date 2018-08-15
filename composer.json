@@ -16,7 +16,9 @@
         "zendframework/zend-json-server": "^3.0",
         "zendframework/zend-paginator": "^2.8",
         "zendframework/zend-inputfilter": "^2.8",
-        "zendframework/zend-log": "^2.9"
+        "zendframework/zend-log": "^2.9",
+        "zendframework/zend-permissions-acl": "^2.7",
+        "zendframework/zend-cache": "^2.8"
     },
     "autoload": {
       "psr-4": {
