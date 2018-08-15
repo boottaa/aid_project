@@ -106,11 +106,12 @@ class Base extends AbstractActionController
 	protected function run()
 	{
 		$server = $this->getRpcServer();
+        $model = $this->params()->fromRoute('model', '');
 		try
 		{
 			if ('GET' == $_SERVER['REQUEST_METHOD'])
 			{
-				$server->setTarget('/aid')
+				$server->setTarget('/aid/key/run/'.$model)
 					->setEnvelope(Smd::ENV_JSONRPC_2);
 				$smd = $server->getServiceMap();
 				$smd->setDojoCompatible(true);

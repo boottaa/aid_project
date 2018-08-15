@@ -68,22 +68,20 @@ class Module implements ConfigProviderInterface
 					$request = $container->get('request');
 					$routerMatch = $router->match($request);
 					$rout = $routerMatch->getParam('model');
-					if (! $container->has($rout)) {
-						throw new Exception\InvalidServiceException(sprintf(
-							'Rout writer by name %s not found',
-							$rout
-						));
-					}else{
+
+                    if ($container->has($rout)) {
                         $jsonRpcServer = $container->get($rout);
+                    } else {
+                        throw new Exception\InvalidServiceException(sprintf(
+                            'Rout writer by name %s not found',
+                            $rout
+                        ));
                     }
 
 		            return new Controller\IndexController(
                         $container->get(Logger::class),
 					    $container->get(ApiAccess::class),
-                        $jsonRpcServer,
-
-                        //Тест модель ---- // ----
-                        ['orders' => '']
+                        $jsonRpcServer
 					);
 				},
 			]

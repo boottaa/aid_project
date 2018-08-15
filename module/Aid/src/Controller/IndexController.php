@@ -17,15 +17,11 @@ use Zend\Mvc\MvcEvent;
 
 class IndexController extends Base
 {
-    private $test = [];
-
-	public function __construct(LoggerInterface $logger, Auth $apiAccess,Server $rpcServer, array $test = [])
+	public function __construct(LoggerInterface $logger, Auth $apiAccess,Server $rpcServer)
 	{
 		$this->setLogger($logger);
 		$this->setApiAccess($apiAccess);
 		$this->setRpcServer($rpcServer);
-
-		$this->test = $test;
 	}
 
 	/**
@@ -43,7 +39,7 @@ class IndexController extends Base
             $checkAccess = $this->getApiAccess()->check($userIp, $hash, $class, $method);
             if(!$checkAccess) $this->getRpcServer()->fault("Access denied!", 403);
         }elseif ('GET' == $_SERVER['REQUEST_METHOD']){
-
+            // Для безопасности только get пропускаем все остальное в топку
         }else{
             throw new BadMethodCallException("BAD REQUEST");
         }
@@ -52,29 +48,10 @@ class IndexController extends Base
 	}
 
 	/**
-	 * @inheritdoc: /aid/k33f3c8db70d437ce41cfbd1bbde0f413/run/orders (model name)
+     * @inheritdoc: /aid/k33f3c8db70d437ce41cfbd1bbde0f413/run/orders (model name)
 	 */
     public function runAction()
     {
         $this->run();
     }
-
-
-    //Тест модел
-    public function teAction()
-    {
-        /**
-         * @var $o Orders
-         */
-        $o = $this->test['orders'];
-        
-        echo __FILE__."<hr /><pre>";
-        print_r($o->delete(['id' => 81]));
-        die();
-        
-        
-    }
-
-
-
 }
