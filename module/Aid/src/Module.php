@@ -15,7 +15,7 @@ use Aid\Model\Users;
 use Aid\Model\UsersAddress;
 use Aid\Model\UsersProfession;
 use Aid\Helpers\Auth\AuthFactory;
-use Zend\Db\Adapter\AdapterInterface;
+use Zend\Cache\Service\StorageCacheFactory;
 use Zend\Log\Logger;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\Router\Http\Literal;
@@ -43,6 +43,9 @@ class Module implements ConfigProviderInterface
                 UsersProfession::class => ServerFactory::class,
 
                 ApiAccess::class => AuthFactory::class,
+
+                //Кеширование
+                StorageCacheFactory::class => StorageCacheFactory::class,
 			],
             //alias rout to model
             'aliases' => [
@@ -81,7 +84,8 @@ class Module implements ConfigProviderInterface
 		            return new Controller\IndexController(
                         $container->get(Logger::class),
 					    $container->get(ApiAccess::class),
-                        $jsonRpcServer
+                        $jsonRpcServer,
+                        $container->get(StorageCacheFactory::class)
 					);
 				},
 			]

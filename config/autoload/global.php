@@ -30,4 +30,16 @@ return array(
             ['name' => new Stream('./logs/Aid/rpcserver.log'),]
         ),
     ],
+
+    'cache' => [
+        'adapter' => [
+            'name' => 'memcached',
+            'options' => [
+                'namespace' => 'aid_project',
+                'servers' => [
+                    ['127.0.0.1', 11211],
+                ],
+            ],
+        ],
+    ],
 );

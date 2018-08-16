@@ -9,6 +9,8 @@ namespace Aid\Controller;
 
 use Aid\Interfaces\Models\Auth;
 use Aid\Model\Orders;
+use Zend\Cache\Storage\Adapter\AbstractAdapter;
+use Zend\Cache\Storage\Adapter\Memcached;
 use Zend\Http\PhpEnvironment\RemoteAddress;
 use Zend\Json\Server\Exception\BadMethodCallException;
 use Zend\Json\Server\Server;
@@ -17,8 +19,9 @@ use Zend\Mvc\MvcEvent;
 
 class IndexController extends Base
 {
-	public function __construct(LoggerInterface $logger, Auth $apiAccess,Server $rpcServer)
+	public function __construct(LoggerInterface $logger, Auth $apiAccess,Server $rpcServer,AbstractAdapter $cache)
 	{
+        $this->setCache($cache);
 		$this->setLogger($logger);
 		$this->setApiAccess($apiAccess);
 		$this->setRpcServer($rpcServer);

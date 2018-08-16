@@ -6,6 +6,7 @@ return [
 	'Zend\\Validator',
     //'Zend\\Di',
     'Zend\\Log',
+    'Zend\\Cache',
 
 	'Application',
 	'Aid',

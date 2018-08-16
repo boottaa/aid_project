@@ -10,6 +10,7 @@ namespace Aid\Controller;
 
 
 use Aid\Interfaces\Models\Auth;
+use Zend\Cache\Storage\Adapter\AbstractAdapter;
 use Zend\Log\LoggerInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Json\Server\Server;
@@ -35,7 +36,26 @@ class Base extends AbstractActionController
 	 * @var Server
 	 */
 	private $rpcServer;
+    /**
+     * @var AbstractAdapter
+     */
+	private $cache;
 
+    /**
+     * @param AbstractAdapter $cache
+     */
+    public function setCache(AbstractAdapter $cache)
+    {
+        $this->cache = $cache;
+    }
+
+    /**
+     * @return AbstractAdapter
+     */
+    public function getCache()
+    {
+        return $this->cache;
+    }
 
 	/**
 	 * @return Server
