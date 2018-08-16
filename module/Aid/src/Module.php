@@ -15,6 +15,7 @@ use Aid\Model\Users;
 use Aid\Model\UsersAddress;
 use Aid\Model\UsersProfession;
 use Aid\Helpers\Auth\AuthFactory;
+use Zend\Cache\Service\StorageCacheAbstractServiceFactory;
 use Zend\Cache\Service\StorageCacheFactory;
 use Zend\Log\Logger;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
@@ -36,16 +37,16 @@ class Module implements ConfigProviderInterface
 	{
 		return array(
 			'factories' => [
+                //Кеширование
+                StorageCacheFactory::class => StorageCacheFactory::class,
+                //Проверка доступа
+                ApiAccess::class => AuthFactory::class,
+                //Модели
                 Orders::class => ServerFactory::class,
                 Users::class => ServerFactory::class,
                 Professions::class => ServerFactory::class,
                 UsersAddress::class => ServerFactory::class,
                 UsersProfession::class => ServerFactory::class,
-
-                ApiAccess::class => AuthFactory::class,
-
-                //Кеширование
-                StorageCacheFactory::class => StorageCacheFactory::class,
 			],
             //alias rout to model
             'aliases' => [

@@ -33,8 +33,16 @@ class IndexController extends Base
 	 */
 	public function onDispatch(MvcEvent $e)
 	{
-	    $userIp = (new RemoteAddress())->getIpAddress();
-	    $hash = $this->getHash();
+		return parent::onDispatch($e);
+	}
+
+	/**
+     * @inheritdoc: /aid/k33f3c8db70d437ce41cfbd1bbde0f413/run/orders (model name)
+	 */
+    public function runAction()
+    {
+        $userIp = (new RemoteAddress())->getIpAddress();
+        $hash = $this->getHash();
         $class = $this->params()->fromRoute('model', '');
         $method = $this->getRpcServer()->getRequest()->getMethod();
 
@@ -47,14 +55,6 @@ class IndexController extends Base
             throw new BadMethodCallException("BAD REQUEST");
         }
 
-		return parent::onDispatch($e);
-	}
-
-	/**
-     * @inheritdoc: /aid/k33f3c8db70d437ce41cfbd1bbde0f413/run/orders (model name)
-	 */
-    public function runAction()
-    {
         $this->run();
     }
 }
