@@ -15,25 +15,18 @@ class Rights extends Acl
 {
     function __construct(AbstractAdapter $cache)
     {
-        $hashForCache = 'ACL.' . __CLASS__;
+        $allow = include __DIR__ . '/allow.php';
+        $users = array_keys($allow);
+        foreach ($users as $user) {
+            $this->addRole($user);
 
-        if ($cache->hasItem($hashForCache)) {
-            return $cache->getItem($hashForCache);
-        } else {
-            $allow = include __DIR__ . '/allow.php';
-            $users = array_keys($allow);
-            foreach ($users as $user) {
-                $this->addRole($user);
-
-                $resursesAllow = $allow[$user];
-                foreach ($resursesAllow as $resurse => $allows) {
-                    if (!$this->hasResource($resurse)) {
-                        $this->addResource($resurse);
-                    }
-                    $this->allow($user, $resurse, $allows);
+            $resursesAllow = $allow[$user];
+            foreach ($resursesAllow as $resurse => $allows) {
+                if (!$this->hasResource($resurse)) {
+                    $this->addResource($resurse);
                 }
+                $this->allow($user, $resurse, $allows);
             }
-            $cache->addItem($hashForCache, serialize($this));
         }
     }
 }
