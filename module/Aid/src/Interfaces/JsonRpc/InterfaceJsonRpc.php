@@ -10,7 +10,7 @@ namespace Aid\Interfaces\JsonRpc;
 
 interface InterfaceJsonRpc
 {
-	public function getItem(int $id);
+	public function getItem(array $where);
 	public function fethList(int $page, int $limit);
 	public function add(array $data);
 	public function delete(array $where);

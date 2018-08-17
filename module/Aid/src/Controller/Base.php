@@ -10,7 +10,9 @@ namespace Aid\Controller;
 
 
 use Aid\Interfaces\Models\Auth;
+
 use Zend\Cache\Storage\Adapter\AbstractAdapter;
+use Zend\Json\Server\Exception\InvalidArgumentException;
 use Zend\Log\LoggerInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Json\Server\Server;
@@ -139,7 +141,11 @@ class Base extends AbstractActionController
 				echo $smd;
 				exit();
 			}
-            $haskForCache = md5($method.' '.$class.' '.serialize($server->getRequest()->getParams()));
+
+			$haskForCache = md5($method.' '.$class.' '.serialize($server->getRequest()->getParams()));
+
+//            Пока оставим тут для отладки может пригодиться
+//            $this->getCache()->removeItem($haskForCache);
 
             if ($this->getCache()->hasItem($haskForCache) && $method != 'add') {
                 echo $this->getCache()->getItem($haskForCache);
@@ -147,22 +153,6 @@ class Base extends AbstractActionController
                 $server->handle();
                 $this->getCache()->addItem($haskForCache, $server->getResponse());
             }
-
-//            $server->handle();
-
-//			echo $server->getRequest();
-//			$hashRequest = md5($class.$method);
-//            echo json_encode($hashRequest);
-
-//			if($this->getCache()->hasItem($hashRequest)){
-			    //Если есть в кеше то выводим
-//			    echo $this->getCache()->getItem($hashRequest);
-//            }else{
-//                $server->handle();
-//                $this->getCache()->addItem($hashRequest, $server->getResponse());
-//            }
-
-//			$this->getLogger()->debug("REQUEST: ".$server->getRequest()." RESPONSE: ".$server->getResponse());
 		}
 		catch (\Exception $e)
 		{

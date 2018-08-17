@@ -13,33 +13,34 @@
 
 use Zend\Log\Writer\Stream;
 
-return array(
-	'db' => array(
+return [
+	'db' => [
 		'driver'         => 'Pdo',
 		'dsn'            => 'mysql:dbname=aid;host=192.168.33.11',
 		'username'       => 'bootta',
 		'password'       => '1991',
-		'driver_options' => array(
+		'driver_options' => [
 			PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
-		),
-	),
+		],
+	],
 
     'log' => [
-        'writers' => array(
+        'writers' => [
             //Можем добавить несколько стримов.
             ['name' => new Stream('./logs/Aid/rpcserver.log'),]
-        ),
+        ],
     ],
 
     'cache' => [
         'adapter' => [
             'name' => 'memcached',
             'options' => [
-                'namespace' => 'aid_project',
+                'namespace' => 'methods',
+                'ttl' => 30,
                 'servers' => [
                     ['127.0.0.1', 11211],
                 ],
             ],
         ],
     ],
-);
+];

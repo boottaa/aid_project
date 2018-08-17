@@ -33,8 +33,7 @@ class ClassHandlers
             //module/Aid/src/JsonRpc/ClassHandlers/Orders.php
             'orders' => [
                 'getItem' => [
-                    ['id' => @$_SESSION['orders']['add']?:1],
-
+                    ['where' => ['id' => @$_SESSION['orders']['add']?:1]]
                 ],
                 'fethList' => [
                     ['page' => 1, 'limit' => 10],
@@ -50,13 +49,13 @@ class ClassHandlers
                     ]
                 ],
                 'delete' => [
-                   ['data' => ['id' => @$_SESSION['orders']['add']?:1]]
+                   ['where' => ['id' => @$_SESSION['orders']['add']?:1]]
                 ]
             ],
 
             'users' => [
                 'getItem' => [
-                    ['id' => @$_SESSION['users']['add']?:1],
+                    ['where' => ['id' => @$_SESSION['users']['add']?:1]],
 
                 ],
                 'fethList' => [
@@ -75,13 +74,13 @@ class ClassHandlers
                     ]
                 ],
                 'delete' => [
-                    ['data' => ['id' => @$_SESSION['users']['add']?:1]]
+                    ['where' => ['id' => @$_SESSION['users']['add']?:1]]
                 ]
             ],
 
             'professions' => [
                 'getItem' => [
-                    ['id' => @$_SESSION['professions']['add']?:1],
+                    ['where' => ['id' => @$_SESSION['professions']['add']?:1]],
 
                 ],
                 'fethList' => [
@@ -95,13 +94,13 @@ class ClassHandlers
                     ]
                 ],
                 'delete' => [
-                    ['data' => ['id' => @$_SESSION['professions']['add']?:1]]
+                    ['where' => ['id' => @$_SESSION['professions']['add']?:1]]
                 ]
             ],
 
             'users_address' => [
                 'getItem' => [
-                    ['id' => @$_SESSION['users_address']['add']?:1],
+                    ['where' => ['id' => @$_SESSION['users_address']['add']?:1]],
 
                 ],
                 'fethList' => [
@@ -116,13 +115,13 @@ class ClassHandlers
                     ]
                 ],
                 'delete' => [
-                    ['data' => ['id' => @$_SESSION['users_address']['add']?:1]]
+                    ['where' => ['id' => @$_SESSION['users_address']['add']?:1]]
                 ]
             ],
 
             'users_profession' => [
                 'getItem' => [
-                    ['id' => @$_SESSION['users_profession']['add']?:1],
+                    ['where' => ['id' => @$_SESSION['users_profession']['add']?:1]],
 
                 ],
                 'fethList' => [
@@ -138,7 +137,7 @@ class ClassHandlers
                     ]
                 ],
                 'delete' => [
-                    ['data' => ['id' => @$_SESSION['users_profession']['add']?:1]]
+                    ['where' => ['id' => @$_SESSION['users_profession']['add']?:1]]
                 ]
             ],
         ];

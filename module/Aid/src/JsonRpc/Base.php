@@ -23,14 +23,14 @@ class Base implements InterfaceJsonRpc
     }
 
     /**
-     * @param int $id
+     * @param array $where
      *
      * @return mixed
      */
-    public function getItem(int $id)
+    public function getItem(array $where)
     {
         try {
-            return $this->model->getOnly(['id' => $id]);
+            return $this->model->getOnly($where);
         } catch (\Throwable $e) {
             throw new InvalidArgumentException("ERROR " . $e->getMessage(), Error::ERROR_INVALID_PARAMS);
         }
