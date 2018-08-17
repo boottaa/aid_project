@@ -69,8 +69,15 @@ class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Au
         }
         $this->logger = $logger;
 
-        $this->acl = new Rights();
         $this->tableGateway = new TableGateway($this->table, $dbAdapter);
+    }
+
+    /**
+     * @param Rights $acl
+     */
+    public function setAcl(Rights $acl)
+    {
+        $this->acl = $acl;
     }
 
     /**
