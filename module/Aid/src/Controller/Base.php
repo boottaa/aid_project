@@ -123,15 +123,14 @@ class Base extends AbstractActionController
 	/**
 	 * @param Server $server
 	 */
-	protected function run()
+	protected function run($userIp, $hash, $class, $method)
 	{
 		$server = $this->getRpcServer();
-        $model = $this->params()->fromRoute('model', '');
 		try
 		{
 			if ('GET' == $_SERVER['REQUEST_METHOD'])
 			{
-				$server->setTarget('/aid/key/run/'.$model)
+				$server->setTarget('/aid/key/run/'.$class)
 					->setEnvelope(Smd::ENV_JSONRPC_2);
 				$smd = $server->getServiceMap();
 				$smd->setDojoCompatible(true);
@@ -140,7 +139,29 @@ class Base extends AbstractActionController
 				echo $smd;
 				exit();
 			}
-			$server->handle();
+            $haskForCache = md5($method.' '.$class.' '.serialize($server->getRequest()->getParams()));
+
+            if ($this->getCache()->hasItem($haskForCache) && $method != 'add') {
+                echo $this->getCache()->getItem($haskForCache);
+            } else {
+                $server->handle();
+                $this->getCache()->addItem($haskForCache, $server->getResponse());
+            }
+
+//            $server->handle();
+
+//			echo $server->getRequest();
+//			$hashRequest = md5($class.$method);
+//            echo json_encode($hashRequest);
+
+//			if($this->getCache()->hasItem($hashRequest)){
+			    //Если есть в кеше то выводим
+//			    echo $this->getCache()->getItem($hashRequest);
+//            }else{
+//                $server->handle();
+//                $this->getCache()->addItem($hashRequest, $server->getResponse());
+//            }
+
 //			$this->getLogger()->debug("REQUEST: ".$server->getRequest()." RESPONSE: ".$server->getResponse());
 		}
 		catch (\Exception $e)

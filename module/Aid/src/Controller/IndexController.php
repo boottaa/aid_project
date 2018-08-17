@@ -55,6 +55,6 @@ class IndexController extends Base
             throw new BadMethodCallException("BAD REQUEST");
         }
 
-        $this->run();
+        $this->run($userIp, $hash, $class, $method);
     }
 }
