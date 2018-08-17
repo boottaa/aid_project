@@ -8,30 +8,32 @@
 
 namespace Aid\Helpers\Auth;
 
+use Zend\Cache\Storage\Adapter\AbstractAdapter;
 use Zend\Permissions\Acl\Acl;
-use Zend\Permissions\Acl\Resource\GenericResource;
-use Zend\Permissions\Acl\Role\GenericRole;
 
 class Rights extends Acl
 {
-
-
-    function __construct()
+    function __construct(AbstractAdapter $cache)
     {
-        $allow = include __DIR__ . '/allow.php';
-        $users = array_keys($allow);
-        foreach ($users as $user) {
-            $this->addRole($user);
+        $hashForCache = 'ACL.' . __CLASS__;
 
-            $resursesAllow = $allow[$user];
-            foreach ($resursesAllow as $resurse => $allows) {
-                if (!$this->hasResource($resurse)) {
-                    $this->addResource($resurse);
+        if ($cache->hasItem($hashForCache)) {
+            return $cache->getItem($hashForCache);
+        } else {
+            $allow = include __DIR__ . '/allow.php';
+            $users = array_keys($allow);
+            foreach ($users as $user) {
+                $this->addRole($user);
+
+                $resursesAllow = $allow[$user];
+                foreach ($resursesAllow as $resurse => $allows) {
+                    if (!$this->hasResource($resurse)) {
+                        $this->addResource($resurse);
+                    }
+                    $this->allow($user, $resurse, $allows);
                 }
-                $this->allow($user, $resurse, $allows);
             }
+            $cache->addItem($hashForCache, serialize($this));
         }
-        //--- --- --- --- --- --- --- --- --- --- --- --- --- ---//
-        //$this need cached and get $this from cached if exists  //
-    }   //--- --- --- --- --- --- --- --- --- --- --- --- --- ---//
+    }
 }
