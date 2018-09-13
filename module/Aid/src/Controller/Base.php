@@ -147,12 +147,12 @@ class Base extends AbstractActionController
 //            Пока оставим тут для отладки может пригодиться
 //            $this->getCache()->removeItem($haskForCache);
 
-            if ($this->getCache()->hasItem($haskForCache) && $method != 'add') {
-                echo $this->getCache()->getItem($haskForCache);
-            } else {
+//            if ($this->getCache()->hasItem($haskForCache) && $method != 'add') {
+//                echo $this->getCache()->getItem($haskForCache);
+//            } else {
                 $server->handle();
-                $this->getCache()->addItem($haskForCache, $server->getResponse());
-            }
+//                $this->getCache()->addItem($haskForCache, $server->getResponse());
+//            }
 		}
 		catch (\Exception $e)
 		{
