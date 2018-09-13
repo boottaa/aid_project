@@ -65,8 +65,9 @@
                 </div>
                 <?php if(!empty($postData)): ?>
                 <div class="col-6" >
-                    <pre style="background: black; color: #00e300; overflow: auto; min-height: 600px;">
-                    <?php print_r($postData); ?>
+                    <pre style="background: black; color: #00e300; overflow: auto; min-height: 600px; padding: 15px;">
+
+<?= json_encode($postData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES); ?>
                     </pre>
                 </div>
                 <?php endif; ?>

@@ -99,7 +99,7 @@ class IndexController extends AbstractActionController
         ];
 
 //        $postData = $this->sendRequest(['id' => 2], 'professions', 'getItem', ClassHandlers::HASH);
-
+        
         return new ViewModel(['items' => $r, 'postData' => $postData]);
     }
 }
