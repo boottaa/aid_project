@@ -131,23 +131,40 @@
                         удаляем данные
                     </p>
                 </div>
+
+                <h4 id="item-2">users </small></h4>
+                <p>
+                    <a href="/aid/k33f3c8db70d437ce41cfbd1bbde0f413/run/users">/aid/k33f3c8db70d437ce41cfbd1bbde0f413/run/users</a><br />
+                    Ниже описанны данные для создания пользователя
+                </p>
+                <div class="item-2">
+                    <h5 id="item-2-1">add</h5>
+                    <p>
+                        <b>Обязательнные данные:</b> <br />
+                        fname (string) UTF-8 - минимальное количество символов 2 максимальное 16 <br />
+                        lname (string) UTF-8 - минимальное количество символов 2 максимальное 16 <br />
+                        email (string) UTF-8 - формат email пример: youemail@site.com <br />
+                        password (string) UTF-8 - минимальное количество символов 4 максимальное 100 <br />
+                    </p>
+                    <p>
+                        <b>Не обязательнные данные:</b> <br />
+                        status (int) - cтус пользователя (бан, подтверждения email и тд)  <br />
+                        phone (int) - номер телефона пользователя <br />
+                        type (enum('EX', 'CU')) UTF-8: определяет тип пользователя EX - executor исполнитель, CU - customer заказчик<br />
+                    </p>
+                    <p>
+                        <b>Дополнительные данные: </b> <br />
+                        is_deleted (enum('0', '1')) - При добавление по умолчанию 0 после выполнения delete проставляется 1  <br />
+                        date_update (date) - Дата добавления пользователя или дата обновления данных (если данные менялись)<br />
+                    </p>
+                </div>
+
             </div>
 
         </div>
         <div class="col-2">
-            <nav id="navbar-example3" class="navbar navbar-light bg-light position-fixed">
+            <nav id="navbar-example3" class="navbar navbar-light bg-light">
                 <nav class="nav nav-pills flex-column">
-<!--                    <a class="nav-link" href="#item-1">Item 1</a>-->
-<!--                    <nav class="nav nav-pills flex-column">-->
-<!--                        <a class="nav-link ml-3 my-1" href="#item-1-1">Item 1-1</a>-->
-<!--                        <a class="nav-link ml-3 my-1" href="#item-1-2">Item 1-2</a>-->
-<!--                    </nav>-->
-<!--                    <a class="nav-link" href="#item-2">Item2</a>-->
-<!--                    <a class="nav-link" href="#item-3">Item3</a>-->
-<!--                    <nav class="nav nav-pills flex-column">-->
-<!--                        <a class="nav-link ml-3 my-1" href="#item-3-1">Item 3-1</a>-->
-<!--                        <a class="nav-link ml-3 my-1" href="#item-3-2">Item 3-2</a>-->
-<!--                    </nav>-->
                 </nav>
             </nav>
         </div>

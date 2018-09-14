@@ -22,6 +22,7 @@ class Users extends Base
         'password' => null,
         'fname'  => null,
         'lname' => null,
+        'rating' => null,
         'is_deleted' => null,
         'status' => 1,
         'date_update' => null,
@@ -114,13 +115,12 @@ class Users extends Base
             ));
 
             $inputFilter->add(array(
-                'name'     => 'id_employee',
+                'name'     => 'phone',
                 'required' => false,
                 'filters'  => array(
                     array('name' => 'Int'),
                 ),
             ));
-
 
             $inputFilter->add(array(
                 'name'     => 'rating',
