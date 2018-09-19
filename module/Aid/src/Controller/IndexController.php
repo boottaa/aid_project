@@ -36,6 +36,9 @@ class IndexController extends Base
 		return parent::onDispatch($e);
 	}
 
+//	public function
+	
+
 	/**
      * @inheritdoc: /aid/k33f3c8db70d437ce41cfbd1bbde0f413/run/orders (model name)
 	 */
@@ -48,10 +51,15 @@ class IndexController extends Base
 
         if ('POST' == $_SERVER['REQUEST_METHOD']) {
             $checkAccess = $this->getApiAccess()->check($userIp, $hash, $class, $method);
-            if(!$checkAccess) $this->getRpcServer()->fault("Access denied!", 403);
+            if (!$checkAccess) {
+                 $this->getRpcServer()->fault("Access denied!", 403);
+//                throw new BadMethodCallException("Access denied!");
+            }
+
         }elseif ('GET' == $_SERVER['REQUEST_METHOD']){
             // Для безопасности только get пропускаем все остальное в топку
         }else{
+            $this->getLogger()->err("BAD REQUEST");
             throw new BadMethodCallException("BAD REQUEST");
         }
 

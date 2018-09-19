@@ -225,11 +225,16 @@ class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Au
     public function check(string $user_ip, string $hash, string $class, string $method = null): bool
     {
         try {
-            $row = iterator_to_array($this->getOnly(['hash' => $hash]));
-            $user = $row['applications'];
+            $row = iterator_to_array($this->getOnly(['hash' => $hash, 'status' => '1', 'is_deleted' => '0']));
+            if (empty($row)){
+                $this->logger->alert("check access error");
+                return false;
+            }
+
+            $application = $row['applications'];
             $this->logger->info("CHECK_ACCESS - IP: ".$user_ip." HASH: ".$hash." CLASS: ".$class." METHOD: ".$method);
 
-            return $this->acl->isAllowed($user, $class, $method);
+            return $this->acl->isAllowed($application, $class, $method);
 
         }catch (\Exception $e){
             return false;

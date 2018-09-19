@@ -128,6 +128,7 @@ class Base extends AbstractActionController
 	protected function run($userIp, $hash, $class, $method)
 	{
 		$server = $this->getRpcServer();
+
 		try
 		{
 			if ('GET' == $_SERVER['REQUEST_METHOD'])
@@ -150,14 +151,14 @@ class Base extends AbstractActionController
 //            if ($this->getCache()->hasItem($haskForCache) && $method != 'add') {
 //                echo $this->getCache()->getItem($haskForCache);
 //            } else {
-                $server->handle();
+                $server->handle($server->getRequest());
 //                $this->getCache()->addItem($haskForCache, $server->getResponse());
 //            }
+            exit();
 		}
 		catch (\Exception $e)
 		{
 			$this->getLogger()->err($e->getMessage());
 		}
-		exit();
 	}
 }
