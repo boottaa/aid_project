@@ -143,6 +143,7 @@ class Base extends AbstractActionController
 				exit();
 			}
 
+
 			$haskForCache = md5($method.' '.$class.' '.serialize($server->getRequest()->getParams()));
 
 //            Пока оставим тут для отладки может пригодиться
@@ -151,7 +152,9 @@ class Base extends AbstractActionController
 //            if ($this->getCache()->hasItem($haskForCache) && $method != 'add') {
 //                echo $this->getCache()->getItem($haskForCache);
 //            } else {
-                $server->handle($server->getRequest());
+                $server->handle();
+            $this->getLogger()->notice("Request: ".$server->getRequest()->toJson() );
+            $this->getLogger()->info("Response: ".$server->getResponse()->toJson() );
 //                $this->getCache()->addItem($haskForCache, $server->getResponse());
 //            }
             exit();

@@ -64,12 +64,10 @@ class ClassHandlers
                 'add' => [
                     ['data' =>
                         [
-                            'phone' => 11111111,
                             'email' => 'vasia@bigTest.com',
                             'password' => '111111111',
                             'fname' => 'TESTFNAME',
                             'lname' => 'TESTLNAME',
-                            'status' => 1,
                         ]
                     ]
                 ],
