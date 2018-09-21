@@ -66,7 +66,7 @@ abstract class Base implements Models\All
         if($inputFilter->isValid()){
             $this->data = $data;
         }else{
-            throw new \Exception("ERRORS: ".json_encode($inputFilter->getMessages()));
+            throw new \Exception( json_encode($inputFilter->getMessages()));
         }
 
         return $this;

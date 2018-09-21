@@ -32,7 +32,7 @@ class Base implements InterfaceJsonRpc
         try {
             return $this->model->getOnly($where);
         } catch (\Throwable $e) {
-            throw new InvalidArgumentException("ERROR " . $e->getMessage(), Error::ERROR_INVALID_PARAMS);
+            throw new InvalidArgumentException( $e->getMessage(), Error::ERROR_INVALID_PARAMS);
         }
     }
 
