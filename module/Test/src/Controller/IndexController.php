@@ -25,7 +25,6 @@ class IndexController extends AbstractActionController
 
         
         $client = new \Zend\Json\Server\Client($url);
-        $client->call();
         try
         {
             $e = $client->call($method, $data);
