@@ -71,7 +71,7 @@ class Base implements InterfaceJsonRpc
         try {
             return $this->model->exchangeArray($data)->save();
         }catch (\Exception $e){
-            throw new InvalidArgumentException("ERROR " . $e->getMessage(), Error::ERROR_INVALID_PARAMS);
+            throw new InvalidArgumentException( $e->getMessage(), Error::ERROR_INVALID_PARAMS);
         }
     }
 
