@@ -28,9 +28,10 @@ class Users extends Base implements InterfaceJsonRpc
                 $result['is_deleted'] == 0
             ){
                 $hash = md5(serialize($result)."SALAID");
-                $checkHash = $apiAccess->getOnly(['hash'=> $hash]);
 
-                if (empty($checkHash['hash']) && empty($result['is_deleted']) && $checkHash['status'] == $result['status']) {
+                try {
+                    $apiAccess->getOnly(['hash' => $hash]);
+                } catch (\Exception $e) {
                     $apiAccess->exchangeArray([
                         'hash' => $hash,
                         'id_user' => $result['id'],
@@ -49,7 +50,7 @@ class Users extends Base implements InterfaceJsonRpc
         }catch (\Exception $e){
             if($this->isDebug == true){
                 $this->logger->debug(
-                    'class: ' . __CLASS__ . ' method: ' . __METHOD__ . ' message: ' . $e->getMessage()
+                    'class: ' . __CLASS__ . ' method: ' . __METHOD__ . ' message: ' . $e->getMessage().' getFile:'. $e->getFile().' getLine:'. $e->getLine()
                 );
             }
             return false;
