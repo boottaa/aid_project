@@ -68,6 +68,7 @@ class ClassHandlers
                             'password' => '111111111',
                             'fname' => 'TESTFNAME',
                             'lname' => 'TESTLNAME',
+                            'status' => 1,
                         ]
                     ]
                 ],

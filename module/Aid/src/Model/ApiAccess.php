@@ -220,6 +220,8 @@ class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Au
 
     public function getOnly(array $where)
     {
+        $this->logger->debug( "ACCESS getOnly: ".json_encode( $where ) );
+
         $rowset = $this->tableGateway->select($where);
 
         $row = $rowset->current();

@@ -44,6 +44,10 @@ class Users extends Base
         return $this->access;
     }
 
+    public function hashPassword($password){
+        return md5( $password.'$_SERVER[sult]' );
+    }
+
     public function getInputFilter()
     {
         if (!$this->inputFilter) {
@@ -114,7 +118,7 @@ class Users extends Base
                         'name'    => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min'      => 4,
+                            'min'      => 32,
                             'max'      => 100,
                         ),
                     ),
