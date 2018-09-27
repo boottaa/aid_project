@@ -86,7 +86,8 @@ class Module implements ConfigProviderInterface
                         $container->get(Logger::class),
 					    $container->get(ApiAccess::class),
                         $jsonRpcServer,
-                        $container->get(StorageCacheFactory::class)
+                        $container->get(StorageCacheFactory::class),
+                        ($container->get('config'))['isDebug']
 					);
 				},
 			]

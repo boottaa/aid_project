@@ -1,6 +1,13 @@
 <?php
 return [
-    'web_aid_project' => [
+    'WA' => [
+        'users' => [
+            'add',
+            'auth',
+        ],
+    ],
+
+    'CU' => [
         'orders' => [
             'getItem',
             'fethList',
@@ -32,18 +39,5 @@ return [
             'delete',
         ],
     ],
-    'ios_aid_project' => [
-        'users' => [
-            'getItem',
-            'fethList',
-            'add',
-            'delete',
-        ],
-        'professions' => [
-            'getItem',
-            'fethList',
-            'add',
-            'delete',
-        ],
-    ]
+
 ];

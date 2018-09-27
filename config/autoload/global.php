@@ -14,6 +14,7 @@
 use Zend\Log\Writer\Stream;
 
 return [
+    'isDebug' => true,
 	'db' => [
 		'driver'         => 'Pdo',
 		'dsn'            => 'mysql:dbname=aid;host=localhost',

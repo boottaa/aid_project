@@ -8,9 +8,7 @@
 namespace Aid\Controller;
 
 use Aid\Interfaces\Models\Auth;
-use Aid\Model\Orders;
 use Zend\Cache\Storage\Adapter\AbstractAdapter;
-use Zend\Cache\Storage\Adapter\Memcached;
 use Zend\Http\PhpEnvironment\RemoteAddress;
 use Zend\Json\Server\Exception\BadMethodCallException;
 use Zend\Json\Server\Server;
@@ -19,12 +17,21 @@ use Zend\Mvc\MvcEvent;
 
 class IndexController extends Base
 {
-	public function __construct(LoggerInterface $logger, Auth $apiAccess,Server $rpcServer,AbstractAdapter $cache)
+	public function __construct(
+	    LoggerInterface $logger,
+        Auth $apiAccess,
+        Server $rpcServer,
+
+        //Пока оставим кеш на продакшене пока не работает нужно разобраться
+        AbstractAdapter $cache,
+
+        $isDebug = false
+    )
 	{
-        $this->setCache($cache);
 		$this->setLogger($logger);
 		$this->setApiAccess($apiAccess);
 		$this->setRpcServer($rpcServer);
+        $this->isDebug = $isDebug;
 	}
 
 	/**
@@ -36,7 +43,15 @@ class IndexController extends Base
 		return parent::onDispatch($e);
 	}
 
-//	public function
+	/**
+     * @inheritdoc: aid/k/auth/users
+     */
+	public function authAction()
+    {
+        $class = 'auth';
+
+        $this->run($class);
+    }
 	
 
 	/**
@@ -63,6 +78,6 @@ class IndexController extends Base
             throw new BadMethodCallException("BAD REQUEST");
         }
 
-        $this->run($userIp, $hash, $class, $method);
+        $this->run($class, $userIp, $hash, $method);
     }
 }

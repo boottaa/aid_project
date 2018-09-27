@@ -38,14 +38,16 @@ class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Au
      * @var Rights
      */
     protected $acl;
-    
+
+    private $isDebug;
+
     protected $table = 'api_access';
 
     protected $data = [
         'id' => null,
         'hash' => '',
         'status' => 1,
-        'applications' => 'web',
+        'type' => 'CU',
         'date_create' => null,
         'is_deleted' => 0,
     ];
@@ -56,20 +58,91 @@ class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Au
     protected $inputFilter;
 
     /**
-     * Construct constructor.
+     * ApiAccess constructor.
      *
      * @param AdapterInterface $dbAdapter
+     * @param LoggerInterface $logger
+     * @param bool $isDebug
      *
-     * @return void
+     * @throws \Exception
      */
-    public function __construct(AdapterInterface $dbAdapter, LoggerInterface $logger)
+    public function __construct(AdapterInterface $dbAdapter, LoggerInterface $logger, $isDebug = false)
     {
         if (empty($this->table)) {
             throw new \Exception("Error: table is empty");
         }
         $this->logger = $logger;
+        $this->isDebug = $isDebug;
 
         $this->tableGateway = new TableGateway($this->table, $dbAdapter);
+    }
+
+    /**
+     * @return InputFilter
+     */
+    public function getInputFilter()
+    {
+        if (!$this->inputFilter) {
+            $inputFilter = new InputFilter();
+
+            $inputFilter->add(array(
+                'name'     => 'id',
+                'required' => false,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ))->add(array(
+                'name'     => 'id_user',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ))->add(array(
+                'name'     => 'status',
+                'required' => false,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ))->add(array(
+                'name'     => 'hash',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 32,
+                            'max'      => 32,
+                        ),
+                    ),
+                ),
+            ))->add(array(
+                'name'     => 'type',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 2,
+                            'max'      => 5,
+                        ),
+                    ),
+                ),
+            ));
+
+            $this->inputFilter = $inputFilter;
+        }
+
+        return $this->inputFilter;
     }
 
     /**
@@ -109,7 +182,9 @@ class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Au
         if($inputFilter->isValid()){
             $this->data = $data;
         }else{
+
             throw new \Exception( json_encode($inputFilter->getMessages()));
+
         }
 
         return $this;
@@ -143,68 +218,6 @@ class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Au
         }
     }
 
-    /**
-     * @return InputFilter
-     */
-    public function getInputFilter()
-    {
-        if (!$this->inputFilter) {
-            $inputFilter = new InputFilter();
-
-            $inputFilter->add(array(
-                'name'     => 'id',
-                'required' => false,
-                'filters'  => array(
-                    array('name' => 'Int'),
-                ),
-            ))->add(array(
-                'name'     => 'status',
-                'required' => false,
-                'filters'  => array(
-                    array('name' => 'Int'),
-                ),
-            ))->add(array(
-                'name'     => 'hash',
-                'required' => false,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 32,
-                            'max'      => 32,
-                        ),
-                    ),
-                ),
-            ))->add(array(
-                'name'     => 'applications',
-                'required' => false,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 3,
-                            'max'      => 32,
-                        ),
-                    ),
-                ),
-            ));
-
-            $this->inputFilter = $inputFilter;
-        }
-
-        return $this->inputFilter;
-    }
-
     public function getOnly(array $where)
     {
         $rowset = $this->tableGateway->select($where);
@@ -231,10 +244,10 @@ class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Au
                 return false;
             }
 
-            $application = $row['applications'];
+            $type = $row['type'];
             $this->logger->info("CHECK_ACCESS - IP: ".$user_ip." HASH: ".$hash." CLASS: ".$class." METHOD: ".$method);
 
-            return $this->acl->isAllowed($application, $class, $method);
+            return $this->acl->isAllowed($type, $class, $method);
 
         }catch (\Exception $e){
             return false;

@@ -19,6 +19,14 @@ use Zend\Db\Adapter\AdapterInterface;
 
 abstract class Base implements Models\All
 {
+    protected $table = '';
+    protected $data = [];
+
+
+    /**
+     * @isDebug from config/autoload/global.php
+     */
+    protected $isDebug;
 
     /**
      * @var LoggerInterface
@@ -29,16 +37,16 @@ abstract class Base implements Models\All
      * @var TableGateway
      */
     protected $tableGateway;
-    protected $table = '';
-    protected $data = [];
+
     /**
      * @var InputFilter
      */
     protected $inputFilter;
 
-    public function __construct(AdapterInterface $dbAdapter, LoggerInterface $logger)
+    public function __construct(AdapterInterface $dbAdapter, LoggerInterface $logger, $isDebug = false)
     {
         $this->logger = $logger;
+        $this->isDebug = $isDebug;
 
         if (empty($this->table)) {
             $this->logger->err("table is empty");

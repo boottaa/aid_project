@@ -39,8 +39,9 @@ class AuthFactory implements FactoryInterface
         $logger = $container->get(Logger::class);
         $cache = $container->get(StorageCacheFactory::class);
         $dbAdapter = $container->get(AdapterInterface::class);
+        $isDebug = ($container->get('config'))['isDebug'];
         $acl = new Rights($cache);
-        $apiAccess = new ApiAccess($dbAdapter, $logger, $cache);
+        $apiAccess = new ApiAccess($dbAdapter, $logger, $isDebug);
         $apiAccess->setAcl($acl);
 
         return $apiAccess;

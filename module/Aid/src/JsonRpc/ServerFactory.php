@@ -38,11 +38,21 @@ class ServerFactory implements FactoryInterface
         $dataBaseAdapter = $container->get(AdapterInterface::class);
         if (class_exists($requestedName)) {
             $logger = $container->get(Logger::class);
+            $isDebug = ($container->get('config'))['isDebug'];
 
-            $model = new $requestedName($dataBaseAdapter, $logger);
+            $model = new $requestedName($dataBaseAdapter, $logger, $isDebug);
             if($model instanceof All){
                 $server = new Server();
-                $server->setClass(new Base($model));
+
+                $getClassName = explode('\\', $requestedName);
+                $class = '\\Aid\\JsonRpc\\'.end($getClassName);
+
+                if (class_exists($class)) {
+                    $server->setClass(new $class($model, $logger, $isDebug));
+                } else {
+                    $server->setClass(new Base($model, $logger, $isDebug));
+                }
+
                 return $server;
             }
             throw new \Exception('Class '.$requestedName.' not instanceof to All');

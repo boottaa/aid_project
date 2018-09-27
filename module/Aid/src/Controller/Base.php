@@ -30,34 +30,21 @@ class Base extends AbstractActionController
 	 * @var Logger
 	 */
 	private $logger;
+
 	/**
 	 * @var Auth
 	 */
 	private $apiAccess;
+
 	/**
 	 * @var Server
 	 */
 	private $rpcServer;
-    /**
-     * @var AbstractAdapter
-     */
-	private $cache;
 
     /**
-     * @param AbstractAdapter $cache
+     * @isDebug from config/autoload/global.php
      */
-    public function setCache(AbstractAdapter $cache)
-    {
-        $this->cache = $cache;
-    }
-
-    /**
-     * @return AbstractAdapter
-     */
-    public function getCache()
-    {
-        return $this->cache;
-    }
+    public $isDebug;
 
 	/**
 	 * @return Server
@@ -120,12 +107,13 @@ class Base extends AbstractActionController
         return implode("", $hash);
     }
 
-
-
-	/**
-	 * @param Server $server
-	 */
-	protected function run($userIp, $hash, $class, $method)
+    /**
+     * @param $class
+     * @param string $userIp
+     * @param string $hash
+     * @param string $method
+     */
+	protected function run($class, $userIp = '', $hash = '', $method = '')
 	{
 		$server = $this->getRpcServer();
 
@@ -143,20 +131,11 @@ class Base extends AbstractActionController
 				exit();
 			}
 
+            $server->handle();
 
-			$haskForCache = md5($method.' '.$class.' '.serialize($server->getRequest()->getParams()));
+            $this->getLogger()->debug("Request: " . $server->getRequest()->toJson());
+            $this->getLogger()->debug("Response: " . $server->getResponse()->toJson());
 
-//            Пока оставим тут для отладки может пригодиться
-//            $this->getCache()->removeItem($haskForCache);
-
-//            if ($this->getCache()->hasItem($haskForCache) && $method != 'add') {
-//                echo $this->getCache()->getItem($haskForCache);
-//            } else {
-                $server->handle();
-            $this->getLogger()->notice("Request: ".$server->getRequest()->toJson() );
-            $this->getLogger()->info("Response: ".$server->getResponse()->toJson() );
-//                $this->getCache()->addItem($haskForCache, $server->getResponse());
-//            }
             exit();
 		}
 		catch (\Exception $e)

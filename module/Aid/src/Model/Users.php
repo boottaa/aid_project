@@ -9,7 +9,9 @@
 namespace Aid\Model;
 
 use Aid\Model\Base;
+use Zend\Db\Adapter\AdapterInterface;
 use Zend\InputFilter\InputFilter;
+use Zend\Log\LoggerInterface;
 
 class Users extends Base
 {
@@ -28,6 +30,19 @@ class Users extends Base
         'date_update' => null,
         'type' => '',//ENUM
     ];
+
+    private $access;
+
+    public function __construct(AdapterInterface $dbAdapter, LoggerInterface $logger, $isDebug = false)
+    {
+        $this->access = new ApiAccess($dbAdapter, $logger);
+        parent::__construct($dbAdapter, $logger, $isDebug);
+    }
+
+    public function getApiAccess()
+    {
+        return $this->access;
+    }
 
     public function getInputFilter()
     {

@@ -76,6 +76,7 @@ class IndexController extends AbstractActionController
                 'fethList',
                 'add',
                 'delete',
+                'auth',
             ],
             'professions' => [
                 'getItem',

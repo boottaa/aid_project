@@ -73,6 +73,9 @@ class ClassHandlers
                 ],
                 'delete' => [
                     ['where' => ['id' => @$_SESSION['users']['add']?:1]]
+                ],
+                'auth' => [
+                    ['email' => 'vasia@bigTest.com', 'password' => '111111111']
                 ]
             ],
 

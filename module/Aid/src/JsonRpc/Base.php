@@ -3,23 +3,34 @@ namespace Aid\JsonRpc;
 
 use Aid\Interfaces\JsonRpc\InterfaceJsonRpc;
 use Aid\Interfaces\Models\All;
-use Aid\JsonRpc\Server;
 use Zend\Json\Exception\InvalidArgumentException;
 use Zend\Json\Server\Error;
-use Zend\Json\Server\Exception\ErrorException;
+use Zend\Log\LoggerInterface;
 
 class Base implements InterfaceJsonRpc
 {
     /**
      * @var All
      */
-    private $model;
+    protected $model;
+
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * @isDebug from config/autoload/global.php
+     */
+    protected $isDebug;
 
     /**
      * @param All $model
      */
-    public function __construct(All $model){
+    public function __construct(All $model, LoggerInterface $logger, $isDebug = false){
         $this->model = $model;
+        $this->logger = $logger;
+        $this->isDebug = $isDebug;
     }
 
     /**

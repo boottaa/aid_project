@@ -20,5 +20,5 @@ interface Construct
      *
      * @return void
      */
-    public function __construct(AdapterInterface $dbAdapter, LoggerInterface $logger);
+    public function __construct(AdapterInterface $dbAdapter, LoggerInterface $logger, $isDebug = false);
 }
