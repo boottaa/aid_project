@@ -2,7 +2,7 @@
 return [
     'WA' => [
         'users' => [
-            'add',
+            'registration',
             'auth',
         ],
     ],

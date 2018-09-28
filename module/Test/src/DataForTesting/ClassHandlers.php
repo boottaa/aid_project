@@ -61,10 +61,10 @@ class ClassHandlers
                 'fethList' => [
                     ['page' => 1, 'limit' => 10],
                 ],
-                'add' => [
+                'registration' => [
                     ['data' =>
                         [
-                            'email' => 'vasia@bigTest.com',
+                            'email' => 'bootta@yandex.ru',
                             'password' => '111111111',
                             'fname' => 'TESTFNAME',
                             'lname' => 'TESTLNAME',
