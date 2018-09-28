@@ -17,6 +17,7 @@ use Aid\Model\UsersProfession;
 use Aid\Helpers\Auth\AuthFactory;
 use Zend\Cache\Service\StorageCacheAbstractServiceFactory;
 use Zend\Cache\Service\StorageCacheFactory;
+use Zend\Db\Adapter\AdapterInterface;
 use Zend\Log\Logger;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\Router\Http\Literal;
@@ -37,6 +38,10 @@ class Module implements ConfigProviderInterface
 	{
 		return array(
 			'factories' => [
+			    //Need for auth
+			    'ModelUsers' => function($sm){
+                    return new Users($sm->get(AdapterInterface::class), $sm->get(Logger::class));
+                },
                 //Кеширование
                 StorageCacheFactory::class => StorageCacheFactory::class,
                 //Проверка доступа
@@ -90,6 +95,23 @@ class Module implements ConfigProviderInterface
                         ($container->get('config'))['isDebug']
 					);
 				},
+
+                Controller\AuthController::class => function ($container) {
+                    /**
+                     * @var $container ServiceManager
+                     */
+
+                    $jsonRpcServer = $container->get('users');
+
+                    return new Controller\AuthController(
+                        $container->get(Logger::class),
+                        $container->get(ApiAccess::class),
+                        $jsonRpcServer,
+                        $container->get(StorageCacheFactory::class),
+                        $container->get('ModelUsers'),
+                        ($container->get('config'))['isDebug']
+                    );
+                },
 			]
 		];
 	}

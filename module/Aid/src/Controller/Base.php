@@ -121,7 +121,7 @@ class Base extends AbstractActionController
 		{
 			if ('GET' == $_SERVER['REQUEST_METHOD'])
 			{
-				$server->setTarget('/aid/key/run/'.$class)
+				$server->setTarget('/'.$class)
 					->setEnvelope(Smd::ENV_JSONRPC_2);
 				$smd = $server->getServiceMap();
 				$smd->setDojoCompatible(true);
