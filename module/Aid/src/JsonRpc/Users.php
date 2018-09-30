@@ -77,7 +77,7 @@ class Users extends Base
         $hash = $data['password'];
         $id = parent::add($data);
 
-        $link = "<a href='http://billig.ru/k/accept/users?hash={$hash}.&user=$id'>Подтвердить регистрацию</a>";
+        $link = "http://billig.ru/auth/accept/k{$hash}/{$id}";
 
         $to      = $data['email'];
         $subject = 'Подтверждение регистрации';

@@ -49,7 +49,7 @@ class ClassHandlers
                     ]
                 ],
                 'delete' => [
-                   ['where' => ['id' => @$_SESSION['orders']['add']?:1]]
+                    ['where' => ['id' => @$_SESSION['orders']['add']?:1]]
                 ]
             ],
 
@@ -68,7 +68,6 @@ class ClassHandlers
                             'password' => '111111111',
                             'fname' => 'TESTFNAME',
                             'lname' => 'TESTLNAME',
-                            'status' => 1,
                         ]
                     ]
                 ],

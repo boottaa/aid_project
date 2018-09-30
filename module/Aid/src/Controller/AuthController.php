@@ -19,6 +19,8 @@ use Zend\Mvc\MvcEvent;
 
 class AuthController extends Base
 {
+    private $users;
+
 	public function __construct(
 	    LoggerInterface $logger,
         Auth $apiAccess,
@@ -29,18 +31,11 @@ class AuthController extends Base
         $isDebug = false
     )
 	{
-	    /*
-	     * $container->get(Logger::class),
-                        $container->get(ApiAccess::class),
-                        $jsonRpcServer,
-                        $container->get(StorageCacheFactory::class),
-                        $container->get('ModelUsers'),
-                        ($container->get('config'))['isDebug']*/
-
 		$this->setLogger($logger);
 		$this->setApiAccess($apiAccess);
 		$this->setRpcServer($rpcServer);
         $this->isDebug = $isDebug;
+        $this->users = $users;
 	}
 
 	/**
@@ -52,9 +47,25 @@ class AuthController extends Base
 		return parent::onDispatch($e);
 	}
 
-	public function acceptAction()
-    {
-        $this->getApiAccess();
+    public function acceptAction(){
+
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        if(!empty($id) && $id > 0){
+            $user = $this->users->getOnly(['id' => $id]);
+
+            $hash = $this->getHash();
+            if($user['password'] == $hash){
+                $user['status'] = 1;
+                $this->users->exchangeArray($user)->save();
+                echo "Молодец, регистрацию завершил";
+            }else{
+                echo "Хакер что ли?";
+            }
+        }else{
+            echo "Как ты сюда попал?";
+        }
+
+        exit();
     }
 
 	/**
