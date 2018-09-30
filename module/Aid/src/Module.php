@@ -56,7 +56,7 @@ class Module implements ConfigProviderInterface
             //alias rout to model
             'aliases' => [
                 'orders' => Orders::class,
-                'users' => Users::class,
+//                'users' => Users::class,
                 'professions' => Professions::class,
                 'users_address' => UsersAddress::class,
                 'users_profession' => UsersProfession::class,
@@ -100,8 +100,7 @@ class Module implements ConfigProviderInterface
                     /**
                      * @var $container ServiceManager
                      */
-
-                    $jsonRpcServer = $container->get('users');
+                    $jsonRpcServer = $container->get(Users::class);
 
                     return new Controller\AuthController(
                         $container->get(Logger::class),
