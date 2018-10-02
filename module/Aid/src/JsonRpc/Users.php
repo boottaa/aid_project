@@ -128,7 +128,7 @@ class Users extends Base
             $user = iterator_to_array($this->model->getOnly(['email' => $email, 'status' => '1', 'is_deleted' => '0']));
             $hash = md5(sha1($email."__".date('U')));
             $newPassword = substr($hash, 0, 8);
-            $user['password'] = md5($newPassword);
+            $user['password'] = $this->model->hashPassword($newPassword);
 
             $this->model->exchangeArray($user)->save();
 
