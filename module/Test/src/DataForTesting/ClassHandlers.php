@@ -75,7 +75,10 @@ class ClassHandlers
                     ['where' => ['id' => @$_SESSION['users']['add']?:1]]
                 ],
                 'auth' => [
-                    ['email' => 'vasia@bigTest.com', 'password' => '111111111']
+                    ['email' => 'bootta@yandex', 'password' => '111111111']
+                ],
+                'restorePassword' => [
+                    ['email' => 'bootta@yandex.ru']
                 ]
             ],
 

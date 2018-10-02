@@ -81,6 +81,7 @@ class IndexController extends AbstractActionController
                 'registration',
                 'delete',
                 'auth',
+                'restorePassword',
             ],
             'professions' => [
                 'getItem',

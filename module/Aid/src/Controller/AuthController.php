@@ -81,6 +81,12 @@ class AuthController extends Base
         $this->run('auth');
     }
 
+    public function restoreAction()
+    {
+        echo "Извините востановить пароль временно не возможно!!!";
+        exit();
+    }
+
     protected function run($class, $userIp = '', $hash = '', $method = '')
     {
         $server = $this->getRpcServer();
