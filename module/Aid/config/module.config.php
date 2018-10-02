@@ -36,7 +36,7 @@ return [
                 'options' => [
                     'route'    => '/auth[/:action][/:hash][/:id]',
                     'constraints' => [
-                        'hash' => 'k[a-z0-9_-]*',
+                        'hash' => 'k[a-zA-Z0-9_-]*',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
                     ],

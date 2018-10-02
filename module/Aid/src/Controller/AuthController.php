@@ -7,11 +7,10 @@
 
 namespace Aid\Controller;
 
+use Aid\Helpers\Auth\Base64;
 use Aid\Interfaces\Models\Auth;
 use Aid\Model\Users;
 use Zend\Cache\Storage\Adapter\AbstractAdapter;
-use Zend\Http\PhpEnvironment\RemoteAddress;
-use Zend\Json\Server\Exception\BadMethodCallException;
 use Zend\Json\Server\Server;
 use Zend\Json\Server\Smd;
 use Zend\Log\LoggerInterface;
@@ -19,6 +18,7 @@ use Zend\Mvc\MvcEvent;
 
 class AuthController extends Base
 {
+    use Base64;
     private $users;
 
 	public function __construct(
@@ -83,7 +83,10 @@ class AuthController extends Base
 
     public function restoreAction()
     {
-        echo "Извините востановить пароль временно не возможно!!!";
+        $hash = $this->getHash();
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+
+        echo "Извините востановить пароль временно не возможно!!!".$this->base64_url_decode($hash).$id;
         exit();
     }
 

@@ -125,7 +125,7 @@ class Users extends Base
      */
     public function restorePassword(string $email){
         try{
-            $user = iterator_to_array($this->model->getOnly(['email' => $email]));
+            $user = iterator_to_array($this->model->getOnly(['email' => $email, 'status' => '1', 'is_deleted' => '0']));
             $hash = $this->base64_url_encode($email);
             $id = $user['id'];
 
@@ -137,8 +137,9 @@ class Users extends Base
             $headers = 'From: noreply@billig.ru' . "\r\n" .
                 'Reply-To: noreply@billig.ru' . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
-
             mail($to, $subject, $message, $headers);
+            
+            return "Check your mailbox: ".$email;
 
         }catch (\Exception $e){
 
