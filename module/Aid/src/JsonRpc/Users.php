@@ -126,14 +126,15 @@ class Users extends Base
     public function restorePassword(string $email){
         try{
             $user = iterator_to_array($this->model->getOnly(['email' => $email, 'status' => '1', 'is_deleted' => '0']));
-            $hash = $this->base64_url_encode($email);
-            $id = $user['id'];
+            $hash = $this->encode($email."__".date('U'));
+            $newPassword = substr($hash, 0, 8);
+            $user['password'] = md5($newPassword);
 
-            $link = "http://billig.ru/auth/restore/k{$hash}/{$id}";;
+            $this->model->exchangeArray($user)->save();
 
             $to      = $user['email'];
             $subject = 'Востановления доступа';
-            $message = 'Для востановления пароля перейдите по ссылке: '.$link;
+            $message = 'Ваш новый пароль: '.$newPassword;
             $headers = 'From: noreply@billig.ru' . "\r\n" .
                 'Reply-To: noreply@billig.ru' . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
