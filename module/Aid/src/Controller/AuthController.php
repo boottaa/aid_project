@@ -7,7 +7,6 @@
 
 namespace Aid\Controller;
 
-use Aid\Helpers\Auth\Base64;
 use Aid\Interfaces\Models\Auth;
 use Aid\Model\Users;
 use Zend\Cache\Storage\Adapter\AbstractAdapter;
@@ -18,7 +17,6 @@ use Zend\Mvc\MvcEvent;
 
 class AuthController extends Base
 {
-    use Base64;
     private $users;
 
 	public function __construct(
