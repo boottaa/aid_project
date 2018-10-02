@@ -81,7 +81,7 @@ class ClassHandlers
                 ],
 
                 'auth' => [
-                    ['email' => 'bootta@yandex.ru', 'password' => '111111111']
+                    ['email' => 'bootta@yandex.ru', 'password' => 'b4a8bb20']
                 ],
                 'restorePassword' => [
                     ['email' => 'bootta@yandex.ru']
