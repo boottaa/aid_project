@@ -126,13 +126,13 @@ class Users extends Base
     public function restorePassword(string $email){
         try{
             $user = iterator_to_array($this->model->getOnly(['email' => $email]));
-            $hash = $this->base64_url_decode($email);
+            $hash = $this->base64_url_encode($email);
             $id = $user['id'];
 
             $link = "http://billig.ru/auth/restore/k{$hash}/{$id}";;
 
             $to      = $user['email'];
-            $subject = 'Подтверждение регистрации';
+            $subject = 'Востановления доступа';
             $message = 'Для востановления пароля перейдите по ссылке: '.$link;
             $headers = 'From: noreply@billig.ru' . "\r\n" .
                 'Reply-To: noreply@billig.ru' . "\r\n" .
