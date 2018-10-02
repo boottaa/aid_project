@@ -51,7 +51,7 @@ class AuthController extends Base
 
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
         if(!empty($id) && $id > 0){
-            $user = $this->users->getOnly(['id' => $id]);
+            $user = iterator_to_array($this->users->getOnly(['id' => $id]));
 
             $hash = $this->getHash();
             if($user['password'] == $hash){

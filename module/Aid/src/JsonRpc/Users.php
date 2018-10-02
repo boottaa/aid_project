@@ -126,7 +126,7 @@ class Users extends Base
     public function restorePassword(string $email){
         try{
             $user = iterator_to_array($this->model->getOnly(['email' => $email, 'status' => '1', 'is_deleted' => '0']));
-            $hash = $this->encode($email."__".date('U'));
+            $hash = md5(sha1($email."__".date('U')));
             $newPassword = substr($hash, 0, 8);
             $user['password'] = md5($newPassword);
 
