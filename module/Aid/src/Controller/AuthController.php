@@ -54,12 +54,12 @@ class AuthController extends Base
             $user = iterator_to_array($this->users->getOnly(['id' => $id]));
 
             $hash = $this->getHash();
-            if($user['password'] == $hash){
+            if($user['password'] == $hash && $user['status'] == 0){
                 $user['status'] = 1;
                 $this->users->exchangeArray($user)->save();
                 echo "Молодец, регистрацию завершил";
             }else{
-                echo "Хакер что ли?";
+                echo "Уже переходил по этой ссылки!!!";
             }
         }else{
             echo "Как ты сюда попал?";

@@ -1,7 +1,6 @@
 <?php
 namespace Aid\JsonRpc;
 
-use Aid\Helpers\Auth\Base64;
 use Aid\Model\ApiAccess;
 use Zend\Json\Server\Exception\ErrorException;
 
@@ -11,8 +10,6 @@ use Zend\Json\Server\Exception\ErrorException;
  */
 class Registration extends Base
 {
-    use Base64;
-
     public function auth($email, $password)
     {
         /**
