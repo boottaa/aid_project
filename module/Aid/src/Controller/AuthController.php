@@ -81,32 +81,6 @@ class AuthController extends Base
         $this->run('auth');
     }
 
-//    public function restoreAction()
-//    {
-//        $hash = $this->getHash();
-//        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-//
-//
-//        try {
-//            $hashDecode = $this->decode($hash);
-//            list($email, $time) = explode("__", $hashDecode);
-//
-//            if ($time < time()) {
-//                echo "сcылка устарела";
-//                die();
-//            }
-//            if($this->getRequest()->isPost()) {
-//                $user = iterator_to_array($this->users->getOnly(['email' => $email, 'id' => $id]));
-//                $user['password'] = substr($hash, 0, 8);
-//                $this->users->exchangeArray($user);
-//            }
-//        }catch (\Exception $e){
-//
-//        }
-////        echo "Извините востановить пароль временно не возможно!!!".$this->base64_url_decode($hash).$id;
-//        exit();
-//    }
-
     protected function run($class, $userIp = '', $hash = '', $method = '')
     {
         $server = $this->getRpcServer();

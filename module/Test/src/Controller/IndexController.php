@@ -69,6 +69,11 @@ class IndexController extends AbstractActionController
             }
         }
         $r = [
+            'auth' => [
+                'registration',
+                'auth',
+                'restorePassword',
+            ],
             'orders' => [
                 'getItem',
                 'fethList',
@@ -78,10 +83,7 @@ class IndexController extends AbstractActionController
             'users' => [
                 'getItem',
                 'fethList',
-                'registration',
                 'delete',
-                'auth',
-                'restorePassword',
             ],
             'professions' => [
                 'getItem',

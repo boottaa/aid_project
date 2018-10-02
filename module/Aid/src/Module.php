@@ -7,6 +7,7 @@
 
 namespace Aid;
 
+use Aid\JsonRpc\Registration;
 use Aid\JsonRpc\ServerFactory;
 use Aid\Model\ApiAccess;
 use Aid\Model\Orders;
@@ -15,9 +16,9 @@ use Aid\Model\Users;
 use Aid\Model\UsersAddress;
 use Aid\Model\UsersProfession;
 use Aid\Helpers\Auth\AuthFactory;
-use Zend\Cache\Service\StorageCacheAbstractServiceFactory;
 use Zend\Cache\Service\StorageCacheFactory;
 use Zend\Db\Adapter\AdapterInterface;
+use Zend\Json\Server\Server;
 use Zend\Log\Logger;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\Router\Http\Literal;
@@ -46,6 +47,20 @@ class Module implements ConfigProviderInterface
                 StorageCacheFactory::class => StorageCacheFactory::class,
                 //Проверка доступа
                 ApiAccess::class => AuthFactory::class,
+
+                Registration::class => function($sm){
+
+                    $server = new Server();
+                    /**
+                     * @var $sm ServiceManager
+                     */
+                    $model = $sm->get('ModelUsers');
+                    $logger = $sm->get(Logger::class);
+					$isDebug = ($sm->get('config'))['isDebug'];
+
+					return $server->setClass(new Registration($model, $logger, $isDebug));
+                },
+
                 //Модели
                 Orders::class => ServerFactory::class,
                 Users::class => ServerFactory::class,
@@ -56,7 +71,7 @@ class Module implements ConfigProviderInterface
             //alias rout to model
             'aliases' => [
                 'orders' => Orders::class,
-//                'users' => Users::class,
+                'users' => Users::class,
                 'professions' => Professions::class,
                 'users_address' => UsersAddress::class,
                 'users_profession' => UsersProfession::class,
@@ -100,7 +115,7 @@ class Module implements ConfigProviderInterface
                     /**
                      * @var $container ServiceManager
                      */
-                    $jsonRpcServer = $container->get(Users::class);
+                    $jsonRpcServer = $container->get(Registration::class);
 
                     return new Controller\AuthController(
                         $container->get(Logger::class),

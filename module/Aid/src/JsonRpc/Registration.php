@@ -9,7 +9,7 @@ use Zend\Json\Server\Exception\ErrorException;
 /**
  * @property \Aid\Model\Users  model
  */
-class Users extends Base
+class Registration extends Base
 {
     use Base64;
 
