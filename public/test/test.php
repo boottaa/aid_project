@@ -4,7 +4,12 @@ require __DIR__.'/../../vendor/autoload.php';
 
 
 // API access key from Google API's Console
-define('API_ACCESS_KEY','AAAAXCCLNmI:APA91bFfH3ODGU5AOiYi9laZorBx5q1iHeSc7Xe1CcJeKcYbiajMlVeh0Ar3VgfOBPB8VklkIvloXY4ai6e7yGUn5m0AjGJEfVFdhin18IsikLoO6E_F415xzdJMZe5hnHunodSKbS5D');
+//AIDVPS
+//define('API_ACCESS_KEY','AAAAXCCLNmI:APA91bFfH3ODGU5AOiYi9laZorBx5q1iHeSc7Xe1CcJeKcYbiajMlVeh0Ar3VgfOBPB8VklkIvloXY4ai6e7yGUn5m0AjGJEfVFdhin18IsikLoO6E_F415xzdJMZe5hnHunodSKbS5D');
+
+// TEST https://peter-gribanov.github.io/serviceworker/   https://github.com/peter-gribanov/serviceworker
+//define('API_ACCESS_KEY','AAAAaGQ_q2M:APA91bGCEOduj8HM6gP24w2LEnesqM2zkL_qx2PJUSBjjeGSdJhCrDoJf_WbT7wpQZrynHlESAoZ1VHX9Nro6W_tqpJ3Aw-A292SVe_4Ho7tJQCQxSezDCoJsnqXjoaouMYIwr34vZTs');
+
 $url = 'https://fcm.googleapis.com/fcm/send';
 $registrationIds = array($_GET['id']);
 // prepare the message
@@ -15,10 +20,14 @@ $message = array(
     'sound'      => 1
 );
 $fields = [
+//    "registration_ids" => [
+//        "YOUR-TOKEN-ID-1",
+//        "YOUR-TOKEN-ID-2",
+//        "YOUR-TOKEN-ID-3",
+//    ],
+//    "to" => "/topics/foo-bar",
     "registration_ids" => [
-        "YOUR-TOKEN-ID-1",
-        "YOUR-TOKEN-ID-2",
-        "YOUR-TOKEN-ID-3",
+        "ffquIwrs5dA:APA91bH7sCiONJETz4JPhwOLnh4BRiSUDoemq_tHxsFqZPUVLA5Ym6Tp7VtxbBZw2kPkWxxh3ZWZH3r3a0G92p0sPGoDGHnTChOs01Y5LHiH_sdmrJ7-qMnF29T1u2Xx6acU7FbIlPV6"
     ],
     'notification' => [
         'title' => 'Ералаш',
