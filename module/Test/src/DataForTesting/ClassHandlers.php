@@ -16,7 +16,7 @@ class ClassHandlers
      *
      * 33f3c8db70d437ce41cfbd1bbde0f413
      */
-    const HASH = 'k33f3c8db70d437ce41cfbd1bbde0f413';
+    const HASH = 'kf8f6fa41b9bb6c9c6e282f945e461f95';
 
     /**
      * @param string $class

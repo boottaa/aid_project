@@ -25,8 +25,8 @@ class IndexController extends AbstractActionController
         /*
          * //http://192.168.33.11/auth
          */
-//        $url = "http://{$_SERVER['HTTP_HOST']}/aid/".$hash."/run/".$action;
-        $url = "http://{$_SERVER['HTTP_HOST']}/auth";
+        $url = "http://{$_SERVER['HTTP_HOST']}/aid/".$hash."/run/".$action;
+//        $url = "http://{$_SERVER['HTTP_HOST']}/auth";
         
         $client = new \Zend\Json\Server\Client($url);
         try

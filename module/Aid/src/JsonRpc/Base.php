@@ -96,4 +96,24 @@ class Base implements InterfaceJsonRpc
          return $this->model->delete($where);
     }
 
+    /**
+     * @return string
+     */
+    protected function getRequest(){
+        list($l, $module, $hash, $controller, $class) = explode('/',$_SERVER['REQUEST_URI']);
+        $hash = str_split($hash);
+        unset($hash[0]);
+
+        $result = [
+            'module' => $module,
+            'hash' => implode("", $hash),
+            'controller' => $controller,
+            'class' => $class,
+            'user_ip' => $_SERVER['REMOTE_ADDR'],
+        ];
+
+        return $result;
+
+    }
+
 }
