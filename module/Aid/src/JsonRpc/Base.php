@@ -99,7 +99,7 @@ class Base implements InterfaceJsonRpc
     /**
      * @return string
      */
-    protected function getRequest(){
+    protected function getRequestUri(){
         list($l, $module, $hash, $controller, $class) = explode('/',$_SERVER['REQUEST_URI']);
         $hash = str_split($hash);
         unset($hash[0]);

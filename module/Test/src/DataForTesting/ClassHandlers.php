@@ -54,16 +54,8 @@ class ClassHandlers
             ],
 
             'users' => [
-                'getItem' => [
-                    ['where' => ['id' => @$_SESSION['users']['add']?:1]],
-
-                ],
-                'fethList' => [
-                    ['page' => 1, 'limit' => 10],
-                ],
-
-                'delete' => [
-                    ['where' => ['id' => @$_SESSION['users']['add']?:1]]
+                'userInfo' => [
+                    ['id' => @$_SESSION['users']['add']?:7],
                 ],
 
             ],
@@ -81,7 +73,7 @@ class ClassHandlers
                 ],
 
                 'auth' => [
-                    ['email' => 'bootta@yandex.ru', 'password' => 'b4a8bb20']
+                    ['email' => 'bootta@yandex.ru', 'password' => '111111111']
                 ],
                 'restorePassword' => [
                     ['email' => 'bootta@yandex.ru']

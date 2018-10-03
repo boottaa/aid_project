@@ -25,8 +25,11 @@ class IndexController extends AbstractActionController
         /*
          * //http://192.168.33.11/auth
          */
-        $url = "http://{$_SERVER['HTTP_HOST']}/aid/".$hash."/run/".$action;
-//        $url = "http://{$_SERVER['HTTP_HOST']}/auth";
+        if ($action == 'auth') {
+            $url = "http://{$_SERVER['HTTP_HOST']}/auth";
+        } else {
+            $url = "http://{$_SERVER['HTTP_HOST']}/aid/" . $hash . "/run/" . $action;
+        }
         
         $client = new \Zend\Json\Server\Client($url);
         try
@@ -74,15 +77,13 @@ class IndexController extends AbstractActionController
                 'auth',
                 'restorePassword',
             ],
+            'users' => [
+                'userInfo',
+            ],
             'orders' => [
                 'getItem',
                 'fethList',
                 'add',
-                'delete',
-            ],
-            'users' => [
-                'getItem',
-                'fethList',
                 'delete',
             ],
             'professions' => [

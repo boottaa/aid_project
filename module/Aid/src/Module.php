@@ -49,7 +49,6 @@ class Module implements ConfigProviderInterface
                 ApiAccess::class => AuthFactory::class,
 
                 Registration::class => function($sm){
-
                     $server = new Server();
                     /**
                      * @var $sm ServiceManager
