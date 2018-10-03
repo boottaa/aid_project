@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "395682985570",
+    "firebase_url": "https://aidvps.firebaseio.com",
+    "project_id": "aidvps",
+    "storage_bucket": "aidvps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395682985570:android:e7e53ac18685271f",
+        "android_client_info": {
+          "package_name": "billig.ru"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "395682985570-s9pqp4s4nrtp2rh9m3v0qbn12221t2nc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuOZMXeD3uFC1gZsyJwR_zIHFE_RxPasc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
