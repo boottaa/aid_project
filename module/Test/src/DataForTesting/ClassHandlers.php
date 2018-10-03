@@ -54,8 +54,21 @@ class ClassHandlers
             ],
 
             'users' => [
-                'userInfo' => [
+                'info' => [
                     ['id' => @$_SESSION['users']['add']?:7],
+                ],
+                'update' => [
+                    [
+                        'id' => @$_SESSION['users']['add'] ?: 7,
+                        'data' =>
+                            [
+                                'email' => 'bootta@yandex.ru',
+                                'password' => '111111111',
+                                'fname' => 'TTTTT',
+                                'lname' => 'UPDATER',
+                            ]
+                    ],
+
                 ],
 
             ],

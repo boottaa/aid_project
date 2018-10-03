@@ -15,7 +15,8 @@ return [
             'delete',
         ],
         'users' => [
-            'userInfo',
+            'info',
+            'update',
         ],
         'professions' => [
             'getItem',

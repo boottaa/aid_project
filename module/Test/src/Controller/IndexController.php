@@ -78,7 +78,8 @@ class IndexController extends AbstractActionController
                 'restorePassword',
             ],
             'users' => [
-                'userInfo',
+                'info',
+                'update'
             ],
             'orders' => [
                 'getItem',
