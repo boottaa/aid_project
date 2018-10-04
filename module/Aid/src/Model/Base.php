@@ -43,10 +43,16 @@ abstract class Base implements Models\All
      */
     protected $inputFilter;
 
+    /**
+     * @var ApiAccess
+     */
+    protected $apiAccess;
+
     public function __construct(AdapterInterface $dbAdapter, LoggerInterface $logger, $isDebug = false)
     {
         $this->logger = $logger;
         $this->isDebug = $isDebug;
+        $this->apiAccess = new ApiAccess($dbAdapter, $logger, $isDebug);
 
         if (empty($this->table)) {
             $this->logger->err("table is empty");
@@ -54,6 +60,13 @@ abstract class Base implements Models\All
         }
 
         $this->tableGateway = new TableGateway($this->table, $dbAdapter);
+    }
+
+    /**
+     * @return ApiAccess
+     */
+    public function getApiAccess(){
+        return $this->apiAccess;
     }
 
     /**

@@ -15,6 +15,7 @@ use Aid\Interfaces\Models\Delete;
 use Aid\Interfaces\Models\ExchangeArray;
 use Aid\Interfaces\Models\Filter;
 use Aid\Interfaces\Models\GetOnly;
+use Exception;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
@@ -220,8 +221,6 @@ class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Au
 
     public function getOnly(array $where)
     {
-        $this->logger->debug( "ACCESS getOnly: ".json_encode( $where ) );
-
         $rowset = $this->tableGateway->select($where);
 
         $row = $rowset->current();
@@ -252,6 +251,59 @@ class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Au
             return $this->acl->isAllowed($type, $class, $method);
 
         }catch (\Exception $e){
+            return false;
+        }
+    }
+
+
+
+    /**
+     * @return string
+     */
+    protected function getRequestUri(){
+        list($l, $module, $hash, $controller, $class) = explode('/',$_SERVER['REQUEST_URI']);
+        $hash = str_split($hash);
+        unset($hash[0]);
+
+        $result = [
+            'module' => $module,
+            'hash' => implode("", $hash),
+            'controller' => $controller,
+            'class' => $class,
+            'user_ip' => $_SERVER['REMOTE_ADDR'],
+        ];
+
+        return $result;
+    }
+
+    public function hashToUserId(){
+        $requestUri = $this->getRequestUri();
+
+        $hash = $requestUri['hash'];
+
+        /**
+         * @var ApiAccess $apiAccess ;
+         */
+        $apiAccess = $this->getOnly(['hash' => $hash, 'status' => '1', 'is_deleted' => '0']);
+
+        return $apiAccess['id_user'];
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function checkAccess(int $id)
+    {
+        try {
+
+            if ($this->hashToUserId() == $id) {
+                return true;
+            }
+            return false;
+        } catch (Exception $e) {
+
             return false;
         }
     }

@@ -10,39 +10,13 @@ use Zend\Json\Server\Exception\ErrorException;
  */
 class Users extends Base
 {
-    /**
-     * @param int $id
-     *
-     * @return bool
-     */
-    protected function checkAccess(int $id)
-    {
-        try {
-            $requestUri = $this->getRequestUri();
-
-            $hash = $requestUri['hash'];
-
-            /**
-             * @var ApiAccess $apiAccess ;
-             */
-            $apiAccess = $this->model->getApiAccess()->getOnly(['hash' => $hash, 'status' => '1', 'is_deleted' => '0']);
-            if ($apiAccess['id_user'] == $id) {
-                return true;
-            }
-
-            return false;
-        } catch (Exception $e) {
-
-            return false;
-        }
-    }
 
     public function info(int $id)
     {
 
         try {
 
-            if ($this->checkAccess($id)) {
+            if ($this->model->getApiAccess()->checkAccess($id)) {
                 $result = parent::getItem(['id' => $id]);
                 unset($result['password'], $result['date_update'], $result['is_deleted']);
             } else {
@@ -57,7 +31,7 @@ class Users extends Base
 
     public function update(int $id, $data)
     {
-        if ($this->checkAccess($id)) {
+        if ($this->model->getApiAccess()->checkAccess($id)) {
             $data['id'] = $id;
             unset($data['password'], $data['date_update'], $data['is_deleted'], $data['status']);
             $userRow = iterator_to_array(parent::getItem(['id' => $id]));
@@ -78,7 +52,7 @@ class Users extends Base
         throw new ErrorException("Access denied!");
     }
 
-    public function fethList(int $page, int $limit, int $status = 1)
+    public function fethList(int $page, int $limit, array $where = [])
     {
         throw new ErrorException("Access denied!");
     }

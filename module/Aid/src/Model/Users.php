@@ -31,18 +31,6 @@ class Users extends Base
         'type' => '',//ENUM
     ];
 
-    private $access;
-
-    public function __construct(AdapterInterface $dbAdapter, LoggerInterface $logger, $isDebug = false)
-    {
-        $this->access = new ApiAccess($dbAdapter, $logger);
-        parent::__construct($dbAdapter, $logger, $isDebug);
-    }
-
-    public function getApiAccess()
-    {
-        return $this->access;
-    }
 
     public function hashPassword($password){
         return md5( $password.'$_SERVER[sult]' );

@@ -54,9 +54,9 @@ class Base implements InterfaceJsonRpc
      *
      * @return array
      */
-    public function fethList(int $page, int $limit, int $status = 1)
+    public function fethList(int $page, int $limit, array $where = ['status' => '1'])
     {
-        $r = $this->model->fetchAll(['status' => $status]);
+        $r = $this->model->fetchAll($where);
         $r->setCurrentPageNumber($page);
         // set the number of items per page to 10
         $r->setItemCountPerPage($limit);
@@ -94,26 +94,6 @@ class Base implements InterfaceJsonRpc
     public function delete(array $where)
     {
          return $this->model->delete($where);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getRequestUri(){
-        list($l, $module, $hash, $controller, $class) = explode('/',$_SERVER['REQUEST_URI']);
-        $hash = str_split($hash);
-        unset($hash[0]);
-
-        $result = [
-            'module' => $module,
-            'hash' => implode("", $hash),
-            'controller' => $controller,
-            'class' => $class,
-            'user_ip' => $_SERVER['REMOTE_ADDR'],
-        ];
-
-        return $result;
-
     }
 
 }
