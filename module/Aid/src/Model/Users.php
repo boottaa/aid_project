@@ -10,6 +10,7 @@ namespace Aid\Model;
 
 use Aid\Model\Base;
 use Zend\Db\Adapter\AdapterInterface;
+use Zend\Db\Sql\Sql;
 use Zend\InputFilter\InputFilter;
 use Zend\Log\LoggerInterface;
 
@@ -31,6 +32,18 @@ class Users extends Base
         'type' => '',//ENUM
     ];
 
+
+    private
+        $address,
+        $professions;
+
+    public function __construct(AdapterInterface $dbAdapter, LoggerInterface $logger, $isDebug = false)
+    {
+        $this->address = new UsersAddress($dbAdapter, $logger, $isDebug);
+        $this->professions =  new UsersProfession($dbAdapter, $logger, $isDebug);
+
+        parent::__construct($dbAdapter, $logger, $isDebug);
+    }
 
     public function hashPassword($password){
         return md5( $password.'$_SERVER[sult]' );
@@ -142,5 +155,21 @@ class Users extends Base
         }
 
         return $this->inputFilter;
+    }
+
+    /**
+     * @return UsersAddress
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @return UsersProfession
+     */
+    public function getProfessions()
+    {
+        return $this->professions;
     }
 }

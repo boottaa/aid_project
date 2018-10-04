@@ -42,6 +42,44 @@ class Users extends Base
         }
     }
 
+    public function getAddress($page, $limit = 10, $where = [] )
+    {
+        $where['id_user'] = $this->model->getApiAccess()->hashToUserId();
+        $r = $this->model->getAddress()->fetchAll($where);
+        $r->setCurrentPageNumber($page);
+        // set the number of items per page to 10
+        $r->setItemCountPerPage($limit);
+
+        $x = [];
+        $x['getPages'] = $r->getPages();
+
+        foreach ($r as $v)
+        {
+            $x['items'][] = $v;
+        }
+
+        return $x;
+    }
+
+    public function getProfessions($page, $limit = 10, $where = [] )
+    {
+        $where['id_user'] = $this->model->getApiAccess()->hashToUserId();
+        $r = $this->model->getProfessions()->fetchAll($where);
+        $r->setCurrentPageNumber($page);
+        // set the number of items per page to 10
+        $r->setItemCountPerPage($limit);
+
+        $x = [];
+        $x['getPages'] = $r->getPages();
+
+        foreach ($r as $v)
+        {
+            $x['items'][] = $v;
+        }
+
+        return $x;
+    }
+
     public function add(array $data)
     {
         throw new ErrorException("Access denied!");

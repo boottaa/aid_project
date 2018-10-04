@@ -70,6 +70,12 @@ class ClassHandlers
                     ],
 
                 ],
+                'getAddress' => [
+                    ['page' => 0],
+                ],
+                'getProfessions' => [
+                    ['page' => 0],
+                ]
 
             ],
 

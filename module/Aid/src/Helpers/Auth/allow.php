@@ -17,6 +17,8 @@ return [
         'users' => [
             'info',
             'update',
+            'getAddress',
+            'getProfessions'
         ],
         'professions' => [
             'getItem',
