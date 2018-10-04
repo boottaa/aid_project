@@ -32,16 +32,8 @@ class UsersProfession extends Base
             $inputFilter = new InputFilter();
 
             $inputFilter->add(array(
-                'name'     => 'id_employee',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'Int'),
-                ),
-            ));
-
-            $inputFilter->add(array(
                 'name'     => 'id_profession',
-                'required' => false,
+                'required' => true,
                 'filters'  => array(
                     array('name' => 'Int'),
                 ),

@@ -75,7 +75,33 @@ class ClassHandlers
                 ],
                 'getProfessions' => [
                     ['page' => 0],
-                ]
+                ],
+                'addProfessions' => [
+                    ['data' =>
+                        [
+                            'id_profession' => 2,
+                            'description' => 'TESTTITLE',
+                        ]
+                    ]
+                ],
+                'addAddress' => [
+                    ['data' =>
+                        [
+                            'address' => 'TEST ADDRESS',
+                        ]
+                    ]
+                ],
+                'getOrders' => [
+                    ['page' => 0],
+                ],
+                'addOrders' => [
+                    ['data' =>
+                        [
+                            'id_address' => '2',
+                            'id_user' => '7',
+                        ]
+                    ]
+                ],
 
             ],
 

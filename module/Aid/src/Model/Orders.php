@@ -19,7 +19,7 @@ class Orders extends Base
         'id_user'  => null,
         'id_employee' => null,
         'status' => 1,
-        'address' => null,
+        'id_address' => null,
         'phone' => null,
         'email' => null,
         'date_create' => null

@@ -32,13 +32,19 @@ class Users extends Base
         'type' => '',//ENUM
     ];
 
-
+    /**
+     * @var Orders $orders
+     * @var UsersAddress $address
+     * @var UsersProfession $professions
+     */
     private
         $address,
+        $orders,
         $professions;
 
     public function __construct(AdapterInterface $dbAdapter, LoggerInterface $logger, $isDebug = false)
     {
+        $this->orders = new Orders($dbAdapter, $logger, $isDebug);
         $this->address = new UsersAddress($dbAdapter, $logger, $isDebug);
         $this->professions =  new UsersProfession($dbAdapter, $logger, $isDebug);
 
@@ -155,6 +161,14 @@ class Users extends Base
         }
 
         return $this->inputFilter;
+    }
+
+    /**
+     * @return Orders
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 
     /**

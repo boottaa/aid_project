@@ -18,7 +18,11 @@ return [
             'info',
             'update',
             'getAddress',
-            'getProfessions'
+            'addAddress',
+            'getProfessions',
+            'addProfessions',
+            'getOrders',
+            'addOrders',
         ],
         'professions' => [
             'getItem',

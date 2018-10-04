@@ -61,6 +61,24 @@ class Users extends Base
         return $x;
     }
 
+    /**
+     * @param array $data
+     *
+     * @return int|mixed
+     */
+    public function addAddress(array $data)
+    {
+        $data['id_user'] = $this->model->getApiAccess()->hashToUserId();
+        return $this->model->getAddress()->exchangeArray($data)->save();
+    }
+
+    /**
+     * @param $page
+     * @param int $limit
+     * @param array $where
+     *
+     * @return array
+     */
     public function getProfessions($page, $limit = 10, $where = [] )
     {
         $where['id_user'] = $this->model->getApiAccess()->hashToUserId();
@@ -80,21 +98,91 @@ class Users extends Base
         return $x;
     }
 
+    /**
+     * @param array $data
+     *
+     * @return int|mixed
+     */
+    public function addProfessions(array $data)
+    {
+        $data['id_user'] = $this->model->getApiAccess()->hashToUserId();
+        return $this->model->getProfessions()->exchangeArray($data)->save();
+    }
+
+    /**
+     * @param $page
+     * @param int $limit
+     * @param array $where
+     *
+     * @return array
+     */
+    public function getOrders($page, $limit = 10, $where = [] )
+    {
+        $id_user = $this->model->getApiAccess()->hashToUserId();
+        $user = $this->model->getOnly(['id' => $id_user]);
+
+        if($user['type'] == 'CU'){
+            $where['id_user'] = $id_user;
+        }
+
+        $r = $this->model->getOrders()->fetchAll($where);
+        $r->setCurrentPageNumber($page);
+        // set the number of items per page to 10
+        $r->setItemCountPerPage($limit);
+
+        $x = [];
+
+        $x['getPages'] = $r->getPages();
+        foreach ($r as $v)
+        {
+            $x['items'][] = $v;
+        }
+
+        return $x;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return int|mixed
+     */
+    public function addOrders(array $data)
+    {
+        $id_user = $this->model->getApiAccess()->hashToUserId();
+
+        $data['id_user'] = $id_user;
+        return $this->model->getOrders()->exchangeArray($data)->save();
+    }
+
+    /**
+     * @param array $data
+     */
     public function add(array $data)
     {
         throw new ErrorException("Access denied!");
     }
 
+    /**
+     * @param array $where
+     */
     public function getItem(array $where)
     {
         throw new ErrorException("Access denied!");
     }
 
+    /**
+     * @param int $page
+     * @param int $limit
+     * @param array $where
+     */
     public function fethList(int $page, int $limit, array $where = [])
     {
         throw new ErrorException("Access denied!");
     }
 
+    /**
+     * @param array $where
+     */
     public function delete(array $where)
     {
         throw new ErrorException("Access denied!");

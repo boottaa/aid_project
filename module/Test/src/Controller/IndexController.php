@@ -81,7 +81,11 @@ class IndexController extends AbstractActionController
                 'info',
                 'update',
                 'getAddress',
+                'addAddress',
                 'getProfessions',
+                'addProfessions',
+                'getOrders',
+                'addOrders',
             ],
             'orders' => [
                 'getItem',
