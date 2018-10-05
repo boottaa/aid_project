@@ -126,7 +126,7 @@ class Registration extends Base
             $hash = md5(sha1($email."__".date('U')));
             $newPassword = substr($hash, 0, 8);
             $user['password'] = $this->model->hashPassword($newPassword);
-
+            $this->model->getAddress()->delete(['id_user' => $user['id']]);
             $this->model->exchangeArray($user)->save();
 
             $to      = $user['email'];

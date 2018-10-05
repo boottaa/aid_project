@@ -69,11 +69,11 @@ class Module implements ConfigProviderInterface
 			],
             //alias rout to model
             'aliases' => [
-                'orders' => Orders::class,
+                //'orders' => Orders::class,
                 'users' => Users::class,
-                'professions' => Professions::class,
-                'users_address' => UsersAddress::class,
-                'users_profession' => UsersProfession::class,
+                //'professions' => Professions::class,
+                //'users_address' => UsersAddress::class,
+                //'users_profession' => UsersProfession::class,
             ],
 		);
 	}
