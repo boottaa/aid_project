@@ -16,7 +16,7 @@ class ClassHandlers
      *
      * 33f3c8db70d437ce41cfbd1bbde0f413
      */
-    const HASH = 'kf8f6fa41b9bb6c9c6e282f945e461f95';
+    const HASH = 'k'.'3febdf1113384ca742088b6998593538';
 
     /**
      * @param string $class
@@ -55,7 +55,7 @@ class ClassHandlers
 
             'users' => [
                 'info' => [
-                    ['id' => @$_SESSION['users']['add']?:7],
+                    ['id' => @$_SESSION['users']['add']?:90],
                 ],
                 'update' => [
                     [
@@ -118,7 +118,7 @@ class ClassHandlers
                 ],
 
                 'auth' => [
-                    ['email' => 'bootta@yandex.ru', 'password' => '111111111']
+                    ['data' => ['email' => 'bootta@yandex.ru', 'password' => '760218e9']]
                 ],
                 'restorePassword' => [
                     ['email' => 'bootta@yandex.ru']

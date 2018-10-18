@@ -297,7 +297,6 @@ class ApiAccess implements GetOnly, Filter, Delete, Construct, ExchangeArray, Au
     public function checkAccess(int $id)
     {
         try {
-
             if ($this->hashToUserId() == $id) {
                 return true;
             }
