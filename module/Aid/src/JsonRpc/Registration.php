@@ -10,8 +10,11 @@ use Zend\Json\Server\Exception\ErrorException;
  */
 class Registration extends Base
 {
-    public function auth($email, $password)
+    public function auth(array $data)
     {
+        $email = $data['email'];
+        $password = $data['password'];
+
         /**
          * @var ApiAccess $apiAccess;
          */
@@ -60,7 +63,7 @@ class Registration extends Base
                 return $result;
             }
 
-            return false;
+            throw new ErrorException("INCORRECT_AUTH");
 
         }catch (\Exception $e){
             if($this->isDebug == true){
@@ -68,7 +71,7 @@ class Registration extends Base
                     'class: ' . __CLASS__ . ' method: ' . __METHOD__ . ' message: ' . $e->getMessage().' getFile:'. $e->getFile().' getLine:'. $e->getLine()
                 );
             }
-            return false;
+            throw new ErrorException("INCORRECT_AUTH");
         }
     }
 
@@ -120,8 +123,9 @@ class Registration extends Base
     /**
      * @param string $email
      */
-    public function restorePassword(string $email){
+    public function restorePassword(array $data){
         try{
+            $email = $data['email'];
             $user = iterator_to_array($this->model->getOnly(['email' => $email, 'status' => '1', 'is_deleted' => '0']));
             $hash = md5(sha1($email."__".date('U')));
             $newPassword = substr($hash, 0, 8);
